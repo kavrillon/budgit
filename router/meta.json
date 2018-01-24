@@ -1,0 +1,12 @@
+{
+  "/": {
+    "title": "Budg'It - A thousandth budget management app",
+    "description": "Budg'It - A thousandth budget management app.",
+    "keywords": "budget, management, bank, account"
+  },
+  "/tests": {
+    "title": "Tests - Budg'It",
+    "description": "",
+    "keywords": ""
+  }
+}
