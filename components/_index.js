@@ -1,5 +1,5 @@
-import Vuetify from './Vuetify'
+import NavigationTopbar from './Navigation/NavigationTopbar'
 
 export default {
-  Vuetify
+  NavigationTopbar
 }

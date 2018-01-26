@@ -8,5 +8,10 @@
     "title": "Tests - Budg'It",
     "description": "",
     "keywords": ""
+  },
+  "/login": {
+    "title": "Login - Budg'It",
+    "description": "Budg'It - Log into the app.",
+    "keywords": ""
   }
 }

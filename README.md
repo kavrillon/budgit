@@ -21,3 +21,13 @@ For additional information, please visit the [Official Documentation](https://vu
 ## Resources
 
 - [Vuetifyjs](https://vuetifyjs.com)
+
+
+## TODO
+
+- Layout & app skeleton
+- ChartJS
+- Page dashboard
+- vuex: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
+- SASS: https://medium.com/@mahesh.ks/using-sass-scss-in-vue-js-2-d472af0facf9
+- Mongo
