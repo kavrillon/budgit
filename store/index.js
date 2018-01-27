@@ -5,28 +5,12 @@ Vue.use(Vuex)
 
 export function createStore () {
   return new Vuex.Store({
-    state: {
-      mobileNavigation: false
-    },
+    state: {},
 
-    actions: {
-      toggleNavigation: ({ commit }) => commit('toggleNavigation'),
-      setNavigation: ({ commit }) => commit('setNavigation'),
-    },
+    actions: {},
 
-    mutations: {
-      toggleNavigation (state) {
-        state.mobileNavigation = !state.mobileNavigation
-      },
-      setNavigation (state, status) {
-        state.mobileNavigation = status
-      }
-    },
+    mutations: {},
 
-    getters: {
-      mobileNavigation (state) {
-        return state.mobileNavigation
-      }
-    }
+    getters: {}
   })
 }

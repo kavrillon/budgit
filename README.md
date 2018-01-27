@@ -25,9 +25,13 @@ For additional information, please visit the [Official Documentation](https://vu
 
 ## TODO
 
-- Layout & app skeleton
-- ChartJS
-- Page dashboard
-- vuex: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
 - SASS: https://medium.com/@mahesh.ks/using-sass-scss-in-vue-js-2-d472af0facf9
-- Mongo
+- Page dashboard
+- fake data
+- states: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
+- Mongo + API: https://hackernoon.com/lets-build-a-web-app-with-vue-chart-js-and-an-api-544eb81c4b44
+- LocalStorage
+- SEO
+- Travis
+- Tests U
+- Tests E&E
