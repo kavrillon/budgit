@@ -1,0 +1,36 @@
+<template>
+  <v-footer dark class="white--text">
+    <v-layout row>
+      <v-flex xs6 class="text-xs-left">
+        <div class="ml-3">
+          Made with
+          <v-icon class="red--text">favorite</v-icon>
+          by
+          <a href="https://github.com/kavrillon/budgit" class="white--text">
+            Kevin Avrillon
+          </a>
+        </div>
+      </v-flex>
+      <v-flex xs6 class="text-xs-right">
+        <div class="mr-3">
+          <router-link
+            to="/tests"
+            class="ml-3">
+            <v-icon color="white">whatshot</v-icon>
+          </router-link>
+        </div>
+      </v-flex>
+    </v-layout>
+  </v-footer>
+</template>
+<script>
+  import Meta from 'mixins/meta'
+
+  export default {
+    mixins: [Meta],
+
+    data () {
+      return {}
+    }
+  }
+</script>
