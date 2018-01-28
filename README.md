@@ -25,9 +25,8 @@ For additional information, please visit the [Official Documentation](https://vu
 
 ## TODO
 
-- SASS: https://medium.com/@mahesh.ks/using-sass-scss-in-vue-js-2-d472af0facf9
-- Page dashboard
 - fake data
+- Page dashboard
 - states: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
 - Mongo + API: https://hackernoon.com/lets-build-a-web-app-with-vue-chart-js-and-an-api-544eb81c4b44
 - LocalStorage

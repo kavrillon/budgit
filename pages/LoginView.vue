@@ -49,7 +49,10 @@
   </v-content>
 </template>
 
-<style>
+<style lang="scss" scoped>
+  @import '../style/variables';
+  @import '../style/mixins';
+
   .card-container {
     width: 100%;
   }

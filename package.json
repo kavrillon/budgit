@@ -1,8 +1,12 @@
 {
   "name": "budgit",
+  "license": "UNLICENSED",
   "description": "A thousandth budget management app.",
   "author": "Kevin Avrillon <kavrillon@leadformance.com>",
   "version": "0.0.1",
+  "repository": {
+    "type": "git"
+  },
   "scripts": {
     "dev": "node server",
     "start": "cross-env NODE_ENV=production node server",
@@ -23,6 +27,8 @@
     "express": "^4.15.2",
     "extract-text-webpack-plugin": "^2.1.0",
     "lru-cache": "^4.0.2",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
     "serialize-javascript": "^1.3.0",
     "serve-favicon": "^2.3.2",
     "vue": "^2.5.3",
@@ -50,7 +56,7 @@
     "pug": "^2.0.0-beta3",
     "rimraf": "^2.6.1",
     "script-ext-html-webpack-plugin": "^1.3.4",
-    "style-loader": "^0.18.1",
+    "style-loader": "^0.20.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "sw-precache-webpack-plugin": "^0.9.1",

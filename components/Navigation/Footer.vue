@@ -1,7 +1,7 @@
 <template>
   <v-footer dark class="white--text">
     <v-layout row>
-      <v-flex xs6 class="text-xs-left">
+      <v-flex xs10 class="text-xs-left">
         <div class="ml-3">
           Made with
           <v-icon class="red--text">favorite</v-icon>
@@ -11,7 +11,7 @@
           </a>
         </div>
       </v-flex>
-      <v-flex xs6 class="text-xs-right">
+      <v-flex xs2 class="text-xs-right">
         <div class="mr-3">
           <router-link
             to="/tests"
