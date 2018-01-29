@@ -5,7 +5,7 @@ import App from './App.vue'
 import Components from 'components/_index'
 
 import { createStore } from 'store/index'
-import { createRouter } from 'router/index'
+import { createRouter } from '../router'
 import { sync } from 'vuex-router-sync'
 
 Vue.use(Vuetify, {

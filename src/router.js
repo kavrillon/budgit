@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import VueAxios from 'vue-axios';
+import axios from 'axios';
 
 // The meta data for your routes
-const meta = require('./meta.json')
+const meta = require('./config/meta.json')
 
 // Function to create routes
 // Is default lazy but can be changed
@@ -14,6 +16,7 @@ function route (path, view) {
   }
 }
 
+Vue.use(VueAxios, axios);
 Vue.use(Router)
 
 export function createRouter () {

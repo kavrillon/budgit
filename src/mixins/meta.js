@@ -1,4 +1,4 @@
-const meta = require('../router/meta.json')
+const meta = require('../config/meta.json')
 
 export default {
   watch: {

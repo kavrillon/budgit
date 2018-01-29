@@ -6,13 +6,24 @@ const favicon = require('serve-favicon')
 const compression = require('compression')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
-const redirects = require('./router/301.json')
+const redirects = require('./config/301.json')
+const apiRoutes = require('./api')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const mongoose = require('mongoose')
+const config = require('./config/db')
 
 const isProd = process.env.NODE_ENV === 'production'
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
 const serverInfo =
   `express/${require('express/package.json').version} ` +
   `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
+
+mongoose.Promise = global.Promise
+mongoose.connect(config.database).then(
+  () => {console.log('Database is connected') },
+  err => { console.log('Can not connect to the models'+ err)}
+)
 
 const app = express()
 
@@ -69,6 +80,8 @@ app.get('/sitemap.xml', (req, res) => {
   res.setHeader("Content-Type", "text/xml")
   res.sendFile(resolve('./static/sitemap.xml'))
 })
+
+app.use('/api', apiRoutes)
 
 // 301 redirect for changed routes
 Object.keys(redirects).forEach(k => {
