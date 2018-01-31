@@ -1,3 +1,6 @@
 module.exports = {
-  database: 'mongodb://localhost:27017/budgit'
+  url: 'localhost:27017',
+  database: 'budgit',
+  user: '',
+  password: ''
 };

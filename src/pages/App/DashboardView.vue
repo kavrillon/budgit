@@ -61,20 +61,6 @@
           }
         }
       }
-    },
-    created: function()
-    {
-      this.fetchItems()
-    },
-    methods: {
-      fetchItems()
-      {
-        const uri = 'http://localhost:8080/api/users';
-        this.axios.get(uri).then((response) => {
-          console.log(`Users`)
-          console.log(response.users)
-        });
-      }
     }
   }
 </script>

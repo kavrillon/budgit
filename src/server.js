@@ -7,11 +7,10 @@ const compression = require('compression')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
 const redirects = require('./config/301.json')
-const apiRoutes = require('./api')
+const apiRoutes = require('./api/routes')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const mongoose = require('mongoose')
-const config = require('./config/database')
+const db = require('./lib/database')
 
 const isProd = process.env.NODE_ENV === 'production'
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
@@ -19,14 +18,14 @@ const serverInfo =
   `express/${require('express/package.json').version} ` +
   `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
 
-mongoose.Promise = global.Promise
-mongoose.connect(config.database).then(
-  () => {console.log('Database is connected') },
+db.connect().then(
+  () => {console.log('Database is connected'); },
   err => { console.log('Can not connect to the models'+ err)}
 )
 
 const app = express()
 
+const port = process.env.PORT || 8080
 const template = fs.readFileSync(resolve('./assets/index.template.html'), 'utf-8')
 
 function createRenderer (bundle, options) {
@@ -70,6 +69,8 @@ const serve = (path, cache) => express.static(resolve(path), {
   maxAge: cache && isProd ? 60 * 60 * 24 * 30 : 0
 })
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(compression({ threshold: 0 }))
 app.use(favicon('./src/static/favicon.ico'))
 app.use('/static', serve('./static', true))
@@ -80,8 +81,6 @@ app.get('/sitemap.xml', (req, res) => {
   res.setHeader("Content-Type", "text/xml")
   res.sendFile(resolve('./static/sitemap.xml'))
 })
-
-app.use('/api', apiRoutes)
 
 // 301 redirect for changed routes
 Object.keys(redirects).forEach(k => {
@@ -100,6 +99,16 @@ const microCache = LRU({
 // logic to determine whether a request is cacheable based on its url and
 // headers.
 const isCacheable = req => useMicroCache
+
+app.use('/api', apiRoutes)
+
+app.get('*', isProd ? render : (req, res) => {
+  readyPromise.then(() => render(req, res))
+})
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`server started at localhost:${port}`)
+})
 
 function render (req, res) {
   const s = Date.now()
@@ -146,12 +155,3 @@ function render (req, res) {
     }
   })
 }
-
-app.get('*', isProd ? render : (req, res) => {
-  readyPromise.then(() => render(req, res))
-})
-
-const port = process.env.PORT || 8080
-app.listen(port, '0.0.0.0', () => {
-  console.log(`server started at localhost:${port}`)
-})

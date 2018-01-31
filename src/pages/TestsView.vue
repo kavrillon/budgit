@@ -3,25 +3,47 @@
     <v-container>
       <v-layout column justify-center align-center>
         <v-flex xs12 sm8>
-          <div class="text-xs-center">
-            <img src="/static/v.png" alt="Vuetify.js" class="mb-5" />
+          <div class="text-xs-center mb-5">
+            <div>List des users:</div>
+            <ul>
+              <li v-for="u in users" v-text="u.firstname"></li>
+            </ul>
           </div>
-          <v-card>
-            <v-card-text>
-              <p>Welcome to the Webpack SSR template.</p>
-              <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications. For more information on Vuetify, check out the <a href="https://vuetifyjs.com" target="_blank">documentation</a>. If you have questions, please join the official <a href="https://gitter.im/vuetifyjs/Lobby" target="_blank" title="chat">gitter</a>. Find a bug? Report it on the github <a href="https://github.com/vuetifyjs/vuetify/issues" target="_blank" title="contribute">issue board</a>.</p>
-              <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-              <div class="text-xs-right">
-                <em><small>&mdash; John Leider</small></em>
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn color="primary" flat router to="/inspire">Continue</v-btn>
-            </v-card-actions>
-          </v-card>
-          <v-date-picker v-model="picker2" landscape></v-date-picker>
+          <div class="text-xs-center mb-5">
+            <div>User {{ userId }} email: {{ userEmail }}</div>
+          </div>
         </v-flex>
       </v-layout>
     </v-container>
   </v-content>
 </template>
+
+<script>
+  export default {
+    data () {
+      return {
+        users: [],
+        userId: '5a6f93264e7161d1c1e9748a',
+        userEmail: ''
+      }
+    },
+    created: function()
+    {
+      this.fetchItems()
+    },
+    methods: {
+      fetchItems()
+      {
+        const uri = 'http://localhost:8080/api/users'
+
+        this.axios.get(uri).then((response) => {
+          this.users = response.data
+        })
+
+        this.axios.get(`${uri}/5a6f93264e7161d1c1e9748a`).then((response) => {
+          this.userEmail = response.data.email
+        })
+      }
+    }
+  }
+</script>

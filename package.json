@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-polyfill": "^6.23.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "chart.js": "^2.7.1",
     "compression": "^1.6.2",
