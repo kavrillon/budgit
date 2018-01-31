@@ -11,7 +11,7 @@ const apiRoutes = require('./api')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const config = require('./config/db')
+const config = require('./config/database')
 
 const isProd = process.env.NODE_ENV === 'production'
 const useMicroCache = process.env.MICRO_CACHE !== 'false'

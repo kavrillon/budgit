@@ -50,8 +50,8 @@
 </template>
 
 <style lang="scss" scoped>
-  @import '../style/variables';
-  @import '../style/mixins';
+  @import '../assets/variables';
+  @import '../assets/mixins';
 
   .card-container {
     width: 100%;

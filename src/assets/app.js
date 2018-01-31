@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import App from './App.vue'
-import Components from 'components/_index'
+import Components from 'components'
 
-import { createStore } from 'store/index'
+import { createStore } from 'store'
 import { createRouter } from '../router'
 import { sync } from 'vuex-router-sync'
 
