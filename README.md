@@ -26,12 +26,12 @@ For additional information, please visit the [Official Documentation](https://vu
 ## TODO
 
 ### Doing
-- BO: Seeds
 - BO: Handle API errors
 
 ### Next
-- DB: how to manage refs (full copy vs reference)
 - FO: Axios global conf
+- DB: schema Account/Transaction
+- DB: how to manage refs (full copy vs reference)
 
 ### Ideas
 - BO: states: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
@@ -55,4 +55,5 @@ For additional information, please visit the [Official Documentation](https://vu
   https://scotch.io/tutorials/keeping-api-routing-clean-using-express-routers
   http://catlau.co/how-to-modularize-routes-with-the-express-router/
 - BO: Archi Server (Mongo/Mongoose/API): https://hackernoon.com/lets-build-a-web-app-with-vue-chart-js-and-an-api-544eb81c4b44
+- BO: Seeds
 
