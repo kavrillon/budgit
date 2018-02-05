@@ -6,7 +6,7 @@ router.post('/', controller.create)
 
 router.get('/:id', controller.findOneById)
 router.put('/:id', controller.replace)
-router.patch('/:id', controller.udpate)
+router.patch('/:id', controller.update)
 router.delete('/:id', controller.remove)
 
 module.exports = router

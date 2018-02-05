@@ -24,23 +24,39 @@ For additional information, please visit the [Official Documentation](https://vu
 
 
 ## TODO
+CREATE: done
+PUT: create a validator that check if every property is defined
+PATCH: /
+GET: not found
+DEL: /
+
 
 ### Doing
-- BO: API/Server separation
 - API: Handle API errors
+  https://github.com/jmtvms/mongoose-express-error-handler/blob/master/index.js
+  http://thecodebarbarian.com/mongoose-error-handling
   List of managed status code: 
   http://blog.restcase.com/rest-api-error-codes-101/
   http://thecodebarbarian.com/80-20-guide-to-express-error-handling
-  Simple :
+  https://github.com/mongodb/mongo/blob/master/src/mongo/base/error_codes.err
+  HTTP_ERRORS :
     200 - OK
+      - status: 'OK'
     400 - Bad Request (Client Error) - A json with error \ more details should return to the client.
-      - status
+      - status: 'ERROR'
       - type
       - message
       - technical 
-    401 - Unauthorized
-    404 - Not Found
     500 - Internal Server Error - A json with an error should return to the client only when there is no security risk by doing that.
+      - status: 'ERROR'
+      - message: '...'
+  DB_ERRORS
+    Faire un mapping DB_ERRORS <-> HTTP_ERRORS
+    Définir la liste des DB_ERRORS
+    Dans le CORSServices: interception des erreurs DB, levée d'erreurs HTTP
+    Pas besoin d'un type d'erreur interne => trop de complexité
+    Les erreurs HTTP possède l'objet et le status à afficher => plus besoin de multiples handlers
+    Par contre prévoir un handler par défaut avec 500 et pas trop d'infos pour les cas non gérés
 - API: Auto doc: http://apidocjs.com/
 
 ### Next
@@ -56,12 +72,15 @@ For additional information, please visit the [Official Documentation](https://vu
 - CHORE: Tests U
 - CHORE: Tests E&E
 - FO: 404 page
+- FO: 500 page
 - BO: User auth : find standard solution / mongo schema / security 
 - FO: account management 
 - API: auth
 - API: pagination
 - BO: logger
 - API: search method
+- CHORE: live reload sur API
+- DB: replace: return new resource instead of nbModiifed
 
 ### Done
 - Layout & app skeleton
@@ -72,4 +91,4 @@ For additional information, please visit the [Official Documentation](https://vu
   http://catlau.co/how-to-modularize-routes-with-the-express-router/
 - BO: Archi Server (Mongo/Mongoose/API): https://hackernoon.com/lets-build-a-web-app-with-vue-chart-js-and-an-api-544eb81c4b44
 - BO: Seeds
-
+- BO: API/Server separation

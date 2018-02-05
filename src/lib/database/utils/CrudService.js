@@ -1,4 +1,5 @@
 const { toJson } = require('./json')
+const { BadRequestError, InternalServerError } = require('../../http/errors')
 
 class ModelService {
   constructor(model) {
@@ -18,16 +19,23 @@ class ModelService {
   create(data) {
     return this.model.create(data)
       .then(toJson)
-      .catch(Promise.reject)
   }
 
   replace(id, data) {
     const newObject = new this.model(data)
     return newObject.validate()
       .then(() => {
-        return this.update(id, data)
+        return this.model.replaceOne({'_id': id}, data)
+          .then((res) => {
+            if (res.n === 0) {
+              throw new BadRequestError('Not Found', [{
+                name: 'ID',
+                error: `Resource ${id} does not exists`
+              }])
+            }
+            return this.findOneById(id)
+          })
       })
-      .catch(Promise.reject)
   }
 
   update(id, data) {
@@ -39,7 +47,6 @@ class ModelService {
 
     return this.model.findByIdAndUpdate(id, data, options)
       .then(toJson)
-      .catch(Promise.reject)
   }
 
   removeById(id) {
@@ -53,7 +60,6 @@ function execQuery(q) {
     .lean()
     .exec()
     .then(toJson)
-    .catch(Promise.reject)
 }
 
 module.exports = ModelService
