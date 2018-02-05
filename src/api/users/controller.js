@@ -1,5 +1,5 @@
 const userService = require('../../lib/services/user')
-const RequestHandler = require('../../lib/server/http/RequestHandler')
+const RequestHandler = require('../../lib/http/RequestHandler')
 
 
 module.exports.find = RequestHandler.new()

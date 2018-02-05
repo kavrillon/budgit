@@ -26,7 +26,22 @@ For additional information, please visit the [Official Documentation](https://vu
 ## TODO
 
 ### Doing
-- BO: Handle API errors
+- BO: API/Server separation
+- API: Handle API errors
+  List of managed status code: 
+  http://blog.restcase.com/rest-api-error-codes-101/
+  http://thecodebarbarian.com/80-20-guide-to-express-error-handling
+  Simple :
+    200 - OK
+    400 - Bad Request (Client Error) - A json with error \ more details should return to the client.
+      - status
+      - type
+      - message
+      - technical 
+    401 - Unauthorized
+    404 - Not Found
+    500 - Internal Server Error - A json with an error should return to the client only when there is no security risk by doing that.
+- API: Auto doc: http://apidocjs.com/
 
 ### Next
 - FO: Axios global conf
@@ -43,9 +58,10 @@ For additional information, please visit the [Official Documentation](https://vu
 - FO: 404 page
 - BO: User auth : find standard solution / mongo schema / security 
 - FO: account management 
-- BO: API auth
+- API: auth
+- API: pagination
 - BO: logger
-- BO: API search method
+- API: search method
 
 ### Done
 - Layout & app skeleton
