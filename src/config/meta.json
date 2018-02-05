@@ -13,5 +13,10 @@
     "title": "Login - Budg'It",
     "description": "Budg'It - Log into the app.",
     "keywords": ""
+  },
+  "/not-found": {
+    "title": "404 Not Found - Budg'It",
+    "description": "Budg'It - You've reach the end of the app.",
+    "keywords": ""
   }
 }
