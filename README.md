@@ -24,12 +24,6 @@ For additional information, please visit the [Official Documentation](https://vu
 
 
 ## TODO
-CREATE: done
-PUT: create a validator that check if every property is defined
-PATCH: /
-GET: not found
-DEL: /
-
 
 ### Doing
 - API: Handle API errors
@@ -58,6 +52,7 @@ DEL: /
     Les erreurs HTTP possède l'objet et le status à afficher => plus besoin de multiples handlers
     Par contre prévoir un handler par défaut avec 500 et pas trop d'infos pour les cas non gérés
 - API: Auto doc: http://apidocjs.com/
+- API: PATCH return diff object
 
 ### Next
 - FO: Axios global conf

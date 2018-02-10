@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const { BadRequestError, InternalServerError } = require('../../http/errors')
+const statuses  = require('../statuses')
 
 class SchemaBuilder {
   constructor(definition, options) {
@@ -24,24 +25,25 @@ class SchemaBuilder {
   }
 
   applyHooks() {
-    this.schema.post('save', handleSaveError)
-    this.schema.post('update', handleSaveError)
-    this.schema.post('findOneAndUpdate', handleSaveError)
-    this.schema.post('insertMany', handleSaveError)
-    this.schema.post('replaceOne', handleSaveError)
+    this.schema.post('find', handleErrors)
+    this.schema.post('findOne', handleErrors)
+    this.schema.post('findById', handleErrors)
+    this.schema.post('save', handleErrors)
+    this.schema.post('update', handleErrors)
+    this.schema.post('findOneAndUpdate', handleErrors)
+    this.schema.post('insertMany', handleErrors)
+    this.schema.post('replaceOne', handleErrors)
+    this.schema.post('validate', handleErrors)
+    this.schema.post('remove', handleErrors)
   }
 }
 
 module.exports = SchemaBuilder
 
-function handleSaveError(error, doc, next) {
-  console.log('')
-  console.log('GOOOOOTCHAAAAA')
-  console.log(error.name + ' ' + error.code)
-  console.log('')
+function handleErrors(error, doc, next) {
   switch (error.name) {
     case 'ValidationError':
-      throw handleValidationError(error.errors);
+      throw handleValidationError(error);
     case 'MongoError':
     case 'BulkWriteError':
       throw handleMongoError(error);
@@ -52,42 +54,50 @@ function handleSaveError(error, doc, next) {
   }
 }
 
-function handleValidationError(errors) {
-  return new BadRequestError('Validation error', Object.keys(errors).map((e) => {
-    return {
-      name: e,
-      error: errors[e].message
-    };
-  }));
+function handleValidationError(error) {
+  let fields = [];
+  if (error.errors) {
+    fields = Object.keys(error.errors).map((e) => {
+      return {
+        name: e,
+        error: error.errors[e].message
+      };
+    })
+  }
+  return new BadRequestError(statuses.VALIDATION_ERROR, fields);
 }
 
 function handleMongoError(error) {
   switch (error.code) {
     case 11000:
     case 11001:
-      return new BadRequestError('Duplication error', [{
+      return new BadRequestError(statuses.DUPLICATE_ERROR, [{
         name: 'email',
-        error: `Value "${error.getOperation().email}" already exists`
+        error: `Value already exists`
       }]);
+    case 66:
+      return new BadRequestError(statuses.IMMUTABLE_ERROR, [{
+        name: '_id',
+        error: error.message
+      }])
     default:
-      console.log(error)
-      return new InternalServerError(error.message);
+      return new InternalServerError();
   }
 }
 
 function handleCastError(error) {
   switch (error.kind) {
     case 'ObjectId':
-      return new (error);
+      return new BadRequestError(statuses.VALIDATION_ERROR, {
+        name: error.path,
+        error: `Cast to _id failed for value ${error.value}`
+      });
     case 'string':
-      let message = `Cast to string failed for field '${error.path}' with value: `;
-      try {
-        message += JSON.stringify(error.value);
-      } catch (e) {
-        message += '<ERROR_WHEN_PARSING_VALUE>';
-      }
-      return new BadRequestError(error.path, error.value);
+      return new BadRequestError(statuses.VALIDATION_ERROR, {
+        name: error.name,
+        error: `Cast to String failed for field '${error.path}'`
+      });
     default:
-      return new InternalServerError(error.message);
+      return new InternalServerError();
   }
 }

@@ -1,6 +1,7 @@
-const {reduce, isEqual} = require('lodash')
-const {toJson} = require('./json')
-const {BadRequestError, InternalServerError} = require('../../http/errors')
+const { reduce, isEqual } = require('lodash')
+const { toJson } = require('./json')
+const { BadRequestError, NotFoundError } = require('../../http/errors')
+const statuses = require('../statuses')
 
 class ModelService {
   constructor(model) {
@@ -22,18 +23,22 @@ class ModelService {
         if (result) {
           return toJson((result))
         } else {
-          throw new BadRequestError('Not Found')
+          throw new NotFoundError()
         }
       })
   }
 
   create(data) {
-    return this.model.create(data)
-      .then(toJson)
+    return new this.model(data)
+      .validate() // Validate before create to avoid double hook error handling
+      .then(() => {
+        return this.model.create(data)
+          .then(toJson)
+      })
   }
 
   replace(id, data) {
-    const options = {new: true, overwrite: true}
+    const options = { new: true, overwrite: true }
 
     return new this.model(data)
       .validate()
@@ -54,7 +59,7 @@ class ModelService {
               }
             })
         } else {
-          throw new BadRequestError('Not Found')
+          throw new NotFoundError()
         }
       })
   }
@@ -71,8 +76,16 @@ class ModelService {
   }
 
   removeById(id) {
-    return this.model.findByIdAndRemove(id)
-      .then(toJson)
+    return this.model.findById(id)
+      .lean()
+      .exec()
+      .then((result) => {
+        if (result) {
+          return new this.model(result).remove()
+        } else {
+          throw new NotFoundError()
+        }
+      })
   }
 }
 
