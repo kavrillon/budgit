@@ -61,26 +61,26 @@ DEL: /
 
 ### Next
 - FO: Axios global conf
-- DB: schema Account/Transaction
-- DB: how to manage refs (full copy vs reference)
 
 ### Ideas
-- BO: states: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
-- DB: LocalStorage
-- FO: SEO
 - CHORE: Travis
-- CHORE: Tests U
-- CHORE: Tests E&E
-- FO: 404 page
-- FO: 500 page
-- BO: User auth : find standard solution / mongo schema / security 
-- FO: account management 
+- CHORE: Tests U & I
+- CHORE: Tests E&E: snapshots
+- CHORE: live reload sur API
+- DB: LocalStorage
+- DB: how to manage refs (full copy vs reference)
+- DB: schema Account/Transaction
 - API: auth
 - API: pagination
-- BO: logger
 - API: search method
-- CHORE: live reload sur API
-- DB: replace: return new resource instead of nbModiifed
+- API: manage endpoints with deep objects
+- BO: states: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
+- BO: User auth : find standard solution / mongo schema / security 
+- BO: logger
+- FO: SEO
+- FO: 404 page
+- FO: 500 page
+- FO: account management 
 
 ### Done
 - Layout & app skeleton
@@ -92,3 +92,4 @@ DEL: /
 - BO: Archi Server (Mongo/Mongoose/API): https://hackernoon.com/lets-build-a-web-app-with-vue-chart-js-and-an-api-544eb81c4b44
 - BO: Seeds
 - BO: API/Server separation
+- API: replace/update : return old/new/diff object

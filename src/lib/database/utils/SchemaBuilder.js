@@ -9,8 +9,8 @@ class SchemaBuilder {
       minimize: false,
       strict: true,
       timestamps: {
-        createdAt: 'createdAt',
-        updatedAt: 'updatedAt'
+        createdAt: '_createdAt',
+        updatedAt: '_updatedAt'
       },
       versionKey: '_v',
     }, options)
@@ -28,6 +28,7 @@ class SchemaBuilder {
     this.schema.post('update', handleSaveError)
     this.schema.post('findOneAndUpdate', handleSaveError)
     this.schema.post('insertMany', handleSaveError)
+    this.schema.post('replaceOne', handleSaveError)
   }
 }
 

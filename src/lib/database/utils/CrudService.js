@@ -1,5 +1,6 @@
-const { toJson } = require('./json')
-const { BadRequestError, InternalServerError } = require('../../http/errors')
+const {reduce, isEqual} = require('lodash')
+const {toJson} = require('./json')
+const {BadRequestError, InternalServerError} = require('../../http/errors')
 
 class ModelService {
   constructor(model) {
@@ -7,13 +8,23 @@ class ModelService {
   }
 
   find(query) {
-    const q = this.model.find(query)
-    return execQuery(q)
+    return this.model.find(query)
+      .lean()
+      .exec()
+      .then(toJson)
   }
 
   findOneById(id) {
-    const q = this.model.findById(id)
-    return execQuery(q)
+    return this.model.findById(id)
+      .lean()
+      .exec()
+      .then((result) => {
+        if (result) {
+          return toJson((result))
+        } else {
+          throw new BadRequestError('Not Found')
+        }
+      })
   }
 
   create(data) {
@@ -22,19 +33,29 @@ class ModelService {
   }
 
   replace(id, data) {
-    const newObject = new this.model(data)
-    return newObject.validate()
+    const options = {new: true, overwrite: true}
+
+    return new this.model(data)
+      .validate()
       .then(() => {
-        return this.model.replaceOne({'_id': id}, data)
-          .then((res) => {
-            if (res.n === 0) {
-              throw new BadRequestError('Not Found', [{
-                name: 'ID',
-                error: `Resource ${id} does not exists`
-              }])
-            }
-            return this.findOneById(id)
-          })
+        return this.findOneById(id)
+      })
+      .then((oldDoc) => {
+        if (oldDoc) {
+          data = mergeInternalFields(oldDoc, data)
+          data._updatedAt = new Date().toISOString()
+
+          return this.model.findByIdAndUpdate(id, data, options)
+            .then((newDoc) => {
+              return {
+                'old': toJson(oldDoc),
+                'new': toJson(newDoc),
+                'diff': getDiff(oldDoc, newDoc)
+              }
+            })
+        } else {
+          throw new BadRequestError('Not Found')
+        }
       })
   }
 
@@ -55,11 +76,23 @@ class ModelService {
   }
 }
 
-function execQuery(q) {
-  return q
-    .lean()
-    .exec()
-    .then(toJson)
+module.exports = ModelService
+
+function mergeInternalFields(object, data) {
+  Object.keys(object).forEach((key) => {
+    if (object.hasOwnProperty(key) && key[0] === '_') {
+      data[key] = object[key];
+    }
+  })
+  return data
 }
 
-module.exports = ModelService
+function getDiff(oldDoc, newDoc) {
+  const o = toJson(oldDoc)
+  const n = toJson(newDoc)
+
+  return reduce(o, (result, value, key) => {
+    return isEqual(value, n[key]) ?
+      result : result.concat(key)
+  }, [])
+}
