@@ -34,7 +34,7 @@
     methods: {
       fetchItems()
       {
-        const uri = 'http://localhost:8080/api/users'
+        const uri = 'http://localhost:4000/users'
 
         this.axios.get(uri).then((response) => {
           this.users = response.data

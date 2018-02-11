@@ -30,8 +30,9 @@ export function createRouter () {
         route('/app', 'App/Dashboard'),
         route('/app/accounts', 'App/Accounts'),
         route('/tests', 'Tests'),
+        route('/not-found', '404'),
         // Global redirect for 404
-        { path: '*', redirect: '/' }
+        { path: '*', redirect: '/not-found' }
       ]
     })
 

@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"budgit.users"}],"uuid":"ab9d63d9112345d39a4421c616e4c3bf"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"budgit.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"budgit.users","background":true}],"uuid":"9175c7651657498b91746b896e13ec2f"}

@@ -1,4 +1,7 @@
+const { reduce, isEqual } = require('lodash')
 const { toJson } = require('./json')
+const { BadRequestError, NotFoundError } = require('../../http/errors')
+const statuses = require('../statuses')
 
 class ModelService {
   constructor(model) {
@@ -6,28 +9,55 @@ class ModelService {
   }
 
   find(query) {
-    const q = this.model.find(query)
-    return execQuery(q)
+    return this.model.find(query)
+      .lean()
+      .exec()
+      .then(toJson)
   }
 
   findOneById(id) {
-    const q = this.model.findById(id)
-    return execQuery(q)
+    return this.model.findById(id)
+      .lean()
+      .exec()
+      .then((result) => {
+        if (result) {
+          return toJson((result))
+        } else {
+          throw new NotFoundError()
+        }
+      })
   }
 
   create(data) {
-    return this.model.create(data)
-      .then(toJson)
-      .catch(Promise.reject)
+    return new this.model(data)
+      .validate() // Validate before create to avoid double hook error handling
+      .then(() => {
+        return this.model.create(data)
+          .then(toJson)
+      })
   }
 
   replace(id, data) {
-    const newObject = new this.model(data)
-    return newObject.validate()
+    const options = { new: true, overwrite: true }
+
+    return new this.model(data)
+      .validate()
       .then(() => {
-        return this.update(id, data)
+        return this.findOneById(id)
       })
-      .catch(Promise.reject)
+      .then((oldDoc) => {
+        data = _mergeInternalFields(oldDoc, data)
+        data._updatedAt = new Date().toISOString()
+
+        return this.model.findByIdAndUpdate(id, data, options)
+          .then((newDoc) => {
+            return {
+              'old': toJson(oldDoc),
+              'new': toJson(newDoc),
+              'diff': _getDiff(oldDoc, newDoc)
+            }
+          })
+      })
   }
 
   update(id, data) {
@@ -37,23 +67,50 @@ class ModelService {
       runValidators: true
     }
 
-    return this.model.findByIdAndUpdate(id, data, options)
-      .then(toJson)
-      .catch(Promise.reject)
+    return this.findOneById(id)
+      .then((oldDoc) => {
+        return this.model.findByIdAndUpdate(id, data, options)
+          .then((newDoc) => {
+            return {
+              'old': toJson(oldDoc),
+              'new': toJson(newDoc),
+              'diff': _getDiff(oldDoc, newDoc)
+            }
+          })
+      })
   }
 
   removeById(id) {
-    return this.model.findByIdAndRemove(id)
-      .then(toJson)
+    return this.model.findById(id)
+      .lean()
+      .exec()
+      .then((result) => {
+        if (result) {
+          return new this.model(result).remove()
+        } else {
+          throw new NotFoundError()
+        }
+      })
   }
 }
 
-function execQuery(q) {
-  return q
-    .lean()
-    .exec()
-    .then(toJson)
-    .catch(Promise.reject)
+module.exports = ModelService
+
+function _mergeInternalFields(object, data) {
+  Object.keys(object).forEach((key) => {
+    if (object.hasOwnProperty(key) && key[0] === '_') {
+      data[key] = object[key];
+    }
+  })
+  return data
 }
 
-module.exports = ModelService
+function _getDiff(oldDoc, newDoc) {
+  const o = toJson(oldDoc)
+  const n = toJson(newDoc)
+
+  return reduce(o, (result, value, key) => {
+    return isEqual(value, n[key]) ?
+      result : result.concat(key)
+  }, [])
+}
