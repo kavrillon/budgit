@@ -12,7 +12,6 @@ router.use('/users', require('./users/routes'))
 // Handler for internal HTTP errors
 router.use((error, req, res, next) => {
   if (error instanceof BadRequestError
-    || error instanceof InternalServerError
     || error instanceof NotFoundError) {
     res.status(error.status).json(error).end()
   } else {
@@ -20,14 +19,25 @@ router.use((error, req, res, next) => {
   }
 })
 
+// Dedicated handler for InternalServerError
+router.use((error, req, res, next) => {
+  if (error instanceof InternalServerError) {
+    if (env.isProd) {
+      res.status(error.status).json({"status": error.status}).end()
+    } else {
+      res.status(error.status).json(error).end()
+    }
+  } else {
+    next(error)
+  }
+})
+
 // Handler for not managed errors
 router.use((error, req, res, next) => {
-  console.log(error)
   if (env.isProd) {
-    res.status(500).json({"status": 500}).end()
-  }
-  else {
-    res.status(500).json().end()
+    res.status(error.status).json({"status": error.status}).end()
+  } else {
+    res.status(error.status).json(error).end()
   }
 })
 

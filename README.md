@@ -1,58 +1,27 @@
-# Vuetify Webpack SSR Template
-
-> Vuetify SSR Webpack Template
-
-## Build Setup
-
-``` bash
-vue init vuetifyjs/webpack-ssr
-
-cd webpack-ssr
-
-# npm
-npm install
-
-# yarn
-yarn
-```
-
-For additional information, please visit the [Official Documentation](https://vuetifyjs.com).
+# Budg'It
 
 ## Resources
 
 - [Vuetifyjs](https://vuetifyjs.com)
 
+## Doc
 
+### API
+
+#### HTTP errors
+- 200 - OK: Return the result of the operation
+- 400 - Bad Request (Client Error) - Return a json with error
+  - status: 400
+  - type: CastError|DuplicateError|ImmutableError|ValidationError
+  - fields: list of fields having problems (name + error)
+- 404 - Not Found
+- 500 - Internal Server Error
+  - status: 500
+  
 ## TODO
 
 ### Doing
-- API: Handle API errors
-  https://github.com/jmtvms/mongoose-express-error-handler/blob/master/index.js
-  http://thecodebarbarian.com/mongoose-error-handling
-  List of managed status code: 
-  http://blog.restcase.com/rest-api-error-codes-101/
-  http://thecodebarbarian.com/80-20-guide-to-express-error-handling
-  https://github.com/mongodb/mongo/blob/master/src/mongo/base/error_codes.err
-  HTTP_ERRORS :
-    200 - OK
-      - status: 'OK'
-    400 - Bad Request (Client Error) - A json with error \ more details should return to the client.
-      - status: 'ERROR'
-      - type
-      - message
-      - technical 
-    500 - Internal Server Error - A json with an error should return to the client only when there is no security risk by doing that.
-      - status: 'ERROR'
-      - message: '...'
-  DB_ERRORS
-    Faire un mapping DB_ERRORS <-> HTTP_ERRORS
-    Définir la liste des DB_ERRORS
-    Dans le CORSServices: interception des erreurs DB, levée d'erreurs HTTP
-    Pas besoin d'un type d'erreur interne => trop de complexité
-    Les erreurs HTTP possède l'objet et le status à afficher => plus besoin de multiples handlers
-    Par contre prévoir un handler par défaut avec 500 et pas trop d'infos pour les cas non gérés
 - API: Auto doc: http://apidocjs.com/
-- API: PATCH return diff object
 
 ### Next
 - FO: Axios global conf
@@ -65,6 +34,7 @@ For additional information, please visit the [Official Documentation](https://vu
 - DB: LocalStorage
 - DB: how to manage refs (full copy vs reference)
 - DB: schema Account/Transaction
+- API: manage not modified on PUT/PATCH
 - API: auth
 - API: pagination
 - API: search method
@@ -88,3 +58,11 @@ For additional information, please visit the [Official Documentation](https://vu
 - BO: Seeds
 - BO: API/Server separation
 - API: replace/update : return old/new/diff object
+- API: PATCH return diff object
+- API: Handle API errors
+  https://github.com/jmtvms/mongoose-express-error-handler/blob/master/index.js
+  http://thecodebarbarian.com/mongoose-error-handling
+  List of managed status code: 
+  http://blog.restcase.com/rest-api-error-codes-101/
+  http://thecodebarbarian.com/80-20-guide-to-express-error-handling
+  https://github.com/mongodb/mongo/blob/master/src/mongo/base/error_codes.err

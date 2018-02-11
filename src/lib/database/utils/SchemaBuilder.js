@@ -81,7 +81,7 @@ function handleMongoError(error) {
         error: error.message
       }])
     default:
-      return new InternalServerError();
+      return new InternalServerError(error);
   }
 }
 
@@ -98,6 +98,6 @@ function handleCastError(error) {
         error: `Cast to String failed for field '${error.path}'`
       });
     default:
-      return new InternalServerError();
+      return new InternalServerError(error);
   }
 }
