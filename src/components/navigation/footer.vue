@@ -23,3 +23,9 @@
     </v-layout>
   </v-footer>
 </template>
+
+<script>
+  export default {
+    name: 'bi-footer'
+  }
+</script>

@@ -42,7 +42,8 @@
         <v-btn exact
                flat
                :to="item.to">
-          <v-icon left>{{ item.icon }}</v-icon>{{ item.title }}
+          <v-icon left>{{ item.icon }}</v-icon>
+          {{ item.title }}
         </v-btn>
       </v-toolbar-items>
 
@@ -56,22 +57,31 @@
 
 <script>
   export default {
-    name: 'NavigationTopbar',
-    data () {
-      return {
+    name: 'bi-navigation-topbar',
+    props: ['user'],
+    data() {
+      let data = {
         drawer: false,
         menuApp: [
-          { icon: 'show_chart', title: 'Dashboard', to: '/app' },
-          { icon: 'storage', title: 'My Accounts', to: '/app/accounts' },
+          {icon: 'show_chart', title: 'Dashboard', to: '/app'},
         ],
         menuHome: [
-          { icon: 'person', title: 'Login', to: '/login' }
+          {icon: 'person', title: 'Login', to: '/login'}
         ],
         title: 'Budg\'It'
       }
+      if (this.user) data.menuApp.push({icon: 'person', title: this.username, to: '/app/accounts'})
+      return data
     },
     computed: {
-      links () {
+      username() {
+        if (this.user) {
+          return `${this.user.firstname} ${this.user.lastname}`
+        } else {
+          return ''
+        }
+      },
+      links() {
         switch (this.$route.path) {
           case '/':
             return this.menuHome
@@ -82,7 +92,7 @@
             return this.menuApp
         }
       },
-      isHiddenOnMobile () {
+      isHiddenOnMobile() {
         switch (this.$route.path) {
           case '/':
             return false

@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
-import App from './App.vue'
-import Components from 'components'
-
-import { createStore } from 'store'
-import { createRouter } from '../router'
 import { sync } from 'vuex-router-sync'
+
+import App from './App.vue'
+import Components from '../components'
+import { createStore } from 'store'
+import { createRouter } from 'router'
 
 Vue.use(Vuetify, {
   theme: {
@@ -20,8 +20,9 @@ Vue.use(Vuetify, {
   }
 })
 
+// All components declaration
 Object.keys(Components).forEach(key => {
-  Vue.component(key, Components[key])
+  Vue.component(`${Components[key].name}`, Components[key])
 })
 
 // Expose a factory function that creates a fresh set of store, router,

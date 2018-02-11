@@ -9,9 +9,6 @@
               <li v-for="u in users" v-text="u.firstname"></li>
             </ul>
           </div>
-          <div class="text-xs-center mb-5">
-            <div>User {{ userId }} email: {{ userEmail }}</div>
-          </div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -23,8 +20,7 @@
     data () {
       return {
         users: [],
-        userId: '5a6f93264e7161d1c1e9748a',
-        userEmail: ''
+        userId: '5a6f93264e7161d1c1e9748a'
       }
     },
     created: function()
@@ -38,10 +34,6 @@
 
         this.axios.get(uri).then((response) => {
           this.users = response.data
-        })
-
-        this.axios.get(`${uri}/5a6f93264e7161d1c1e9748a`).then((response) => {
-          this.userEmail = response.data.email
         })
       }
     }

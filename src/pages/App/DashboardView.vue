@@ -1,21 +1,31 @@
 <template>
   <v-content>
+
     <v-container>
       <v-layout>
       <v-flex xs12 sm6>
-        <ChartBar :data="datasets"
+        <bi-chart-bar :data="datasets"
                   :options="chartOptions"
                   class="chart-bar">
-        </ChartBar>
+        </bi-chart-bar>
+      </v-flex>
+      <v-flex xs12 sm6>
       </v-flex>
       </v-layout>
     </v-container>
+
   </v-content>
 </template>
 
 <script>
   export default {
+    asyncData ({ store, route }) {
+      return store.dispatch('fetchUser', '5a7eaf51b9bb8f0deeb548a3')
+    },
     computed: {
+      user () {
+        return this.$store.state.user
+      },
       datasets: function () {
         return {
           labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'September', 'October', 'November', 'December'],
@@ -61,6 +71,10 @@
           }
         }
       }
+    },
+    created: function() {
+    },
+    methods: {
     }
   }
 </script>

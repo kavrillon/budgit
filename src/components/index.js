@@ -1,6 +1,6 @@
-import ChartBar from './Chart/ChartBar'
-import Footer from './Navigation/Footer'
-import NavigationTopbar from './Navigation/NavigationTopbar'
+import ChartBar from './chart/chart-bar'
+import Footer from './navigation/footer'
+import NavigationTopbar from './navigation/navigation-topbar'
 
 export default {
   ChartBar,
