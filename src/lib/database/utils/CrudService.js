@@ -46,21 +46,17 @@ class ModelService {
         return this.findOneById(id)
       })
       .then((oldDoc) => {
-        if (oldDoc) {
-          data = mergeInternalFields(oldDoc, data)
-          data._updatedAt = new Date().toISOString()
+        data = _mergeInternalFields(oldDoc, data)
+        data._updatedAt = new Date().toISOString()
 
-          return this.model.findByIdAndUpdate(id, data, options)
-            .then((newDoc) => {
-              return {
-                'old': toJson(oldDoc),
-                'new': toJson(newDoc),
-                'diff': getDiff(oldDoc, newDoc)
-              }
-            })
-        } else {
-          throw new NotFoundError()
-        }
+        return this.model.findByIdAndUpdate(id, data, options)
+          .then((newDoc) => {
+            return {
+              'old': toJson(oldDoc),
+              'new': toJson(newDoc),
+              'diff': _getDiff(oldDoc, newDoc)
+            }
+          })
       })
   }
 
@@ -71,8 +67,17 @@ class ModelService {
       runValidators: true
     }
 
-    return this.model.findByIdAndUpdate(id, data, options)
-      .then(toJson)
+    return this.findOneById(id)
+      .then((oldDoc) => {
+        return this.model.findByIdAndUpdate(id, data, options)
+          .then((newDoc) => {
+            return {
+              'old': toJson(oldDoc),
+              'new': toJson(newDoc),
+              'diff': _getDiff(oldDoc, newDoc)
+            }
+          })
+      })
   }
 
   removeById(id) {
@@ -91,7 +96,7 @@ class ModelService {
 
 module.exports = ModelService
 
-function mergeInternalFields(object, data) {
+function _mergeInternalFields(object, data) {
   Object.keys(object).forEach((key) => {
     if (object.hasOwnProperty(key) && key[0] === '_') {
       data[key] = object[key];
@@ -100,7 +105,7 @@ function mergeInternalFields(object, data) {
   return data
 }
 
-function getDiff(oldDoc, newDoc) {
+function _getDiff(oldDoc, newDoc) {
   const o = toJson(oldDoc)
   const n = toJson(newDoc)
 
