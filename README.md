@@ -31,12 +31,14 @@
 - CHORE: Tests U & I
 - CHORE: Tests E&E: snapshots
 - CHORE: live reload sur API
+- CHORE: github conf (project/travis/coverage)
 - DB: LocalStorage
 - DB: how to manage refs (full copy vs reference)
 - DB: schema Account/Transaction
 - API: manage not modified on PUT/PATCH
 - API: auth
 - API: pagination
+- API: stack trace when not on prod
 - API: search method
 - API: manage endpoints with deep objects
 - BO: states: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
@@ -46,8 +48,9 @@
 - FO: 404 page
 - FO: 500 page
 - FO: account management 
+- FO: dashboard
 
-### Done
+### Done & refs
 - Layout & app skeleton
 - ChartJS
 - SASS: https://medium.com/@mahesh.ks/using-sass-scss-in-vue-js-2-d472af0facf9

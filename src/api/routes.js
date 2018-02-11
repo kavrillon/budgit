@@ -13,38 +13,36 @@ router.use('/users', require('./users/routes'))
 router.use((error, req, res, next) => {
   if (error instanceof BadRequestError
     || error instanceof NotFoundError) {
-    res.status(error.status).json(error).end()
-  } else {
-    next(error)
+    return res.status(error.status).json(error).end()
   }
+  next(error)
 })
 
 // Dedicated handler for InternalServerError
 router.use((error, req, res, next) => {
   if (error instanceof InternalServerError) {
     if (env.isProd) {
-      res.status(error.status).json({"status": error.status}).end()
+      return res.status(error.status).json({"status": error.status}).end()
     } else {
-      res.status(error.status).json(error).end()
+      return res.status(error.status).json(error).end()
     }
-  } else {
-    next(error)
   }
+  next(error)
 })
 
 // Handler for not managed errors
 router.use((error, req, res, next) => {
   if (env.isProd) {
-    res.status(error.status).json({"status": error.status}).end()
+    return res.status(error.status).json({"status": error.status}).end()
   } else {
-    res.status(error.status).json(error).end()
+    return res.status(error.status).json(error).end()
   }
 })
 
 // All other routes (not defined by the app) => NotFoundError
 router.get('*', (req, res, next) => {
   const err = new NotFoundError()
-  res.status(err.status).json(err).end()
+  return res.status(err.status).json(err).end()
 });
 
 module.exports = router

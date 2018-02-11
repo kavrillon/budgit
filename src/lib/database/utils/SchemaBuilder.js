@@ -25,36 +25,36 @@ class SchemaBuilder {
   }
 
   applyHooks() {
-    this.schema.post('find', handleErrors)
-    this.schema.post('findOne', handleErrors)
-    this.schema.post('findById', handleErrors)
-    this.schema.post('save', handleErrors)
-    this.schema.post('update', handleErrors)
-    this.schema.post('findOneAndUpdate', handleErrors)
-    this.schema.post('insertMany', handleErrors)
-    this.schema.post('replaceOne', handleErrors)
-    this.schema.post('validate', handleErrors)
-    this.schema.post('remove', handleErrors)
+    this.schema.post('find', _handleErrors)
+    this.schema.post('findOne', _handleErrors)
+    this.schema.post('findById', _handleErrors)
+    this.schema.post('save', _handleErrors)
+    this.schema.post('update', _handleErrors)
+    this.schema.post('findOneAndUpdate', _handleErrors)
+    this.schema.post('insertMany', _handleErrors)
+    this.schema.post('replaceOne', _handleErrors)
+    this.schema.post('validate', _handleErrors)
+    this.schema.post('remove', _handleErrors)
   }
 }
 
 module.exports = SchemaBuilder
 
-function handleErrors(error, doc, next) {
+function _handleErrors(error, doc, next) {
   switch (error.name) {
     case 'ValidationError':
-      throw handleValidationError(error);
+      throw _handleValidationError(error);
     case 'MongoError':
     case 'BulkWriteError':
-      throw handleMongoError(error);
+      throw _handleMongoError(error);
     case 'CastError':
-      throw handleCastError(error);
+      throw _handleCastError(error);
     default:
       throw error;
   }
 }
 
-function handleValidationError(error) {
+function _handleValidationError(error) {
   let fields = [];
   if (error.errors) {
     fields = Object.keys(error.errors).map((e) => {
@@ -67,7 +67,7 @@ function handleValidationError(error) {
   return new BadRequestError(statuses.VALIDATION_ERROR, fields);
 }
 
-function handleMongoError(error) {
+function _handleMongoError(error) {
   switch (error.code) {
     case 11000:
     case 11001:
@@ -85,7 +85,7 @@ function handleMongoError(error) {
   }
 }
 
-function handleCastError(error) {
+function _handleCastError(error) {
   switch (error.kind) {
     case 'ObjectId':
       return new BadRequestError(statuses.VALIDATION_ERROR, {
