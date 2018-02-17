@@ -1,0 +1,122 @@
+@import '../../assets/variables';
+
+$dh-red: #ff6383;
+$dh-green: #4ac2c0;
+$padding-small: 30px;
+$padding-large: 30px;
+
+// Layout
+html,
+body,
+.application,
+.application--wrap,
+.content,
+.content--wrap {
+  display: flex;
+  min-height: auto;
+  height: 100%;
+  width: 100%;
+  flex: 1 0 auto;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1 1 auto;
+
+  &--wrap {
+    display: block;
+    overflow-y: scroll;
+    flex-direction: column;
+  }
+}
+
+.menu__content {
+  max-height: 200px;
+}
+
+// Page
+.dashboard {
+  &__current {
+    &__accounts {
+      flex-direction: column;
+
+      &__content {
+        display: flex;
+        flex-direction: column;
+
+        @media(min-width: $xs) {
+          margin: $padding-small 0 $padding-small $padding-small;
+        }
+
+        @media(min-width: $sm) {
+          margin: $padding-large 0 $padding-large $padding-large;
+        }
+      }
+    }
+
+    &__month {
+      margin: 30px;
+
+      @media(min-width: $sm) {
+        margin: $padding-large;
+      }
+
+      &__title {
+        &__diff {
+          color: $dh-green;
+
+          &--negative {
+            color: $dh-red;
+          }
+        }
+      }
+
+      &__earnings,
+      &__expenses {
+        &__chart {
+          height: 80px;
+        }
+
+        &__percent {
+          margin-top: -33px;
+          color: $dh-green;
+        }
+      }
+
+      &__expenses {
+        transform: scale(1, -1);
+
+        @media(min-width: $sm) {
+          transform: none;
+        }
+
+        &__percent {
+          color: $dh-red;
+        }
+
+        &__total,
+        &__percent {
+          transform: scaleY(-1);
+
+          @media(min-width: $sm) {
+            transform: none;
+          }
+        }
+      }
+    }
+  }
+
+  &__history {
+    background: $bg-blue;
+    padding: $padding-small;
+    color: white;
+
+    @media (min-width: $sm) {
+      padding: $padding-large;
+    }
+
+    &__chart {
+      height: 200px;
+    }
+  }
+}

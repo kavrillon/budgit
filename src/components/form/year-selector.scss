@@ -1,0 +1,26 @@
+@import '../../assets/variables';
+
+$form-year-selector-button: $blue-hover;
+
+@mixin form-year-selector-button {
+  &__button {
+    margin: 3px 5px;
+    min-width: 0;
+
+    &--active {
+      background: $form-year-selector-button !important;
+    }
+
+    .btn__content {
+      padding: 0 10px;
+    }
+  }
+}
+
+.form-year-selector {
+  @include form-year-selector-button;
+
+  &__menu {
+    @include form-year-selector-button;
+  }
+}

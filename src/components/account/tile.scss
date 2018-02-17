@@ -1,0 +1,20 @@
+@import '../../assets/variables';
+
+.account-tile {
+  overflow: hidden;
+
+  &__amount {
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 40px;
+
+    @media(min-width: $xs) {
+      font-size: 36px;
+    }
+  }
+
+  &__chart {
+    height: 40px;
+    width: 100%;
+  }
+}

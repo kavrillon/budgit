@@ -21,14 +21,18 @@
 ## TODO
 
 ### Doing
+- FO: dashboard
+  http://flatlogic.github.io/angular-material-dashboard/#/profile
+  http://fuse-angular-material.withinpixels.com/apps/dashboards/analytics
+  http://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
+
+### Next
 - FO: Axios global conf + get user + error handling
   https://ssr.vuejs.org/en/data.html
   Try to put route compo at top level / pass asyncdata to components
   https://forum.vuejs.org/t/ssr-how-to-make-a-component-to-get-async-data-and-to-render-server-side/12641
   https://nuxtjs.org/faq/async-data-components/
 - BO: states: https://github.com/vuejs/vuex/blob/dev/examples/counter-hot/Counter.vue
-
-### Next
 
 ### Ideas
 - CHORE: Travis
@@ -60,7 +64,6 @@
 - FO: 404 page
 - FO: 500 page
 - FO: account management 
-- FO: dashboard
 - FO: critical CSS
 
 ### Done & refs

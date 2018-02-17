@@ -1,35 +1,31 @@
 <template>
-  <v-content>
-    <v-container>
-      <v-layout column justify-center align-center>
-        <v-flex xs12 sm8>
-          <div class="text-xs-center mb-5">
-            <div>List des users:</div>
-            <ul>
-              <li v-for="u in users" v-text="u.firstname"></li>
-            </ul>
-          </div>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-content>
+  <v-container>
+    <v-layout column justify-center align-center>
+      <v-flex xs12 sm8>
+        <div class="text-xs-center mb-5">
+          <div>List des users:</div>
+          <ul>
+            <li v-for="u in users" v-text="u.firstname"></li>
+          </ul>
+        </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
   export default {
-    data () {
+    data() {
       return {
         users: [],
         userId: '5a6f93264e7161d1c1e9748a'
       }
     },
-    created: function()
-    {
+    created: function () {
       this.fetchItems()
     },
     methods: {
-      fetchItems()
-      {
+      fetchItems() {
         const uri = 'http://localhost:4000/users'
 
         this.axios.get(uri).then((response) => {

@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-navigation-drawer temporary
+                         clipped
                          right
                          v-if="isHiddenOnMobile && links.length > 0"
                          v-model="drawer"
@@ -19,7 +20,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar app dark class="elevation-0">
+    <v-toolbar dark flat>
       <v-toolbar-items class="ml-0">
         <v-btn flat
                data-ripple="false"
@@ -57,14 +58,12 @@
 
 <script>
   export default {
-    name: 'bi-navigation-topbar',
+    name: 'BiNavigationTopbar',
     props: ['user'],
     data() {
       let data = {
         drawer: false,
-        menuApp: [
-          {icon: 'show_chart', title: 'Dashboard', to: '/app'},
-        ],
+        menuApp: [],
         menuHome: [
           {icon: 'person', title: 'Login', to: '/login'}
         ],
@@ -104,3 +103,11 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  @import "../../assets/variables";
+
+  .theme--dark .toolbar, .application .theme--dark.toolbar {
+    background: $dark-1;
+  }
+</style>

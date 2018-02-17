@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <div>
     <section>
       <v-parallax src="static/hero.jpeg" height="600">
         <v-layout
@@ -166,5 +166,7 @@
         </v-layout>
       </v-container>
     </section>
-  </v-content>
+
+    <bi-footer app></bi-footer>
+  </div>
 </template>

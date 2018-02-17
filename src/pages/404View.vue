@@ -1,5 +1,3 @@
 <template>
-  <v-content>
-
-  </v-content>
+  <div>404</div>
 </template>

@@ -1,24 +1,31 @@
 <template>
   <v-app>
-    <bi-navigation-topbar></bi-navigation-topbar>
+    <BiNavigationTopbar></BiNavigationTopbar>
 
     <v-slide-y-transition mode="out-in">
       <router-view></router-view>
     </v-slide-y-transition>
 
-    <bi-footer></bi-footer>
   </v-app>
 </template>
 
 <script>
   import Meta from 'assets/meta'
+  import BiNavigationTopbar from '../components/navigation/topbar'
 
   export default {
     mixins: [Meta],
-    data () {
+    components: {
+      BiNavigationTopbar
+    },
+    data() {
       return {
         title: 'Budg\'It'
       }
     }
   }
 </script>
+
+<style lang="scss">
+  @import '../assets/app.scss';
+</style>
