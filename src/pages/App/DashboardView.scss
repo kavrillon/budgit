@@ -55,20 +55,40 @@ body,
     }
 
     &__month {
-      margin: 30px;
+      margin: 15px;
 
       @media(min-width: $sm) {
         margin: $padding-large;
       }
 
       &__title {
-        &__diff {
-          color: $dh-green;
+        line-height: 52px !important;
+      }
 
-          &--negative {
-            color: $dh-red;
+      &__diff {
+        color: $dh-green;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 40px;
+
+        @media(min-width: $xs) {
+          font-size: 36px;
+        }
+
+        &--down {
+          color: $dh-red;
+
+          .icon {
+            color: $dh-red !important;
           }
         }
+
+        &__icon {
+          font-size: 52px;
+          padding-right: 15px;
+          color: $dh-green !important;
+        }
+
       }
 
       &__earnings,
