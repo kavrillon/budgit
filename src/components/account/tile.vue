@@ -1,7 +1,7 @@
 <template>
   <v-card class="account-tile d-flex">
     <v-container>
-      <div class="account-tile__title text-xs-center text-sm-right subheading">
+      <div class="account-tile__title text-xs-center text-sm-right">
         {{ name }}
       </div>
       <v-layout row wrap align-center reverse>

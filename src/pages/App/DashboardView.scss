@@ -1,8 +1,6 @@
 @import '../../assets/variables';
 
-$dh-red: #ff6383;
-$dh-green: #4ac2c0;
-$padding-small: 30px;
+$padding-small: 15px;
 $padding-large: 30px;
 
 // Layout
@@ -55,7 +53,7 @@ body,
     }
 
     &__month {
-      margin: 15px;
+      margin: $padding-small;
 
       @media(min-width: $sm) {
         margin: $padding-large;
@@ -91,35 +89,18 @@ body,
 
       }
 
-      &__earnings,
-      &__expenses {
-        &__chart {
-          height: 80px;
-        }
-
-        &__percent {
-          margin-top: -33px;
-          color: $dh-green;
-        }
-      }
-
       &__expenses {
         transform: scale(1, -1);
 
         @media(min-width: $sm) {
-          transform: none;
+          transform: scale(1, 1);
         }
 
-        &__percent {
-          color: $dh-red;
-        }
-
-        &__total,
-        &__percent {
-          transform: scaleY(-1);
+        .chart-label-doughnut__infos {
+          transform: scale(1, -1);
 
           @media(min-width: $sm) {
-            transform: none;
+            transform: scale(1, 1);
           }
         }
       }

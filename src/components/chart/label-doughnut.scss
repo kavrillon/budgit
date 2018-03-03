@@ -1,0 +1,18 @@
+@import '../../assets/variables';
+@import '../../assets/mixins';
+
+.chart-label-doughnut {
+  overflow: hidden;
+
+  &__infos {
+    &__title {
+      margin-top: -52px;
+      font-size: 24px;
+      line-height: 36px;
+    }
+    &__subtitle {
+      @include subtitle;
+      line-height: $font-size-subtitle + 2;
+    }
+  }
+}

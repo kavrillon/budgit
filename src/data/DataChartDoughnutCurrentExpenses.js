@@ -6,21 +6,21 @@ export default {
     ],
     datasets: [
       {
-        data: [50, (150 - 50)],
+        data: [300, (400 - 300)],
         borderWidth: 1,
         backgroundColor: [
-          "#4bc1c0",
+          "#FF6384",
           "#dddddd"
         ],
         hoverBackgroundColor: [
-          "#4bc1c0",
+          "#FF6384",
           "#dddddd"
         ]
       }]
   },
   options: {
     showAllTooltips: true,
-    cutoutPercentage: 60,
+    cutoutPercentage: 85,
     title: {
       display: false,
     },

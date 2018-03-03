@@ -1,0 +1,20 @@
+@import 'variables';
+
+@mixin title() {
+  font-size: $font-size-title;
+}
+
+@mixin subtitle($variant:'') {
+  text-transform: uppercase;
+  font-size: $font-size-subtitle;
+
+  @if $variant == 'light' {
+    color: $white;
+
+  } @else if $variant == 'dark' {
+    color: $black;
+
+  } @else {
+    color: $text-light;
+  }
+}
