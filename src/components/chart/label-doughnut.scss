@@ -6,9 +6,9 @@
 
   &__infos {
     &__title {
+      @include highlight;
       margin-top: -52px;
-      font-size: 24px;
-      line-height: 36px;
+      line-height: 26px;
     }
     &__subtitle {
       @include subtitle;

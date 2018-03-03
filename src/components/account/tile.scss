@@ -9,8 +9,11 @@
   }
 
   &__amount {
-    @include title;
-    line-height: 40px;
+    @include highlight;
+
+    @media (min-width: $xs) {
+      line-height: 40px;
+    }
   }
 
   &__chart {

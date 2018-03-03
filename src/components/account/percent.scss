@@ -1,0 +1,25 @@
+@import '../../assets/variables';
+@import '../../assets/mixins';
+
+.account-percent {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+
+    &__infos {
+      &__title {
+        @include subtitle;
+      }
+
+      &__value {
+        @include highlight;
+      }
+    }
+  }
+}

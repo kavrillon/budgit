@@ -1,7 +1,5 @@
 @import '../../assets/variables';
-
-$padding-small: 15px;
-$padding-large: 30px;
+@import '../../assets/mixins';
 
 // Layout
 html,
@@ -35,73 +33,66 @@ body,
 // Page
 .dashboard {
   &__current {
-    &__accounts {
-      flex-direction: column;
+    padding: 0 0 $padding-large;
 
-      &__content {
-        display: flex;
+    @media (min-width: $xs) {
+      padding: 0 $padding-large $padding-large;
+    }
+
+    &__accounts {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      @media (min-width: $xs) {
         flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
+      &__title {
+        @include title;
+        display: none;
 
         @media(min-width: $xs) {
-          margin: $padding-small 0 $padding-small $padding-small;
+          display: block;
+          flex-basis: auto !important;
+          flex-grow: 0 !important;
+        }
+      }
+
+      &__month {
+        &__title {
+          @include subtitle;
         }
 
-        @media(min-width: $sm) {
-          margin: $padding-large 0 $padding-large $padding-large;
+        &__diff {
+          @include title;
         }
       }
     }
 
     &__month {
-      margin: $padding-small;
+      display: flex;
+      flex-direction: column;
+      padding: 0 $padding-small;
 
-      @media(min-width: $sm) {
-        margin: $padding-large;
+      @media (min-width: $xs) {
+        padding: 0 0 0 $padding-large;
       }
 
       &__title {
-        line-height: 52px !important;
+        @include title;
+
+        text-align: center;
+
+        @media (min-width: $xs) {
+          text-align: left;
+        }
       }
 
       &__diff {
-        color: $dh-green;
-        font-size: 26px;
-        font-weight: 400;
-        line-height: 40px;
-
-        @media(min-width: $xs) {
-          font-size: 36px;
-        }
-
-        &--down {
-          color: $dh-red;
-
-          .icon {
-            color: $dh-red !important;
-          }
-        }
-
         &__icon {
-          font-size: 52px;
-          padding-right: 15px;
-          color: $dh-green !important;
-        }
-
-      }
-
-      &__expenses {
-        transform: scale(1, -1);
-
-        @media(min-width: $sm) {
-          transform: scale(1, 1);
-        }
-
-        .chart-label-doughnut__infos {
-          transform: scale(1, -1);
-
-          @media(min-width: $sm) {
-            transform: scale(1, 1);
-          }
+          padding: 0 10px;
         }
       }
     }

@@ -15,7 +15,13 @@ $text-light: #999;
 
 $font-size-base: 14px;
 $font-size-subtitle: 14px;
-$font-size-title: 28px;
+$font-size-title-xs: 18px;
+$font-size-title: 22px;
+$font-size-highlight-xs: 22px;
+$font-size-highlight: 28px;
+
+$padding-small: 15px;
+$padding-large: 30px;
 
 // Media queries breakpoints
 $xs: 600px;

@@ -1,82 +1,82 @@
 <template>
   <v-content class="dashboard">
 
-    <BiNavigationRightBar :notifications="notifications"></BiNavigationRightBar>
+    <bi-navigation-right-bar :notifications="notifications"></bi-navigation-right-bar>
 
+    <!-- MODULE CURRENT -->
     <v-layout row wrap class="dashboard__current">
-      <v-flex xs12 sm5 md4 d-flex class="dashboard__current__accounts">
-        <div class="dashboard__current__accounts__content">
-          <v-layout row wrap>
-            <v-flex xs6 sm12 d-flex column>
 
-              <BiAccountTile name="Courant"
-                             class="dashboard__current__accounts__content__type"
-                             :amount="942"
-                             :chartData="dataChartLineCurrentAccount1.data"
-                             :chartOptions="dataChartLineCurrentAccount1.options"
-              ></BiAccountTile>
+      <v-flex xs12 sm4 class="dashboard__current__accounts">
+        <v-flex xs12 class="dashboard__current__accounts__title">
+          Accounts
+        </v-flex>
 
-            </v-flex>
-            <v-flex xs6 sm12 d-flex column>
+        <v-flex xs6 sm12 d-flex>
 
-              <BiAccountTile name="Epargne"
-                             class="dashboard__current__accounts__content__type"
-                             :amount="14942"
-                             :chartData="dataChartLineCurrentAccount2.data"
-                             :chartOptions="dataChartLineCurrentAccount2.options"
-              ></BiAccountTile>
+          <bi-account-tile name="Courant"
+                         class="dashboard__current__accounts__type"
+                         :amount="942"
+                         :chartData="dataChartLineCurrentAccount1.data"
+                         :chartOptions="dataChartLineCurrentAccount1.options"
+          ></bi-account-tile>
 
-            </v-flex>
-          </v-layout>
+        </v-flex>
+        <v-flex xs6 sm12 d-flex>
+
+          <bi-account-tile name="Epargne"
+                         class="dashboard__current__accounts__type"
+                         :amount="14942"
+                         :chartData="dataChartLineCurrentAccount2.data"
+                         :chartOptions="dataChartLineCurrentAccount2.options"
+          ></bi-account-tile>
+
+        </v-flex>
+      </v-flex>
+
+      <v-flex xs12 sm8 class="dashboard__current__month">
+        <div class="dashboard__current__month__title">
+              <span class="dashboard__current__month__title__label">
+                This month:
+              </span>
+          <span class="dashboard__current__month__diff"
+                :class="{'dashboard__current__month__diff--down' : monthDiff < 0}">
+                <v-icon class="dashboard__current__month__diff__icon" v-show="monthDiff > 0">
+                  trending_up
+                </v-icon>
+                <v-icon class="dashboard__current__month__diff__icon" v-show="monthDiff < 0">
+                  trending_down
+                </v-icon>
+                <span class="dashboard__current__month__diff__amount">{{ monthDiff }} €</span>
+              </span>
         </div>
+
+        <v-flex xs12 d-flex>
+          <v-flex xs6 d-flex class="dashboard__current__month__earnings">
+            <bi-account-percent :chartHeight="80"
+                                :value="currentMonthEarnings"
+                                :total="currentMonthTotalEarnings"
+                                chartColor="#4bc1c0"
+                                title="Earnings"
+                                class="dashboard__current__month__earnings__chart"
+            ></bi-account-percent>
+          </v-flex>
+          <v-flex xs6 d-flex class="dashboard__current__month__expenses">
+            <bi-account-percent :chartHeight="80"
+                                :value="currentMonthExpenses"
+                                :total="currentMonthTotalExpenses"
+                                chartColor="#ff6384"
+                                title="Expenses"
+                                class="dashboard__current__month__expenses__chart"
+            ></bi-account-percent>
+          </v-flex>
+        </v-flex>
       </v-flex>
-      <v-flex xs12 sm7 md8 d-flex>
-        <v-card class="dashboard__current__month d-flex column">
-          <v-container>
-            <v-layout row wrap>
-              <v-flex xs12 md6 class="text-xs-center">
-                <div class="headline dashboard__current__month__title">This month:</div>
-              </v-flex>
-              <v-flex xs12 md6 class="text-xs-center mb-4">
-                  <span class="dashboard__current__month__diff"
-                        :class="{'dashboard__current__month__diff--down' : monthDiff < 0}">
-                    <v-icon class="dashboard__current__month__diff__icon" v-show="monthDiff > 0">trending_up</v-icon>
-                    <v-icon class="dashboard__current__month__diff__icon" v-show="monthDiff < 0">trending_down</v-icon>
-                    <span class="dashboard__current__month__diff__amount">{{ monthDiff }} €</span>
-                  </span>
-              </v-flex>
-              <v-flex xs12 md6>
-                <div class="dashboard__current__month__earnings">
 
-                  <BiChartLabelDoughnut :data="dataChartDoughnutCurrentEarnings.data"
-                                        :options="dataChartDoughnutCurrentEarnings.options"
-                                        :chartHeight="80"
-                                        title="33%"
-                                        subtitle="of 3.253 €"
-                                        class="dashboard__current__month__earnings__chart"
-                  ></BiChartLabelDoughnut>
 
-                </div>
-              </v-flex>
-              <v-flex xs12 md6>
-                <div class="dashboard__current__month__expenses">
-
-                  <BiChartLabelDoughnut :data="dataChartDoughnutCurrentExpenses.data"
-                                        :options="dataChartDoughnutCurrentExpenses.options"
-                                        :chartHeight="80"
-                                        title="70%"
-                                        subtitle="of 2.759 €"
-                                        class="dashboard__current__month__expenses__chart"
-                  ></BiChartLabelDoughnut>
-
-                </div>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
-      </v-flex>
     </v-layout>
+    <!-- END MODULE CURRENT -->
 
+    <!-- MODULE HISTORY -->
     <div class="dashboard__history">
       <v-layout raw wrap>
         <v-flex class="dashboard__history__top text-xs-center text-sm-left" xs12 sm4>
@@ -84,10 +84,10 @@
           <div class="subheading">Saving by month for year {{ activeYear }}</div>
         </v-flex>
         <v-flex class="dashboard__history__year text-xs-center text-sm-right mb-5" xs12 sm8>
-          <BiFormYearSelector :data="availableYears"
+          <bi-form-year-selector :data="availableYears"
                               :activeYear="activeYear"
                               v-on:formYearSelectorYearChange="selectYear"
-          ></BiFormYearSelector>
+          ></bi-form-year-selector>
         </v-flex>
       </v-layout>
 
@@ -96,7 +96,9 @@
                    class="dashboard__history__chart">
       </BiChartLine>
     </div>
+    <!-- END MODULE HISTORY -->
 
+    <!-- MODULE DETAILS -->
     <div class="dashboard__details">
       <v-layout row wrap>
         <v-flex xs12 sm4>
@@ -113,18 +115,22 @@
         </v-flex>
       </v-layout>
     </div>
+    <!-- END MODULE DETAILS -->
 
+    <!-- MODULE PREVIOUS -->
     <div class="dashboard__previous">
       <v-layout>
         <v-flex>
         </v-flex>
       </v-layout>
     </div>
+    <!-- END MODULE PREVIOUS -->
 
   </v-content>
 </template>
 
 <script>
+  import BiAccountPercent from "../../components/account/percent"
   import BiAccountTile from "../../components/account/tile"
   import BiChartLabelDoughnut from "../../components/chart/label-doughnut"
   import BiChartLine from "../../components/chart/line"
@@ -132,12 +138,11 @@
   import BiNavigationRightBar from "../../components/navigation/rightbar"
   import DataChartLineCurrentAccount1 from '../../data/DataChartLineCurrentAccount1'
   import DataChartLineCurrentAccount2 from '../../data/DataChartLineCurrentAccount2'
-  import DataChartDoughnutCurrentEarnings from '../../data/DataChartDoughnutCurrentEarnings'
-  import DataChartDoughnutCurrentExpenses from '../../data/DataChartDoughnutCurrentExpenses'
   import DataChartLineYearlyHistory from '../../data/DataChartLineYearlyHistory'
 
   export default {
     components: {
+      BiAccountPercent,
       BiAccountTile,
       BiChartLabelDoughnut,
       BiChartLine,
@@ -151,15 +156,19 @@
       user() {
         return this.$store.state.user
       },
+      monthDiff() {
+        return this.currentMonthEarnings - this.currentMonthExpenses
+      }
     },
     data() {
       return {
         dataChartLineCurrentAccount1: DataChartLineCurrentAccount1,
         dataChartLineCurrentAccount2: DataChartLineCurrentAccount2,
-        dataChartDoughnutCurrentEarnings: DataChartDoughnutCurrentEarnings,
-        dataChartDoughnutCurrentExpenses: DataChartDoughnutCurrentExpenses,
         dataChartLineYearlyHistory: DataChartLineYearlyHistory,
-        monthDiff: 494,
+        currentMonthTotalExpenses: 2759,
+        currentMonthExpenses: 1931,
+        currentMonthTotalEarnings: 3253,
+        currentMonthEarnings: 1073,
         activeYear: parseInt((new Date()).getFullYear()),
         availableYears: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
         notifications: [

@@ -1,11 +1,21 @@
 @import 'variables';
 
-@mixin title() {
-  font-size: $font-size-title;
+@mixin title {
+  margin: 0;
+  padding: 30px 15px 15px;
+  font-size: $font-size-title-xs;
+  font-weight: 100;
+  line-height: $font-size-title-xs + 4;
+
+  @media (min-width: $xs) {
+    font-size: $font-size-title;
+    line-height: $font-size-title + 4;
+  }
 }
 
 @mixin subtitle($variant:'') {
   text-transform: uppercase;
+  font-weight: 400;
   font-size: $font-size-subtitle;
 
   @if $variant == 'light' {
@@ -16,5 +26,23 @@
 
   } @else {
     color: $text-light;
+  }
+}
+
+@mixin highlight {
+  font-size: $font-size-highlight-xs;
+  line-height: $font-size-highlight-xs + 2;
+
+  @media (min-width: $xs) {
+    font-size: $font-size-highlight;
+    line-height: $font-size-highlight + 2;
+  }
+}
+
+@mixin margin {
+  margin: $padding-small;
+
+  @media(min-width: $md) {
+    margin: $padding-large;
   }
 }
