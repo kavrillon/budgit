@@ -91,8 +91,20 @@ body,
       }
 
       &__diff {
+        color: $dh-green;
+
+        &--down {
+          color: $dh-red;
+
+          .dashboard__current__month__diff__icon {
+            color: $dh-red !important;
+          }
+        }
+
         &__icon {
           padding: 0 10px;
+
+          color: $dh-green !important;
         }
       }
     }
