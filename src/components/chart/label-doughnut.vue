@@ -1,12 +1,12 @@
 <template>
   <div class="chart-label-doughnut" :style="'height:' + chartHeight + 'px'">
 
-    <BiChartDoughnut
+    <bi-chart-doughnut
       :data="data"
       :options="options"
       :height="chartHeight"
       class="chart-label-doughnut__chart"
-    ></BiChartDoughnut>
+    ></bi-chart-doughnut>
 
     <div class="chart-label-doughnut__infos text-xs-center">
       <div class="chart-label-doughnut__infos__title" v-html="title"></div>

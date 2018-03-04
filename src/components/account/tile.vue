@@ -9,10 +9,11 @@
           <div class="account-tile__amount">{{ amount }} €</div>
         </v-flex>
         <v-flex xs12 md5 class="hidden-xs-only">
-          <BiChartLine :data="chartData"
-                       :options="chartOptions"
-                       class="account-tile__chart">
-          </BiChartLine>
+          <bi-chart-line
+            :chart-data="chartData"
+            :options="chartOptions"
+            class="account-tile__chart">
+          </bi-chart-line>
         </v-flex>
       </v-layout>
     </v-container>

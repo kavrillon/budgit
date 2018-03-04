@@ -1,12 +1,14 @@
 <script>
-  import {Bar} from 'vue-chartjs'
+  import {Bar, mixins} from 'vue-chartjs'
+  const { reactiveProp } = mixins
 
   export default {
     name: 'BiChartLine',
     extends: Bar,
-    props: ['data', 'options'],
+    mixins: [reactiveProp],
+    props: ['chartData', 'options'],
     mounted () {
-      var plugin = {
+      /*var plugin = {
         beforeRender: function (chart) {
           if (chart.config.options.showAllTooltips) {
             // create an array of tooltips
@@ -50,8 +52,8 @@
           }
         }
       };
-      this.addPlugin(plugin)
-      this.renderChart(this.data, this.options)
+      this.addPlugin(plugin)*/
+      this.renderChart(this.chartData, this.options)
     }
   }
 </script>

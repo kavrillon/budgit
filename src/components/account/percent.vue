@@ -12,7 +12,7 @@
 
       <bi-chart-label-doughnut :data="chartData"
                                :options="chartOptions"
-                               :chartHeight="chartHeight"
+                               :chart-height="chartHeight"
                                :title="parseInt(percent) + ' %'"
                                :subtitle="'of '+ total + ' €'"
                                class="account-percent__container__chart"

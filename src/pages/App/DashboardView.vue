@@ -13,21 +13,23 @@
 
         <v-flex xs6 sm12 d-flex>
 
-          <bi-account-tile name="Courant"
-                           class="dashboard__current__accounts__type"
-                           :amount="942"
-                           :chartData="dataChartLineCurrentAccount1.data"
-                           :chartOptions="dataChartLineCurrentAccount1.options"
+          <bi-account-tile
+            name="Courant"
+            class="dashboard__current__accounts__type"
+            :amount="942"
+            :chart-data="dataChartLineCurrentAccount1.data"
+            :chart-options="dataChartLineCurrentAccount1.options"
           ></bi-account-tile>
 
         </v-flex>
         <v-flex xs6 sm12 d-flex>
 
-          <bi-account-tile name="Epargne"
-                           class="dashboard__current__accounts__type"
-                           :amount="14942"
-                           :chartData="dataChartLineCurrentAccount2.data"
-                           :chartOptions="dataChartLineCurrentAccount2.options"
+          <bi-account-tile
+            name="Epargne"
+            class="dashboard__current__accounts__type"
+            :amount="14942"
+            :chart-data="dataChartLineCurrentAccount2.data"
+            :chart-options="dataChartLineCurrentAccount2.options"
           ></bi-account-tile>
 
         </v-flex>
@@ -52,21 +54,23 @@
 
         <v-flex xs12 d-flex>
           <v-flex xs6 d-flex class="dashboard__current__month__earnings">
-            <bi-account-percent :chartHeight="80"
-                                :value="currentMonthEarnings"
-                                :total="currentMonthTotalEarnings"
-                                chartColor="#4bc1c0"
-                                title="Earnings"
-                                class="dashboard__current__month__earnings__chart"
+            <bi-account-percent
+              :chart-height="80"
+              :value="currentMonthEarnings"
+              :total="currentMonthTotalEarnings"
+              chart-color="#4bc1c0"
+              title="Earnings"
+              class="dashboard__current__month__earnings__chart"
             ></bi-account-percent>
           </v-flex>
           <v-flex xs6 d-flex class="dashboard__current__month__expenses">
-            <bi-account-percent :chartHeight="80"
-                                :value="currentMonthExpenses"
-                                :total="currentMonthTotalExpenses"
-                                chartColor="#ff6384"
-                                title="Expenses"
-                                class="dashboard__current__month__expenses__chart"
+            <bi-account-percent
+              :chart-height="80"
+              :value="currentMonthExpenses"
+              :total="currentMonthTotalExpenses"
+              chart-color="#ff6384"
+              title="Expenses"
+              class="dashboard__current__month__expenses__chart"
             ></bi-account-percent>
           </v-flex>
         </v-flex>
@@ -84,16 +88,18 @@
           <div class="dashboard__history__top__subtitle">Saving by month in {{ activeYear }}</div>
         </v-flex>
         <v-flex class="dashboard__history__year text-xs-center text-sm-right mb-5" xs12 sm8>
-          <bi-form-year-selector :data="availableYears"
-                                 :activeYear="activeYear"
-                                 v-on:formYearSelectorYearChange="selectYear"
+          <bi-form-year-selector
+            :data="availableYears"
+            :active-year="activeYear"
+            v-on:formYearSelectorYearChange="selectYear"
           ></bi-form-year-selector>
         </v-flex>
       </v-layout>
 
-      <bi-account-history :data="yearHistoryData"
-                          class="dashboard__history__chart">
-      </bi-account-history>
+      <bi-account-history
+        :data="yearHistoryData"
+        class="dashboard__history__chart"
+      ></bi-account-history>
     </div>
     <!-- END MODULE HISTORY -->
 
@@ -157,9 +163,6 @@
       monthDiff() {
         return this.currentMonthEarnings - this.currentMonthExpenses
       },
-      yearHistoryData() {
-        return [400, 1200, -200, -100, 250, 1000, 1222, 1450, 900, -400, -125, 50]
-      }
     },
     data() {
       return {
@@ -171,6 +174,7 @@
         currentMonthEarnings: 1073,
         activeYear: parseInt((new Date()).getFullYear()),
         availableYears: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
+        yearHistoryData: this.generateFakeYearData(),
         notifications: [
           {
             name: 'Achat 1',
@@ -193,7 +197,11 @@
     methods: {
       selectYear: function (year) {
         this.activeYear = year
-      }
+        this.yearHistoryData = this.generateFakeYearData()
+      },
+      generateFakeYearData() {
+        return Array.from({length: 12}, () => Math.floor(Math.random() * 400))
+      },
     }
   }
 </script>

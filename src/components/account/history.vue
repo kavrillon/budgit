@@ -1,8 +1,9 @@
 <template>
   <div class="account-history">
-    <bi-chart-line :data="chartData"
-                   :options="chartOptions"
-                   class="dashboard__history__chart">
+    <bi-chart-line
+      :chart-data="chartData"
+      :options="chartOptions"
+      class="dashboard__history__chart">
     </bi-chart-line>
   </div>
 </template>
