@@ -14,20 +14,20 @@
         <v-flex xs6 sm12 d-flex>
 
           <bi-account-tile name="Courant"
-                         class="dashboard__current__accounts__type"
-                         :amount="942"
-                         :chartData="dataChartLineCurrentAccount1.data"
-                         :chartOptions="dataChartLineCurrentAccount1.options"
+                           class="dashboard__current__accounts__type"
+                           :amount="942"
+                           :chartData="dataChartLineCurrentAccount1.data"
+                           :chartOptions="dataChartLineCurrentAccount1.options"
           ></bi-account-tile>
 
         </v-flex>
         <v-flex xs6 sm12 d-flex>
 
           <bi-account-tile name="Epargne"
-                         class="dashboard__current__accounts__type"
-                         :amount="14942"
-                         :chartData="dataChartLineCurrentAccount2.data"
-                         :chartOptions="dataChartLineCurrentAccount2.options"
+                           class="dashboard__current__accounts__type"
+                           :amount="14942"
+                           :chartData="dataChartLineCurrentAccount2.data"
+                           :chartOptions="dataChartLineCurrentAccount2.options"
           ></bi-account-tile>
 
         </v-flex>
@@ -85,16 +85,15 @@
         </v-flex>
         <v-flex class="dashboard__history__year text-xs-center text-sm-right mb-5" xs12 sm8>
           <bi-form-year-selector :data="availableYears"
-                              :activeYear="activeYear"
-                              v-on:formYearSelectorYearChange="selectYear"
+                                 :activeYear="activeYear"
+                                 v-on:formYearSelectorYearChange="selectYear"
           ></bi-form-year-selector>
         </v-flex>
       </v-layout>
 
-      <BiChartLine :data="dataChartLineYearlyHistory.data"
-                   :options="dataChartLineYearlyHistory.options"
-                   class="dashboard__history__chart">
-      </BiChartLine>
+      <bi-account-history :data="yearHistoryData"
+                          class="dashboard__history__chart">
+      </bi-account-history>
     </div>
     <!-- END MODULE HISTORY -->
 
@@ -130,22 +129,21 @@
 </template>
 
 <script>
+  import BiAccountHistory from "../../components/account/history"
   import BiAccountPercent from "../../components/account/percent"
   import BiAccountTile from "../../components/account/tile"
   import BiChartLabelDoughnut from "../../components/chart/label-doughnut"
-  import BiChartLine from "../../components/chart/line"
   import BiFormYearSelector from "../../components/form/year-selector"
   import BiNavigationRightBar from "../../components/navigation/rightbar"
   import DataChartLineCurrentAccount1 from '../../data/DataChartLineCurrentAccount1'
   import DataChartLineCurrentAccount2 from '../../data/DataChartLineCurrentAccount2'
-  import DataChartLineYearlyHistory from '../../data/DataChartLineYearlyHistory'
 
   export default {
     components: {
+      BiAccountHistory,
       BiAccountPercent,
       BiAccountTile,
       BiChartLabelDoughnut,
-      BiChartLine,
       BiNavigationRightBar,
       BiFormYearSelector
     },
@@ -158,13 +156,15 @@
       },
       monthDiff() {
         return this.currentMonthEarnings - this.currentMonthExpenses
+      },
+      yearHistoryData() {
+        return [400, 1200, -200, -100, 250, 1000, 1222, 1450, 900, -400, -125, 50]
       }
     },
     data() {
       return {
         dataChartLineCurrentAccount1: DataChartLineCurrentAccount1,
         dataChartLineCurrentAccount2: DataChartLineCurrentAccount2,
-        dataChartLineYearlyHistory: DataChartLineYearlyHistory,
         currentMonthTotalExpenses: 2759,
         currentMonthExpenses: 1931,
         currentMonthTotalEarnings: 3253,
