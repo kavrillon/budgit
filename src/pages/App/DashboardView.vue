@@ -87,7 +87,7 @@
           <div class="dashboard__history__top__title">History</div>
           <div class="dashboard__history__top__subtitle">Saving by month in {{ activeYear }}</div>
         </v-flex>
-        <v-flex class="dashboard__history__year text-xs-center text-sm-right mb-5" xs12 sm8>
+        <v-flex class="dashboard__history__year" xs12 sm8>
           <bi-form-year-selector
             :data="availableYears"
             :active-year="activeYear"

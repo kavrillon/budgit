@@ -135,6 +135,16 @@ body,
       }
     }
 
+    &__year {
+      margin: $padding-small 0 $padding-large;
+      text-align: center;
+
+      @media (min-width: $xs) {
+        margin-top: 0;
+        text-align: right;
+      }
+    }
+
     &__chart {
       height: 200px;
     }

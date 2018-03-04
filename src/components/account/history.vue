@@ -59,11 +59,17 @@
           //showAllTooltips: true,
           responsive: true,
           maintainAspectRatio: false,
+          layout:  {
+            padding: {
+              top: 5,
+              bottom: 5
+            }
+          },
           legend: {
             display: false,
           },
           tooltips: {
-            enabled: true,
+            /*enabled: true,
             yAlign: 'bottom',
             xAlign: 'center',
             custom: function (tooltipModel) {
@@ -132,7 +138,7 @@
               tooltipEl.style.fontSize = tooltipModel.fontSize;
               tooltipEl.style.fontStyle = tooltipModel._fontStyle;
               tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
-            }
+            }*/
           },
           scales: {
             xAxes: [{
