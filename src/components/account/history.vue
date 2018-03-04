@@ -25,7 +25,7 @@
     computed: {
       chartData() {
         return {
-          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'SEP', 'OCT', 'NOV', 'DEC'],
+          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
           datasets: [
             {
               label: '',
@@ -56,95 +56,76 @@
       },
       chartOptions() {
         return {
-          //showAllTooltips: true,
           responsive: true,
           maintainAspectRatio: false,
           layout:  {
             padding: {
-              top: 5,
-              bottom: 5
+              top: 0,
+              left: 30,
+              right: 30,
+              bottom: 15
+            }
+          },
+          animation: {
+            duration: 1000,
+            onComplete: function() {
+              var chartInstance = this.chart,
+                ctx = chartInstance.ctx;
+
+              ctx.font = Chart.helpers.fontString(
+                14,
+                'bold',
+                Chart.defaults.global.defaultFontFamily
+              );
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'bottom';
+              ctx.fillStyle = 'white'
+
+              this.data.datasets.forEach(function(dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function(bar, index) {
+                  var data = dataset.data[index] + ' €';
+                  if (dataset.data[index] > 0) {
+                    data = '+' + data;
+                  }
+                  ctx.fillText(data, bar._model.x, chartInstance.height);
+                });
+              });
             }
           },
           legend: {
             display: false,
           },
           tooltips: {
-            /*enabled: true,
-            yAlign: 'bottom',
+            backgroundColor: 'transparent',
+            bodyFontStyle: 'bold',
+            caretSize: 0,
+            cornerRadius: 0,
+            displayColors: false,
+            enabled: false,
             xAlign: 'center',
-            custom: function (tooltipModel) {
-              var tooltipEl = document.getElementById('chartjs-tooltip');
-              console.log(tooltipEl)
-              // Create element on first render
-              if (!tooltipEl) {
-                tooltipEl = document.createElement('div');
-                tooltipEl.id = 'chartjs-tooltip';
-                tooltipEl.innerHTML = "<table></table>"
-                document.body.appendChild(tooltipEl);
+            yAlign: 'bottom',
+            callbacks: {
+              title: () => {
+                return ''
+              },
+              label: (tooltipItem, data) => {
+                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                if (parseInt(tooltipItem.yLabel) > 0) {
+                  label += `${tooltipItem.xLabel}: +${tooltipItem.yLabel} €`;
+                } else {
+                  label += `${tooltipItem.xLabel}: ${tooltipItem.yLabel} €`;
+                }
+                return label;
               }
-
-              // Hide if no tooltip
-              if (tooltipModel.opacity === 0) {
-                tooltipEl.style.opacity = 0;
-                return;
-              }
-
-              // Set caret Position
-              tooltipEl.classList.remove('above', 'below', 'no-transform');
-              if (tooltipModel.yAlign) {
-                tooltipEl.classList.add(tooltipModel.yAlign);
-              } else {
-                tooltipEl.classList.add('no-transform');
-              }
-
-              function getBody(bodyItem) {
-                return bodyItem.lines;
-              }
-
-              // Set Text
-              if (tooltipModel.body) {
-                var titleLines = tooltipModel.title || [];
-                var bodyLines = tooltipModel.body.map(getBody);
-
-                var innerHtml = '<thead>';
-
-                titleLines.forEach(function (title) {
-                  innerHtml += '<tr><th>' + title + '</th></tr>';
-                });
-                innerHtml += '</thead><tbody>';
-
-                bodyLines.forEach(function (body, i) {
-                  var colors = tooltipModel.labelColors[i];
-                  var style = 'background:' + colors.backgroundColor;
-                  style += '; border-color:' + colors.borderColor;
-                  style += '; border-width: 2px';
-                  var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
-                  innerHtml += '<tr><td>' + span + body + '</td></tr>';
-                });
-                innerHtml += '</tbody>';
-
-                var tableRoot = tooltipEl.querySelector('table');
-                tableRoot.innerHTML = innerHtml;
-              }
-
-              // `this` will be the overall tooltip
-              var position = this._chart.canvas.getBoundingClientRect();
-
-              // Display, position, and set styles for font
-              tooltipEl.style.opacity = 1;
-              tooltipEl.style.left = position.left + tooltipModel.caretX + 'px';
-              tooltipEl.style.top = position.top + tooltipModel.caretY + 'px';
-              tooltipEl.style.fontFamily = tooltipModel._fontFamily;
-              tooltipEl.style.fontSize = tooltipModel.fontSize;
-              tooltipEl.style.fontStyle = tooltipModel._fontStyle;
-              tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
-            }*/
+            }
           },
           scales: {
             xAxes: [{
-              stacked: false,
               gridLines: {
                 display: false,
+                color: '#42a5f6'
               },
               ticks: {
                 fontColor: "white",
@@ -156,7 +137,7 @@
                 display: false,
               },
               gridLines: {
-                display: true,
+                display: false,
                 color: '#1e88e5',
                 zeroLineColor: '#42a5f6',
                 zeroLineBorderDash: [5, 5],

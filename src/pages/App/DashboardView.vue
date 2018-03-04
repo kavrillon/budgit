@@ -200,7 +200,7 @@
         this.yearHistoryData = this.generateFakeYearData()
       },
       generateFakeYearData() {
-        return Array.from({length: 12}, () => Math.floor(Math.random() * 400))
+        return Array.from({length: 12}, () => Math.floor(Math.random() * 1000 * (Math.random() < 0.5 ? -1 : 1)))
       },
     }
   }

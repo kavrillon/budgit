@@ -8,52 +8,43 @@
     mixins: [reactiveProp],
     props: ['chartData', 'options'],
     mounted () {
-      /*var plugin = {
-        beforeRender: function (chart) {
-          if (chart.config.options.showAllTooltips) {
-            // create an array of tooltips
-            // we can't use the chart tooltip because there is only one tooltip per chart
-            chart.pluginTooltips = [];
-            chart.config.data.datasets.forEach(function (dataset, i) {
-              chart.getDatasetMeta(i).data.forEach(function (sector, j) {
-                chart.pluginTooltips.push(new Chart.Tooltip({
-                  _chart: chart.chart,
-                  _chartInstance: chart,
-                  _data: chart.data,
-                  _options: chart.options.tooltips,
-                  _active: [sector]
-                }, chart));
-              });
-            });
+      // Register custom positioner
+      if (Chart.Tooltip.positioners.top === undefined) {
+        registerPositioner()
+      }
 
-            // turn off normal tooltips
-            chart.options.tooltips.enabled = false;
-          }
-        },
-        afterDraw: function (chart, easing) {
-          if (chart.config.options.showAllTooltips) {
-            // we don't want the permanent tooltips to animate, so don't do anything till the animation runs atleast once
-            if (!chart.allTooltipsOnce) {
-              if (easing !== 1)
-                return;
-              chart.allTooltipsOnce = true;
-            }
-
-            // turn on tooltips
-            chart.options.tooltips.enabled = true;
-            Chart.helpers.each(chart.pluginTooltips, function (tooltip) {
-              tooltip.initialize();
-              tooltip.update();
-              // we don't actually need this since we are not animating tooltips
-              tooltip.pivot();
-              tooltip.transition(easing).draw();
-            });
-            chart.options.tooltips.enabled = false;
-          }
-        }
-      };
-      this.addPlugin(plugin)*/
+      // Register plugin
       this.renderChart(this.chartData, this.options)
     }
   }
+
+  function registerPositioner() {
+    Chart.Tooltip.positioners.top = (elements) => {
+      if (!elements.length) {
+        return false
+      }
+
+      var i, len
+      var x = 0
+      var y = 0
+      var count = 0
+      var minY = null
+
+      for (i = 0, len = elements.length; i < len; ++i) {
+        var el = elements[i]
+        if (el && el.hasValue()) {
+          var pos = el.tooltipPosition()
+          x += pos.x
+          y += pos.y
+          if (minY === null || pos.y < minY) minY = pos.y
+          ++count
+        }
+      }
+      return {
+        x: Math.round(x / count),
+        y: 50
+      }
+    }
+  }
+
 </script>
