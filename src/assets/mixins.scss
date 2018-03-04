@@ -1,8 +1,8 @@
 @import 'variables';
 
-@mixin title {
+@mixin title($padding: 30px 0 15px) {
   margin: 0;
-  padding: 30px 15px 15px;
+  padding: $padding;
   font-size: $font-size-title-xs;
   font-weight: 100;
   line-height: $font-size-title-xs + 4;

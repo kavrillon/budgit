@@ -79,9 +79,9 @@
     <!-- MODULE HISTORY -->
     <div class="dashboard__history">
       <v-layout raw wrap>
-        <v-flex class="dashboard__history__top text-xs-center text-sm-left" xs12 sm4>
-          <div class="headline">History</div>
-          <div class="subheading">Saving by month for year {{ activeYear }}</div>
+        <v-flex class="dashboard__history__top" xs12 sm4>
+          <div class="dashboard__history__top__title">History</div>
+          <div class="dashboard__history__top__subtitle">Saving by month in {{ activeYear }}</div>
         </v-flex>
         <v-flex class="dashboard__history__year text-xs-center text-sm-right mb-5" xs12 sm8>
           <bi-form-year-selector :data="availableYears"

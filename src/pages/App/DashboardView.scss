@@ -119,6 +119,22 @@ body,
       padding: $padding-large;
     }
 
+    &__top {
+      text-align: center;
+
+      @media (min-width: $xs) {
+        text-align: left;
+      }
+
+      &__title {
+        @include title(0 0 5px);
+      }
+
+      &__subtitle {
+        @include subtitle('light');
+      }
+    }
+
     &__chart {
       height: 200px;
     }
