@@ -60,17 +60,20 @@
           maintainAspectRatio: false,
           layout:  {
             padding: {
-              top: 0,
+              top: 15,
               left: 30,
               right: 30,
               bottom: 15
             }
           },
+          hover: {
+            animationDuration: 1
+          },
           animation: {
             duration: 1000,
-            onComplete: function() {
-              var chartInstance = this.chart,
-                ctx = chartInstance.ctx;
+            onProgress: function() {
+              const chartInstance = this.chart;
+              let ctx = chartInstance.ctx;
 
               ctx.font = Chart.helpers.fontString(
                 14,
@@ -79,19 +82,19 @@
               );
               ctx.textAlign = 'center';
               ctx.textBaseline = 'bottom';
-              ctx.fillStyle = 'white'
+              ctx.fillStyle = 'white';
 
               this.data.datasets.forEach(function(dataset, i) {
-                var meta = chartInstance.controller.getDatasetMeta(i);
+                const meta = chartInstance.controller.getDatasetMeta(i);
                 meta.data.forEach(function(bar, index) {
-                  var data = dataset.data[index] + ' €';
+                  let data = dataset.data[index] + ' €';
                   if (dataset.data[index] > 0) {
                     data = '+' + data;
                   }
                   ctx.fillText(data, bar._model.x, chartInstance.height);
                 });
               });
-            }
+            },
           },
           legend: {
             display: false,

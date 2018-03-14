@@ -33,10 +33,14 @@ body,
 // Page
 .dashboard {
   &__current {
-    padding: 0 0 $padding-large;
+    padding: 0 0 $padding-xs;
 
     @media (min-width: $xs) {
-      padding: 0 $padding-large $padding-large;
+      padding: 0 $padding-md $padding-md;
+    }
+
+    @media (min-width: $md) {
+      padding: $padding-xs $padding-lg $padding-lg;
     }
 
     &__accounts {
@@ -74,10 +78,14 @@ body,
     &__month {
       display: flex;
       flex-direction: column;
-      padding: 0 $padding-small;
+      padding: 0 $padding-xs;
 
       @media (min-width: $xs) {
-        padding: 0 0 0 $padding-large;
+        padding: 0 0 0 $padding-md;
+      }
+
+      @media (min-width: $md) {
+        padding: 0 0 0 $padding-lg;
       }
 
       &__title {
@@ -112,11 +120,15 @@ body,
 
   &__history {
     background: $bg-blue;
-    padding: $padding-small;
+    padding: $padding-xs;
     color: white;
 
-    @media (min-width: $sm) {
-      padding: $padding-large;
+    @media (min-width: $xs) {
+      padding: $padding-md;
+    }
+
+    @media (min-width: $md) {
+      padding: $padding-lg;
     }
 
     &__top {
@@ -136,7 +148,7 @@ body,
     }
 
     &__year {
-      margin: $padding-small 0 $padding-large;
+      margin: $padding-xs 0 $padding-xs;
       text-align: center;
 
       @media (min-width: $xs) {
@@ -147,7 +159,7 @@ body,
 
     &__chart {
       margin-top: 30px;
-      height: 350px;
+      height: 200px;
     }
   }
 }
