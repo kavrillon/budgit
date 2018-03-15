@@ -83,14 +83,16 @@
     <!-- MODULE HISTORY -->
     <div class="dashboard__history">
       <v-layout raw wrap>
-        <v-flex class="dashboard__history__top" xs12 sm4>
+        <v-flex class="dashboard__history__top" xs8 sm4>
           <div class="dashboard__history__top__title">History</div>
           <div class="dashboard__history__top__subtitle">Saving by month in {{ activeYear }}</div>
         </v-flex>
-        <v-flex class="dashboard__history__year" xs12 sm8>
+        <v-flex class="dashboard__history__year" xs4 sm8>
           <bi-form-year-selector
             :data="availableYears"
             :active-year="activeYear"
+            :visible-shortcuts="3"
+            :minimise-on-mobile="true"
             v-on:formYearSelectorYearChange="selectYear"
           ></bi-form-year-selector>
         </v-flex>

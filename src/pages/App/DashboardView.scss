@@ -132,11 +132,7 @@ body,
     }
 
     &__top {
-      text-align: center;
-
-      @media (min-width: $xs) {
-        text-align: left;
-      }
+      text-align: left;
 
       &__title {
         @include title(0 0 5px);
@@ -148,7 +144,7 @@ body,
     }
 
     &__year {
-      margin: $padding-xs 0 $padding-xs;
+      margin: 5px 0 0;
       text-align: center;
 
       @media (min-width: $xs) {

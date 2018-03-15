@@ -46,20 +46,29 @@
         type: Number,
         default: parseInt((new Date()).getFullYear())
       },
-      visibleItems: {
+      visibleShortcuts: {
         type: Number,
         default: 2
+      },
+      minimiseOnMobile: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
       return {}
     },
     computed: {
+      isFullMenu() {
+        return this.visibleShortcuts === 0 || this.$vuetify.breakpoint.name === 'xs' && this.minimiseOnMobile
+      },
       menuYears() {
-        return this.data.slice(0, -this.visibleItems).reverse()
+        if (this.isFullMenu) return this.data.reverse()
+        return this.data.slice(0, -this.visibleShortcuts).reverse()
       },
       buttonYears() {
-        return this.data.slice(-this.visibleItems)
+        if (this.isFullMenu) return [];
+        return this.data.slice(-this.visibleShortcuts)
       },
     },
     methods: {
