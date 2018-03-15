@@ -58,12 +58,12 @@
         return {
           responsive: true,
           maintainAspectRatio: false,
-          layout:  {
+          layout: {
             padding: {
               top: 15,
               left: 30,
               right: 30,
-              bottom: 15
+              bottom: 45
             }
           },
           hover: {
@@ -71,27 +71,26 @@
           },
           animation: {
             duration: 1000,
-            onProgress: function() {
+            onComplete: function () {
               const chartInstance = this.chart;
+              const rotation = this.chart.scales['x-axis-0'].labelRotation;
               let ctx = chartInstance.ctx;
 
-              ctx.font = Chart.helpers.fontString(
-                14,
+              const font = Chart.helpers.fontString(
                 'bold',
                 Chart.defaults.global.defaultFontFamily
               );
               ctx.textAlign = 'center';
               ctx.textBaseline = 'bottom';
-              ctx.fillStyle = 'white';
 
-              this.data.datasets.forEach(function(dataset, i) {
+              this.data.datasets.forEach(function (dataset, i) {
                 const meta = chartInstance.controller.getDatasetMeta(i);
-                meta.data.forEach(function(bar, index) {
+                meta.data.forEach(function (bar, index) {
                   let data = dataset.data[index] + ' €';
                   if (dataset.data[index] > 0) {
                     data = '+' + data;
                   }
-                  ctx.fillText(data, bar._model.x, chartInstance.height);
+                  drawString(ctx, data, bar._model.x, chartInstance.height - 30, 'white', -rotation, font, 14);
                 });
               });
             },
@@ -150,6 +149,23 @@
         }
       }
     }
+  }
+
+  function drawString(ctx, text, posX, posY, textColor, rotation, font, fontSize) {
+    var lines = text.split("\n");
+    if (!rotation) rotation = 0;
+    if (!font) font = "'serif'";
+    if (!fontSize) fontSize = 16;
+    if (!textColor) textColor = '#ffffff';
+    ctx.save();
+    ctx.font = fontSize + "px " + font;
+    ctx.fillStyle = textColor;
+    ctx.translate(posX, posY);
+    ctx.rotate(rotation * Math.PI / 180);
+    for (var i = 0; i < lines.length; i++) {
+      ctx.fillText(lines[i], 0, i * fontSize);
+    }
+    ctx.restore();
   }
 </script>
 
