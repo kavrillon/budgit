@@ -11,27 +11,18 @@
           Accounts
         </v-flex>
 
-        <v-flex xs6 sm12 d-flex>
-
+        <v-flex
+          xs12
+          d-flex
+          v-for="account in dataChartLineCurrentAccounts"
+          :key="account.name"
+        >
           <bi-account-tile
-            name="Courant"
             class="dashboard__current__accounts__type"
-            :amount="942"
-            :chart-data="dataChartLineCurrentAccount1.data"
-            :chart-options="dataChartLineCurrentAccount1.options"
+            :name="account.name"
+            :amount="account.total"
+            :chart-data="account.data"
           ></bi-account-tile>
-
-        </v-flex>
-        <v-flex xs6 sm12 d-flex>
-
-          <bi-account-tile
-            name="Epargne"
-            class="dashboard__current__accounts__type"
-            :amount="14942"
-            :chart-data="dataChartLineCurrentAccount2.data"
-            :chart-options="dataChartLineCurrentAccount2.options"
-          ></bi-account-tile>
-
         </v-flex>
       </v-flex>
 
@@ -110,14 +101,17 @@
       <v-layout row wrap>
         <v-flex xs12 sm4>
           <div class="dashboard__details__savings">
+            <div class="dashboard__details__savings__title">Savings history</div>
           </div>
         </v-flex>
         <v-flex xs12 sm4>
           <div class="dashboard__details__capacity">
+            <div class="dashboard__details__capacity__title">Savings for year</div>
           </div>
         </v-flex>
         <v-flex xs12 sm4>
           <div class="dashboard__details__categories">
+            <div class="dashboard__details__categories__title">Categories</div>
           </div>
         </v-flex>
       </v-layout>
@@ -143,8 +137,7 @@
   import BiChartLabelDoughnut from "../../components/chart/label-doughnut"
   import BiFormYearSelector from "../../components/form/year-selector"
   import BiNavigationRightBar from "../../components/navigation/rightbar"
-  import DataChartLineCurrentAccount1 from '../../data/DataChartLineCurrentAccount1'
-  import DataChartLineCurrentAccount2 from '../../data/DataChartLineCurrentAccount2'
+  import DataChartLineCurrentAccounts from '../../data/DataChartLineCurrentAccounts'
 
   export default {
     components: {
@@ -168,8 +161,7 @@
     },
     data() {
       return {
-        dataChartLineCurrentAccount1: DataChartLineCurrentAccount1,
-        dataChartLineCurrentAccount2: DataChartLineCurrentAccount2,
+        dataChartLineCurrentAccounts: DataChartLineCurrentAccounts,
         currentMonthTotalExpenses: 2759,
         currentMonthExpenses: 1931,
         currentMonthTotalEarnings: 3253,

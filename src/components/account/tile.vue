@@ -1,18 +1,18 @@
 <template>
   <v-card class="account-tile d-flex">
     <v-container>
-      <div class="account-tile__title text-xs-center text-sm-right">
-        {{ name }}
-      </div>
-      <v-layout row wrap align-center reverse>
-        <v-flex xs12 md7 class="text-xs-center text-sm-right">
-          <div class="account-tile__amount">{{ amount }} €</div>
+      <v-layout row wrap class="account-tile__content">
+        <v-flex xs6 sm12 class="account-tile__content__title">
+          {{ name }}
         </v-flex>
-        <v-flex xs12 md5 class="hidden-xs-only">
+        <v-flex xs6 sm12 md7 class="account-tile__content__amount">
+          <div class="account-tile__content__amount__value">{{ amount }} €</div>
+        </v-flex>
+        <v-flex xs12 md5 class="account-tile__content__chart">
           <bi-chart-line
             :chart-data="chartData"
             :options="chartOptions"
-            class="account-tile__chart">
+            class="account-tile__content__chart__item">
           </bi-chart-line>
         </v-flex>
       </v-layout>
@@ -41,10 +41,28 @@
         type: Object,
         required: true,
       },
-      chartOptions: {
-        type: Object,
-        required: true,
-      },
+    },
+    computed: {
+      chartOptions() {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            display: false,
+          },
+          scales: {
+            xAxes: [{
+              display: false,
+            }],
+            yAxes: [{
+              display: false,
+            }],
+          },
+          tooltips: {
+            enabled: false,
+          }
+        }
+      }
     }
   }
 </script>

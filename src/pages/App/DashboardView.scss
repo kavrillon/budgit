@@ -44,13 +44,15 @@ body,
     }
 
     &__accounts {
-      display: flex;
+      display: block; // Just put flex if the column need to fit to the max height
       flex-direction: row;
       flex-wrap: wrap;
+      padding: $padding-xs $padding-xs 0;
 
       @media (min-width: $xs) {
         flex-direction: column;
         flex-wrap: nowrap;
+        padding: 0;
       }
 
       &__title {
@@ -76,7 +78,7 @@ body,
     }
 
     &__month {
-      display: flex;
+      display: block; // Just put flex if the column need to fit to the max height
       flex-direction: column;
       padding: 0 $padding-xs;
 
@@ -124,11 +126,11 @@ body,
     color: white;
 
     @media (min-width: $xs) {
-      padding: $padding-md;
+      padding: $padding-md $padding-md $padding-xs;
     }
 
     @media (min-width: $md) {
-      padding: $padding-lg;
+      padding: $padding-lg $padding-lg $padding-md;
     }
 
     &__top {
@@ -156,6 +158,36 @@ body,
     &__chart {
       margin-top: 30px;
       height: 200px;
+    }
+  }
+
+  &__details {
+    padding: 0 $padding-xs $padding-xs;
+
+    @media (min-width: $xs) {
+      padding: 0 $padding-md $padding-md;
+    }
+
+    @media (min-width: $md) {
+      padding: $padding-xs $padding-lg $padding-lg;
+    }
+
+    &__savings {
+      &__title {
+        @include title;
+      }
+    }
+
+    &__capacity {
+      &__title {
+        @include title;
+      }
+    }
+
+    &__categories {
+      &__title {
+        @include title;
+      }
     }
   }
 }

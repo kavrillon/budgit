@@ -4,20 +4,40 @@
 .account-tile {
   overflow: hidden;
 
-  &__title {
-    @include subtitle;
-  }
-
-  &__amount {
-    @include highlight;
-
-    @media (min-width: $xs) {
-      line-height: 40px;
+  &__content {
+    @media (min-width: $sm) {
+      flex-direction: row-reverse;
     }
-  }
 
-  &__chart {
-    height: 40px;
-    width: 100%;
+    &__title {
+      @include subtitle;
+
+      @media (min-width: $xs) {
+        text-align: right;
+      }
+    }
+
+    &__amount {
+      @include highlight;
+
+      text-align: right;
+
+      @media (min-width: $xs) {
+        line-height: 40px;
+      }
+    }
+
+    &__chart {
+      display: none;
+
+      @media (min-width: $xs) {
+        display: block;
+      }
+
+      &__item {
+        height: 40px;
+        width: 100%;
+      }
+    }
   }
 }
