@@ -1,24 +1,23 @@
 <template>
-  <v-card class="account-percent d-flex">
-    <v-container class="account-percent__container">
-      <div class="account-percent__container__infos">
-        <div class="account-percent__container__infos__title">
-          {{ title }}
-        </div>
-        <div class="account-percent__container__infos__value">
-          {{ value }} €
-        </div>
+  <v-layout column class="account-percent">
+    <div class="account-percent__infos">
+      <div class="account-percent__infos__title">
+        {{ title }}
       </div>
+      <div class="account-percent__infos__value">
+        {{ value }} €
+      </div>
+    </div>
 
-      <bi-chart-label-doughnut :data="chartData"
-                               :options="chartOptions"
-                               :chart-height="chartHeight"
-                               :title="parseInt(percent) + ' %'"
-                               :subtitle="'of '+ total + ' €'"
-                               class="account-percent__container__chart"
-      ></bi-chart-label-doughnut>
-    </v-container>
-  </v-card>
+    <bi-chart-label-doughnut
+      :data="chartData"
+      :options="chartOptions"
+      :chart-height="chartHeight"
+      :title="parseInt(percent) + ' %'"
+      :subtitle="'of '+ total + ' €'"
+      class="account-percent__chart"
+    ></bi-chart-label-doughnut>
+  </v-layout>
 </template>
 
 <script>

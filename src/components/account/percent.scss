@@ -2,23 +2,23 @@
 @import '../../assets/mixins';
 
 .account-percent {
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 
-  &__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  &__infos {
+    text-align: center;
     flex: 1;
 
-    &__infos {
-      &__title {
-        @include subtitle;
-      }
+    &__title {
+      @include subtitle;
+    }
 
-      &__value {
-        @include highlight;
+    &__value {
+      @include highlight;
+
+      margin-bottom: $padding-xs;
+
+      @media (min-width: $xs) {
+        margin-bottom: $padding-md;
       }
     }
   }

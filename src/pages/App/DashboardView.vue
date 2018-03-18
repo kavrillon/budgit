@@ -6,7 +6,7 @@
     <!-- MODULE CURRENT -->
     <v-layout row wrap class="dashboard__current">
 
-      <v-flex xs12 sm4 class="dashboard__current__accounts">
+      <v-flex xs12 sm3 class="dashboard__current__accounts">
         <v-flex xs12 class="dashboard__current__accounts__title">
           Accounts
         </v-flex>
@@ -26,45 +26,76 @@
         </v-flex>
       </v-flex>
 
-      <v-flex xs12 sm8 class="dashboard__current__month">
-        <div class="dashboard__current__month__title">
-              <span class="dashboard__current__month__title__label">
-                This month:
-              </span>
-          <span class="dashboard__current__month__diff"
-                :class="{'dashboard__current__month__diff--down' : monthDiff < 0}">
-                <v-icon class="dashboard__current__month__diff__icon" v-show="monthDiff > 0">
-                  trending_up
-                </v-icon>
-                <v-icon class="dashboard__current__month__diff__icon" v-show="monthDiff < 0">
-                  trending_down
-                </v-icon>
-                <span class="dashboard__current__month__diff__amount">{{ monthDiff }} €</span>
-              </span>
+      <v-flex xs12 sm9 class="dashboard__current__month">
+        <div class="dashboard__current__month__date">
+          January, 2018
         </div>
 
-        <v-flex xs12 d-flex>
-          <v-flex xs6 d-flex class="dashboard__current__month__earnings">
-            <bi-account-percent
-              :chart-height="80"
-              :value="currentMonthEarnings"
-              :total="currentMonthTotalEarnings"
-              chart-color="#4bc1c0"
-              title="Earnings"
-              class="dashboard__current__month__earnings__chart"
-            ></bi-account-percent>
-          </v-flex>
-          <v-flex xs6 d-flex class="dashboard__current__month__expenses">
-            <bi-account-percent
-              :chart-height="80"
-              :value="currentMonthExpenses"
-              :total="currentMonthTotalExpenses"
-              chart-color="#ff6384"
-              title="Expenses"
-              class="dashboard__current__month__expenses__chart"
-            ></bi-account-percent>
-          </v-flex>
-        </v-flex>
+        <v-card>
+          <v-container>
+            <v-layout row wrap>
+              <v-flex xs6 md4 class="dashboard__current__month__expenses">
+                <bi-account-percent
+                  :chart-height="80"
+                  :value="currentMonthExpenses"
+                  :total="currentMonthTotalExpenses"
+                  chart-color="#ff6384"
+                  title="Expenses"
+                  class="dashboard__current__month__expenses__chart"
+                ></bi-account-percent>
+              </v-flex>
+              <v-flex xs6 md4 class="dashboard__current__month__earnings">
+                <bi-account-percent
+                  :chart-height="80"
+                  :value="currentMonthEarnings"
+                  :total="currentMonthTotalEarnings"
+                  chart-color="#4bc1c0"
+                  title="Earnings"
+                  class="dashboard__current__month__earnings__chart"
+                ></bi-account-percent>
+              </v-flex>
+              <v-flex xs12 md4 class="dashboard__current__month__diff">
+                <v-layout row wrap>
+                  <v-flex xs6 md12 class="dashboard__current__month__diff__block">
+                    <div class="dashboard__current__month__diff__block__title">
+                      Balance:
+                    </div>
+                    <div class="dashboard__current__month__diff__block__value"
+                         :class="{'dashboard__current__month__diff__block__value--down' : monthDiff < 0}">
+                      <v-icon class="dashboard__current__month__diff__block__value__icon" v-show="monthDiff > 0">
+                        trending_up
+                      </v-icon>
+                      <v-icon class="dashboard__current__month__diff__block__value__icon" v-show="monthDiff < 0">
+                        trending_down
+                      </v-icon>
+                      <span class="dashboard__current__month__diff__block__value__amount">{{ monthDiff }} €</span>
+                    </div>
+                  </v-flex>
+
+                  <v-flex xs6 md12 class="dashboard__current__month__diff__block">
+                    <div class="dashboard__current__month__diff__block__title">
+                      Savings:
+                    </div>
+                    <div class="dashboard__current__month__diff__block__value"
+                         :class="{'dashboard__current__month__diff__block__value--down' : 500 < 0}">
+                      <v-icon class="dashboard__current__month__diff__block__value__icon" v-show="500 > 0">
+                        trending_up
+                      </v-icon>
+                      <v-icon class="dashboard__current__month__diff__block__value__icon" v-show="500 < 0">
+                        trending_down
+                      </v-icon>
+                      <span class="dashboard__current__month__diff__block__value__amount">{{ 500 }} €</span>
+                    </div>
+                  </v-flex>
+                </v-layout>
+
+                <v-divider class="dashboard__current__month__diff__separator"></v-divider>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card>
+
+
       </v-flex>
 
 

@@ -90,7 +90,7 @@ body,
         padding: 0 0 0 $padding-lg;
       }
 
-      &__title {
+      &__date {
         @include title;
 
         text-align: center;
@@ -100,21 +100,79 @@ body,
         }
       }
 
+      &__expenses {
+        order: 1;
+        padding: 0 $padding-xs;
+
+        @media (min-width: $sm) {
+          order: 0;
+        }
+      }
+
+      &__earnings {
+        order: 2;
+        padding: 0 $padding-xs;
+
+        @media (min-width: $sm) {
+          order: 2;
+        }
+      }
+
       &__diff {
-        color: $dh-green;
+        text-align: center;
+        order: 0;
 
-        &--down {
-          color: $dh-red;
+        @media (min-width: $sm) {
+          display: flex;
+          order: 1;
+        }
 
-          .dashboard__current__month__diff__icon {
-            color: $dh-red !important;
+        &__block {
+          margin: 0;
+          align-self: center;
+
+          @media (min-width: $md) {
+            margin-top: $padding-xs;
+
+            &:first-child {
+              margin-top: 0;
+            }
+          }
+
+          &__title {
+            @include subtitle;
+            margin: 0;
+            padding: 0;
+          }
+
+          &__value {
+            @include title;
+            margin: 0;
+            padding: 0;
+            color: $dh-green;
+
+            &--down {
+              color: $dh-red;
+
+              .dashboard__current__month__diff__block__value__icon {
+                color: $dh-red !important;
+              }
+            }
+
+            &__icon {
+              padding: 0 10px;
+
+              color: $dh-green !important;
+            }
           }
         }
 
-        &__icon {
-          padding: 0 10px;
+        &__separator {
+          margin: $padding-xs 0;
 
-          color: $dh-green !important;
+          @media (min-width: $sm) {
+            display: none;
+          }
         }
       }
     }
