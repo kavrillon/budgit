@@ -40,16 +40,16 @@
               //lineTension: 0
             },
             /*{
-              label: 'Earnings',
+              label: 'Income',
               backgroundColor: '#8af89d',
               borderWidth: 0,
-              data: this.earns
+              data: this.income
             },
             {
-              label: 'Expenses',
+              label: 'Spending',
               backgroundColor: '#f87979',
               borderWidth: 0,
-              data: this.expenses
+              data: this.spending
             }*/
           ],
         }

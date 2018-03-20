@@ -61,11 +61,11 @@
               borderWidth: 1,
               backgroundColor: [
                 this.chartColor,
-                "#dddddd"
+                "#eee"
               ],
               hoverBackgroundColor: [
                 this.chartColor,
-                "#dddddd"
+                "#eee"
               ]
             }]
         }

@@ -100,79 +100,87 @@ body,
         }
       }
 
-      &__expenses {
-        order: 1;
-        padding: 0 $padding-xs;
-
-        @media (min-width: $sm) {
-          order: 0;
-        }
-      }
-
-      &__earnings {
-        order: 2;
-        padding: 0 $padding-xs;
-
-        @media (min-width: $sm) {
-          order: 2;
-        }
-      }
-
-      &__diff {
-        text-align: center;
-        order: 0;
-
-        @media (min-width: $sm) {
-          display: flex;
+      &__balance {
+        &__spending {
           order: 1;
+          padding: 0 $padding-xs;
+
+          @media (min-width: $sm) {
+            order: 0;
+          }
         }
 
-        &__block {
-          margin: 0;
-          align-self: center;
+        &__income {
+          order: 2;
+          padding: 0 $padding-xs;
 
-          @media (min-width: $md) {
-            margin-top: $padding-xs;
+          @media (min-width: $sm) {
+            order: 2;
+          }
+        }
 
-            &:first-child {
-              margin-top: 0;
-            }
+        &__diff {
+          text-align: center;
+          order: 0;
+
+          @media (min-width: $sm) {
+            display: flex;
+            order: 1;
           }
 
-          &__title {
-            @include subtitle;
+          &__block {
             margin: 0;
-            padding: 0;
-          }
+            align-self: center;
 
-          &__value {
-            @include title;
-            margin: 0;
-            padding: 0;
-            color: $dh-green;
+            @media (min-width: $md) {
+              margin-top: $padding-xs;
 
-            &--down {
-              color: $dh-red;
-
-              .dashboard__current__month__diff__block__value__icon {
-                color: $dh-red !important;
+              &:first-child {
+                margin-top: 0;
               }
             }
 
-            &__icon {
-              padding: 0 10px;
+            &__title {
+              @include subtitle;
+              margin: 0;
+              padding: 0;
+            }
 
-              color: $dh-green !important;
+            &__value {
+              @include title;
+              margin: 0;
+              padding: 0;
+              color: $dh-green;
+
+              &--down {
+                color: $dh-red;
+
+                .dashboard__current__month__balance__diff__block__value__icon {
+                  color: $dh-red !important;
+                }
+              }
+
+              &__icon {
+                padding: 0 10px;
+
+                color: $dh-green !important;
+              }
+            }
+          }
+
+          &__separator {
+            margin: $padding-xs 0;
+
+            @media (min-width: $sm) {
+              display: none;
             }
           }
         }
+      }
 
-        &__separator {
-          margin: $padding-xs 0;
-
-          @media (min-width: $sm) {
-            display: none;
-          }
+      &__categories {
+        &__title {
+          @include subtitle;
         }
       }
     }

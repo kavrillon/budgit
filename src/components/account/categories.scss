@@ -1,0 +1,87 @@
+@import '../../assets/variables';
+@import '../../assets/mixins';
+
+@keyframes barSlide {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.account-categories {
+  &__title {
+    @include subtitle;
+    padding-bottom: $padding-xs;
+  }
+
+  &__list {
+    &__item {
+      padding: 5px 0 5px;
+
+      &__title {
+        order: 1;
+      }
+
+      &__value {
+        position: relative;
+        z-index: 1;
+        text-align: right;
+        order: 2;
+
+        @media (min-width: $sm) {
+          padding-right: 10px;
+        }
+      }
+
+      &__chart {
+        position: relative;
+        margin-top: 2px;
+        width: 100%;
+        height: 3px;
+        background: #eee;
+        align-self: center;
+        clear: both;
+        order: 3;
+
+        @media (min-width: $sm) {
+          margin-top: 0;
+          height: 10px;
+        }
+
+        &__container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          height: 100%;
+
+          @media (min-width: $sm) {
+            right: 0;
+            left: auto;
+          }
+
+          &__bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            border-radius: 2px;
+            z-index: 0;
+            width: 0;
+            animation: barSlide 1s ease-in-out 1;
+            animation-fill-mode:forwards;
+
+
+            @media (min-width: $sm) {
+              right: 0;
+              left: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+}
