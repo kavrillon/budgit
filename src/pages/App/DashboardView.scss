@@ -64,14 +64,8 @@ body,
         }
       }
 
-      &__month {
-        &__title {
-          @include subtitle;
-        }
-
-        &__diff {
-          @include title;
-        }
+      &__type {
+        margin-bottom: $padding-xs;
       }
     }
 

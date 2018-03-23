@@ -5,15 +5,26 @@
   overflow: hidden;
 
   &__content {
-    @media (min-width: $sm) {
-      flex-direction: row-reverse;
+    display: flex;
+
+    .layout {
+      max-width: 100%;
+
+      @media (min-width: $sm) {
+        flex-direction: row-reverse;
+      }
     }
 
     &__title {
       @include subtitle;
 
       @media (min-width: $xs) {
+        margin-bottom: 5px;
         text-align: right;
+      }
+
+      @media (min-width: $sm) {
+        margin-bottom: 0;
       }
     }
 
@@ -21,9 +32,10 @@
       @include highlight;
 
       text-align: right;
+      align-self: flex-end;
 
-      @media (min-width: $xs) {
-        line-height: 40px;
+      &__value {
+        line-height: 21px;
       }
     }
 
@@ -38,6 +50,19 @@
         height: 40px;
         width: 100%;
       }
+    }
+  }
+
+  &__footer {
+    border-top: 1px solid #ddd;
+    background: #f5f5f5;
+    padding: 5px $padding-xs;
+    font-size: 12px;
+    color: #666;
+
+    &__text {
+      flex: 1 0 auto;
+      text-align: right;
     }
   }
 }

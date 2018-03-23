@@ -1,7 +1,7 @@
 <template>
-  <v-card class="account-tile d-flex">
-    <v-container>
-      <v-layout row wrap class="account-tile__content">
+  <v-card class="account-tile">
+    <v-card-title class="account-tile__content d-flex">
+      <v-layout row wrap>
         <v-flex xs6 sm12 class="account-tile__content__title">
           {{ name }}
         </v-flex>
@@ -16,12 +16,18 @@
           </bi-chart-line>
         </v-flex>
       </v-layout>
-    </v-container>
+    </v-card-title>
+    <v-card-actions class="account-tile__footer">
+      <div class="account-tile__footer__text">
+        Last synchro: {{ formatDate(lastSynchro) }}
+      </div>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
   import BiChartLine from "../../components/chart/line";
+  import {utc} from "moment";
 
   export default {
     name: 'BiAccountTile',
@@ -35,6 +41,10 @@
       },
       amount: {
         type: Number,
+        required: true,
+      },
+      lastSynchro: {
+        type: Date,
         required: true,
       },
       chartData: {
@@ -62,6 +72,11 @@
             enabled: false,
           }
         }
+      }
+    },
+    methods: {
+      formatDate: function(date) {
+        return utc(date).format('L');
       }
     }
   }

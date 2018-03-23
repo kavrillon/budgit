@@ -26,6 +26,7 @@
               class="dashboard__current__accounts__type"
               :name="account.name"
               :amount="account.total"
+              :lastSynchro="account.lastUpdated"
               :chart-data="account.data"
             ></bi-account-tile>
           </v-flex>

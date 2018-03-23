@@ -2,6 +2,7 @@ export default [
   {
     name: 'Compte commun',
     total: 942,
+    lastUpdated: new Date(),
     data: {
       labels: ['month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9'],
       datasets: [
@@ -22,6 +23,7 @@ export default [
   {
     name: 'Livret A',
     total: 6947,
+    lastUpdated: new Date(),
     data: {
       labels: ['month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9'],
       datasets: [
@@ -42,6 +44,7 @@ export default [
   {
     name: 'PEL',
     total: 12023,
+    lastUpdated: new Date(),
     data: {
       labels: ['month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9'],
       datasets: [
