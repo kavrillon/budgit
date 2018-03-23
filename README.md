@@ -27,6 +27,7 @@
   http://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
 
 ### Next
+- DB: datamodel & API
 - FO: Axios global conf + get user + error handling
   https://ssr.vuejs.org/en/data.html
   Try to put route compo at top level / pass asyncdata to components
@@ -64,6 +65,7 @@
 - FO: 404 page
 - FO: 500 page
 - FO: account management 
+- FO: format numbers
 - FO: critical CSS
 
 ### Done & refs

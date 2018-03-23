@@ -1,187 +1,166 @@
 <template>
   <v-content class="dashboard">
 
-    <bi-navigation-right-bar :notifications="notifications"></bi-navigation-right-bar>
+    <!--
+    <bi-navigation-right-bar
+      class="dashboard__notifications"
+      :notifications="notifications"
+    ></bi-navigation-right-bar>
+    -->
 
-    <!-- MODULE CURRENT -->
-    <v-layout row wrap class="dashboard__current">
+    <v-container>
+      <!-- MODULE CURRENT -->
+      <v-layout row wrap class="dashboard__current">
+        <v-flex xs12 sm3 class="dashboard__current__accounts">
+          <v-flex xs12 class="dashboard__current__accounts__title">
+            Accounts
+          </v-flex>
 
-      <v-flex xs12 sm3 class="dashboard__current__accounts">
-        <v-flex xs12 class="dashboard__current__accounts__title">
-          Accounts
+          <v-flex
+            xs12
+            d-flex
+            v-for="account in dataChartLineCurrentAccounts"
+            :key="account.name"
+          >
+            <bi-account-tile
+              class="dashboard__current__accounts__type"
+              :name="account.name"
+              :amount="account.total"
+              :chart-data="account.data"
+            ></bi-account-tile>
+          </v-flex>
         </v-flex>
 
-        <v-flex
-          xs12
-          d-flex
-          v-for="account in dataChartLineCurrentAccounts"
-          :key="account.name"
-        >
-          <bi-account-tile
-            class="dashboard__current__accounts__type"
-            :name="account.name"
-            :amount="account.total"
-            :chart-data="account.data"
-          ></bi-account-tile>
-        </v-flex>
-      </v-flex>
+        <v-flex xs12 sm9 class="dashboard__current__month">
+          <div class="dashboard__current__month__date">
+            January, 2018
+          </div>
 
-      <v-flex xs12 sm9 class="dashboard__current__month">
-        <div class="dashboard__current__month__date">
-          January, 2018
-        </div>
+          <v-card class="dashboard__current__month__balance">
+            <v-container>
+              <v-layout row wrap>
 
-        <v-card class="dashboard__current__month__balance">
-          <v-container>
+                <v-flex xs6 md4 class="dashboard__current__month__balance__spending">
+                  <bi-account-percent
+                    :chart-height="80"
+                    :value="currentMonthSpending"
+                    :total="currentMonthTotalSpending"
+                    chart-color="#ff6384"
+                    title="Spending"
+                    class="dashboard__current__month__balance__spending__chart"
+                  >
+                  </bi-account-percent>
+                </v-flex>
+
+                <v-flex xs6 md4 class="dashboard__current__month__balance__income">
+                  <bi-account-percent
+                    :chart-height="80"
+                    :value="currentMonthIncome"
+                    :total="currentMonthTotalIncome"
+                    chart-color="#4bc1c0"
+                    title="Income"
+                    class="dashboard__current__month__balance__income__chart"
+                  >
+                  </bi-account-percent>
+                </v-flex>
+
+                <v-flex xs12 md4 class="dashboard__current__month__balance__diff">
+                  <v-layout row wrap>
+                    <v-flex xs6 md12 class="dashboard__current__month__balance__diff__block">
+                      <div class="dashboard__current__month__balance__diff__block__title">Balance:</div>
+                      <div class="dashboard__current__month__balance__diff__block__value"
+                           :class="{'dashboard__current__month__balance__diff__block__value--down' : monthDiff < 0}">
+                        <v-icon
+                          class="dashboard__current__month__balance__diff__block__value__icon"
+                          v-show="monthDiff > 0"
+                        >trending_up
+                        </v-icon>
+                        <v-icon
+                          class="dashboard__current__month__balance__diff__block__value__icon"
+                          v-show="monthDiff < 0"
+                        >trending_down
+                        </v-icon>
+                        <span
+                          class="dashboard__current__month__balance__diff__block__value__amount">{{ monthDiff }} €</span>
+                      </div>
+                    </v-flex>
+
+                    <v-flex xs6 md12 class="dashboard__current__month__balance__diff__block">
+                      <div class="dashboard__current__month__balance__diff__block__title">Savings:</div>
+                      <div
+                        class="dashboard__current__month__balance__diff__block__value"
+                        :class="{'dashboard__current__month__balance__diff__block__value--down' : monthSavings < 0}"
+                      >
+                        <v-icon class="dashboard__current__month__balance__diff__block__value__icon"
+                                v-show="monthSavings > 0"
+                        >trending_up
+                        </v-icon>
+                        <v-icon
+                          class="dashboard__current__month__balance__diff__block__value__icon"
+                          v-show="monthSavings < 0"
+                        >trending_down
+                        </v-icon>
+                        <span class="dashboard__current__month__balance__diff__block__value__amount">{{ monthSavings }} €</span>
+                      </div>
+                    </v-flex>
+                  </v-layout>
+
+                  <v-divider class="dashboard__current__month__balance__diff__separator"></v-divider>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
+
+          <v-card class="dashboard__current__month__categories">
             <v-layout row wrap>
-              <v-flex xs6 md4 class="dashboard__current__month__balance__spending">
-                <bi-account-percent
-                  :chart-height="80"
-                  :value="currentMonthSpending"
-                  :total="currentMonthTotalSpending"
-                  chart-color="#ff6384"
+              <v-flex xs12 sm6>
+                <bi-account-category
                   title="Spending"
-                  class="dashboard__current__month__balance__spending__chart"
-                ></bi-account-percent>
+                  :data="dataChartCurrentAccountByCategories.spending"
+                  color="#ff6383"
+                ></bi-account-category>
               </v-flex>
-              <v-flex xs6 md4 class="dashboard__current__month__balance__income">
-                <bi-account-percent
-                  :chart-height="80"
-                  :value="currentMonthIncome"
-                  :total="currentMonthTotalIncome"
-                  chart-color="#4bc1c0"
+              <v-flex xs12 sm6>
+                <bi-account-category
                   title="Income"
-                  class="dashboard__current__month__balance__income__chart"
-                ></bi-account-percent>
-              </v-flex>
-              <v-flex xs12 md4 class="dashboard__current__month__balance__diff">
-                <v-layout row wrap>
-                  <v-flex xs6 md12 class="dashboard__current__month__balance__diff__block">
-                    <div class="dashboard__current__month__balance__diff__block__title">
-                      Balance:
-                    </div>
-                    <div class="dashboard__current__month__balance__diff__block__value"
-                         :class="{'dashboard__current__month__balance__diff__block__value--down' : monthDiff < 0}">
-                      <v-icon class="dashboard__current__month__balance__diff__block__value__icon"
-                              v-show="monthDiff > 0">
-                        trending_up
-                      </v-icon>
-                      <v-icon class="dashboard__current__month__balance__diff__block__value__icon"
-                              v-show="monthDiff < 0">
-                        trending_down
-                      </v-icon>
-                      <span
-                        class="dashboard__current__month__balance__diff__block__value__amount">{{ monthDiff }} €</span>
-                    </div>
-                  </v-flex>
-
-                  <v-flex xs6 md12 class="dashboard__current__month__balance__balance__diff__block">
-                    <div class="dashboard__current__month__balance__diff__block__title">
-                      Savings:
-                    </div>
-                    <div class="dashboard__current__month__balance__diff__block__value"
-                         :class="{'dashboard__current__month__balance__diff__block__value--down' : 500 < 0}">
-                      <v-icon class="dashboard__current__month__balance__diff__block__value__icon" v-show="500 > 0">
-                        trending_up
-                      </v-icon>
-                      <v-icon class="dashboard__current__month__balance__diff__block__value__icon" v-show="500 < 0">
-                        trending_down
-                      </v-icon>
-                      <span class="dashboard__current__month__balance__diff__block__value__amount">{{ 500 }} €</span>
-                    </div>
-                  </v-flex>
-                </v-layout>
-
-                <v-divider class="dashboard__current__month__balance__diff__separator"></v-divider>
+                  :data="dataChartCurrentAccountByCategories.income"
+                  color="#4ac2c0"
+                ></bi-account-category>
               </v-flex>
             </v-layout>
-          </v-container>
-        </v-card>
+          </v-card>
+        </v-flex>
 
 
-        <div style="height: 100px"></div>
-
-
-        <v-card class="dashboard__current__month__categories">
-          <v-layout row wrap>
-            <v-flex xs12 sm6>
-              <bi-account-category
-                title="Spending"
-                :data="dataChartCurrentAccountByCategories.spending"
-                color="#ff6383"
-              ></bi-account-category>
-            </v-flex>
-            <v-flex xs12 sm6>
-              <bi-account-category
-                title="Income"
-                :data="dataChartCurrentAccountByCategories.income"
-                color="#4ac2c0"
-              ></bi-account-category>
-            </v-flex>
-            <v-flex xs12>More details</v-flex>
-          </v-layout>
-        </v-card>
-      </v-flex>
-
-
-    </v-layout>
-    <!-- END MODULE CURRENT -->
-
+      </v-layout>
+      <!-- END MODULE CURRENT -->
+    </v-container>
     <!-- MODULE HISTORY -->
     <div class="dashboard__history">
-      <v-layout raw wrap>
-        <v-flex class="dashboard__history__top" xs8 sm4>
-          <div class="dashboard__history__top__title">History</div>
-          <div class="dashboard__history__top__subtitle">Saving by month in {{ activeYear }}</div>
-        </v-flex>
-        <v-flex class="dashboard__history__year" xs4 sm8>
-          <bi-form-year-selector
-            :data="availableYears"
-            :active-year="activeYear"
-            :visible-shortcuts="3"
-            :minimise-on-mobile="true"
-            v-on:formYearSelectorYearChange="selectYear"
-          ></bi-form-year-selector>
-        </v-flex>
-      </v-layout>
+      <v-container>
+        <v-layout raw wrap>
+          <v-flex class="dashboard__history__top" xs8 sm4>
+            <div class="dashboard__history__top__title">History</div>
+            <div class="dashboard__history__top__subtitle">Saving by month in {{ activeYear }}</div>
+          </v-flex>
+          <v-flex class="dashboard__history__year" xs4 sm8>
+            <bi-form-year-selector
+              :data="availableYears"
+              :active-year="activeYear"
+              :visible-shortcuts="3"
+              :minimise-on-mobile="true"
+              v-on:formYearSelectorYearChange="selectYear"
+            ></bi-form-year-selector>
+          </v-flex>
+        </v-layout>
 
-      <bi-account-history
-        :data="yearHistoryData"
-        class="dashboard__history__chart"
-      ></bi-account-history>
+        <bi-account-history
+          :data="yearHistoryData"
+          class="dashboard__history__chart"
+        ></bi-account-history>
+      </v-container>
     </div>
     <!-- END MODULE HISTORY -->
-
-    <!-- MODULE DETAILS -->
-    <div class="dashboard__details">
-      <v-layout row wrap>
-        <v-flex xs12 sm4>
-          <div class="dashboard__details__savings">
-            <div class="dashboard__details__savings__title">Savings history</div>
-          </div>
-        </v-flex>
-        <v-flex xs12 sm4>
-          <div class="dashboard__details__capacity">
-            <div class="dashboard__details__capacity__title">Savings for year</div>
-          </div>
-        </v-flex>
-        <v-flex xs12 sm4>
-          <div class="dashboard__details__categories">
-            <div class="dashboard__details__categories__title">Categories</div>
-          </div>
-        </v-flex>
-      </v-layout>
-    </div>
-    <!-- END MODULE DETAILS -->
-
-    <!-- MODULE PREVIOUS -->
-    <div class="dashboard__previous">
-      <v-layout>
-        <v-flex>
-        </v-flex>
-      </v-layout>
-    </div>
-    <!-- END MODULE PREVIOUS -->
 
   </v-content>
 </template>
@@ -229,6 +208,7 @@
         activeYear: parseInt((new Date()).getFullYear()),
         availableYears: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
         yearHistoryData: this.generateFakeYearData(),
+        monthSavings: 500,
         notifications: [
           {
             name: 'Achat 1',

@@ -36,23 +36,21 @@ body,
     padding: 0 0 $padding-xs;
 
     @media (min-width: $xs) {
-      padding: 0 $padding-md $padding-md;
+      padding: 0 0 $padding-md;
     }
 
     @media (min-width: $md) {
-      padding: $padding-xs $padding-lg $padding-lg;
+      padding: 0 0 $padding-lg;
     }
 
     &__accounts {
       display: block; // Just put flex if the column need to fit to the max height
       flex-direction: row;
       flex-wrap: wrap;
-      padding: $padding-xs $padding-xs 0;
 
       @media (min-width: $xs) {
         flex-direction: column;
         flex-wrap: nowrap;
-        padding: 0;
       }
 
       &__title {
@@ -80,7 +78,6 @@ body,
     &__month {
       display: block; // Just put flex if the column need to fit to the max height
       flex-direction: column;
-      padding: 0 $padding-xs;
 
       @media (min-width: $xs) {
         padding: 0 0 0 $padding-md;
@@ -179,6 +176,7 @@ body,
       }
 
       &__categories {
+        margin-top: $padding-md;
         &__title {
           @include subtitle;
         }
@@ -188,7 +186,6 @@ body,
 
   &__history {
     background: $bg-blue;
-    padding: $padding-xs;
     color: white;
 
     @media (min-width: $xs) {
