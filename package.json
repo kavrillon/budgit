@@ -10,7 +10,11 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@types/netlify-identity-widget": "^1.4.1",
     "core-js": "^2.6.5",
+    "gotrue-js": "^0.9.25",
+    "netlify-auth-providers": "^1.0.0-alpha5",
+    "netlify-identity-widget": "^1.5.5",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
