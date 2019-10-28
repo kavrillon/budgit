@@ -1,15 +1,15 @@
 <template>
-  <div id="app">
+  <main id="app">
     <router-view />
-  </div>
+  </main>
 </template>
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 export default Vue.extend({});
 </script>
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

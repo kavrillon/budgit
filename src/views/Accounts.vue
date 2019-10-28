@@ -1,5 +1,32 @@
 <template>
-  <div class="accounts">
-    <h1>List of accounts</h1>
-  </div>
+  <section class="accounts">
+    <h1 class="accounts__title">List of accounts</h1>
+    <div class="accounts__list">
+      <account-summary
+        v-for="(account, index) in accounts"
+        :key="index"
+        :account="account"
+      />
+    </div>
+  </section>
 </template>
+<script lang="ts">
+import Vue from 'vue';
+import { getAccounts } from '@/services/account.service';
+import { Account } from '@/@types';
+import AccountSummary from '@/components/Account/Summary.vue';
+
+export default Vue.extend({
+  components: {
+    AccountSummary
+  },
+  data() {
+    return {
+      accounts: [] as Account[]
+    };
+  },
+  async created() {
+    this.accounts = await getAccounts();
+  }
+});
+</script>
