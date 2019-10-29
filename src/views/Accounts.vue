@@ -11,10 +11,10 @@
   </section>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import { getAccounts } from '@/services/account.service';
-import { Account } from '@/@types';
-import AccountSummary from '@/components/Account/Summary.vue';
+import Vue from "vue";
+import { getAccounts } from "@/services/account.service";
+import { Account } from "@/@types";
+import AccountSummary from "@/components/Account/Summary.vue";
 
 export default Vue.extend({
   components: {
