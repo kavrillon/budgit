@@ -14,7 +14,7 @@
           :key="index"
           class="accounts__operations__list__item"
         >
-          {{ formattedLastUpdated(op.date) }} - {{ op.name }}: {{ op.value }}
+          {{ op.date }} - {{ op.name }}: {{ op.value }}
         </li>
       </ul>
     </section>
@@ -34,12 +34,6 @@ export default Vue.extend({
   },
   async created() {
     this.account = await getAccount(parseInt(this.$route.params.number));
-    console.log("TCL: created -> this.account", this.account);
-  },
-  methods: {
-    formattedLastUpdated(date: Date) {
-      return new Intl.DateTimeFormat("fr-FR").format(date);
-    }
   }
 });
 </script>
