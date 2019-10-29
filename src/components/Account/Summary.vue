@@ -1,5 +1,8 @@
 <template>
-  <section class="account-summary">
+  <router-link
+    :to="{ name: 'account', params: { number: account.number } }"
+    class="account-summary"
+  >
     <figure class="account-summary__balance">{{ account.balance }} €</figure>
     <h2 class="account-summary__name">
       {{ account.name }}
@@ -7,7 +10,7 @@
     <footer class="account-summary__footer">
       {{ formattedLastUpdated }}
     </footer>
-  </section>
+  </router-link>
 </template>
 <script lang="ts">
 import Vue from 'vue';
