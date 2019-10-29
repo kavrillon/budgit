@@ -16,8 +16,8 @@ export type FourthLine = {
 };
 
 const ACCOUNTS: Account[] = [];
-const SOURCE_FOLDER = './data/source/';
-const JSON_FOLDER = './data/json/';
+const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH;
+const RESULT_FOLDER = './data/json/';
 const SEPARATOR = ';';
 let sourceFiles = fs
   .readdirSync(SOURCE_FOLDER)
@@ -54,7 +54,7 @@ sourceFiles.forEach((sourceFile: string) => {
   }
 });
 
-fs.writeFileSync(`${JSON_FOLDER}/accounts.json`, JSON.stringify(ACCOUNTS));
+fs.writeFileSync(`${RESULT_FOLDER}/accounts.json`, JSON.stringify(ACCOUNTS));
 
 function mergeAccounts(
   existingAccount: Account,
