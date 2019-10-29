@@ -1,8 +1,24 @@
 <template>
-  <section class="account" v-if="account">
-    <h1 class="accounts__title">Account: {{ account.name }}</h1>
-    <figure class="accounts__balance">{{ account.balance }} €</figure>
-  </section>
+  <main class="account" v-if="account">
+    <section class="account__header">
+      <h1 class="accounts__header__title">Account: {{ account.name }}</h1>
+      <figure class="accounts__header__balance">{{ account.balance }} €</figure>
+    </section>
+    <section class="accounts__operations">
+      <header class="accounts__operations__head">
+        Operations: {{ account.operations.length }}
+      </header>
+      <ul class="accounts__operations__list">
+        <li
+          v-for="(op, index) in account.operations"
+          :key="index"
+          class="accounts__operations__list__item"
+        >
+          {{ formattedLastUpdated(op.date) }} - {{ op.name }}: {{ op.value }}
+        </li>
+      </ul>
+    </section>
+  </main>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -18,6 +34,12 @@ export default Vue.extend({
   },
   async created() {
     this.account = await getAccount(parseInt(this.$route.params.number));
+    console.log("TCL: created -> this.account", this.account);
+  },
+  methods: {
+    formattedLastUpdated(date: Date) {
+      return new Intl.DateTimeFormat("fr-FR").format(date);
+    }
   }
 });
 </script>

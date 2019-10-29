@@ -27,7 +27,14 @@ function jsonToAccount(jsonObject: any) {
     lastUpdate: new Date(jsonObject.lastUpdate),
     number: jsonObject.number,
     name: jsonObject.name,
-    balance: jsonObject.balance
+    balance: jsonObject.balance,
+    operations: jsonObject.operations.map((op: any) => ({
+      number: op.number,
+      date: new Date(op.date),
+      name: op.name,
+      infos: op.infos,
+      value: op.value
+    }))
   };
 
   return account;

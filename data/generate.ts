@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { Account } from '../src/@types';
+import { Account, Operation } from '../src/@types';
 
 export type FirstLine = {
   bank: number;
@@ -35,13 +35,15 @@ sourceFiles.forEach((sourceFile: string) => {
   const firstLine = parseFirstLine(lines[0]);
   const secondLine = parseSecondLine(lines[1]);
   const fourthLine = parseFourthLine(lines[3]);
+  const operationLines = parseOperationLines(lines);
 
   const currentAccount: Account = {
     bank: firstLine.bank,
     lastUpdate: firstLine.lastUpdate,
     number: secondLine.number,
     name: secondLine.name,
-    balance: fourthLine.balance
+    balance: fourthLine.balance,
+    operations: operationLines
   };
 
   const existingAccount = ACCOUNTS.find(
@@ -64,6 +66,9 @@ function mergeAccounts(
     existingAccount.lastUpdate = currentAccount.lastUpdate;
     existingAccount.balance = currentAccount.balance;
   }
+  existingAccount.operations = existingAccount.operations
+    .concat(currentAccount.operations)
+    .sort((a, b) => (a.date > b.date ? -1 : 1));
 }
 
 function parseFirstLine(line: string): FirstLine {
@@ -93,6 +98,30 @@ function parseFourthLine(line: string): FourthLine {
   };
 }
 
+function parseOperationLines(lines: string[]): Operation[] {
+  const operationLines = lines.slice(5, lines.length - 1);
+  let results: Operation[] = [];
+
+  operationLines.forEach(line => {
+    const cells = line.split(SEPARATOR);
+    const value = cells[3] !== '' ? cells[3] : cells[4];
+
+    results.push({
+      number: cells[1],
+      date: getDateFromString(cells[0]),
+      name: cells[2],
+      infos: cells[5],
+      value: parseValue(value)
+    });
+  });
+  return results;
+}
+
+function parseValue(value: string): number {
+  const formattedValue = value.replace(',', '.').replace('+', '');
+  return parseFloat(formattedValue);
+}
+
 function getLabelledValue(line: string): string {
   const value = line.split(':');
   if (typeof value[1] === 'undefined') {
@@ -103,6 +132,7 @@ function getLabelledValue(line: string): string {
 
 function getDateFromString(line: string): Date {
   const dateParts = line.split('/');
+
   try {
     return new Date(+dateParts[2], +dateParts[1] - 1, +dateParts[0]);
   } catch (_) {
