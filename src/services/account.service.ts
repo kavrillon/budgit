@@ -4,7 +4,7 @@ import { Account } from "@/@types/index.js";
 export async function getAccounts(): Promise<Account[]> {
   let accounts: Account[] = [];
 
-  jsonAccounts.forEach(jsonObject => {
+  jsonAccounts.forEach((jsonObject: any) => {
     accounts.push(jsonToAccount(jsonObject));
   });
 
@@ -13,7 +13,7 @@ export async function getAccounts(): Promise<Account[]> {
 
 export async function getAccount(number: number): Promise<Account | null> {
   const account: Object | undefined = jsonAccounts.find(
-    jsonObject => jsonObject.number === number
+    (jsonObject: any) => jsonObject.number === number
   );
   if (typeof account !== "undefined") {
     return Promise.resolve(jsonToAccount(account));
