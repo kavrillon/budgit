@@ -32,22 +32,20 @@ sourceFiles.forEach((sourceFile: string) => {
     .split('\n')
     .filter(Boolean);
 
-  const firstLine = parseFirstLine(lines[0]);
-  const secondLine = parseSecondLine(lines[1]);
-  const fourthLine = parseFourthLine(lines[3]);
+  const infosLines = parseInfosLines(lines);
   const operationLines = parseOperationLines(lines);
 
   const currentAccount: Account = {
-    bank: firstLine.bank,
-    lastUpdate: firstLine.lastUpdate,
-    number: secondLine.number,
-    name: secondLine.name,
-    balance: fourthLine.balance,
+    bank: infosLines.bank,
+    lastUpdate: infosLines.lastUpdate,
+    number: infosLines.number,
+    name: infosLines.name,
+    balance: infosLines.balance,
     operations: operationLines
   };
 
   const existingAccount = ACCOUNTS.find(
-    acc => acc.number === secondLine.number
+    acc => acc.number === infosLines.number
   );
   if (typeof existingAccount !== 'undefined') {
     mergeAccounts(existingAccount, currentAccount);
@@ -71,30 +69,25 @@ function mergeAccounts(
     .sort((a, b) => (a.date > b.date ? -1 : 1));
 }
 
-function parseFirstLine(line: string): FirstLine {
-  const cells = line.split(SEPARATOR);
+function parseInfosLines(lines: string[]): Account {
+  let cells = lines[0].split(SEPARATOR);
   const bank = parseInt(getLabelledValue(cells[0]));
-  const date = getLabelledValue(cells[3]);
+  const lastUpdate = getDateFromString(getLabelledValue(cells[3]));
+
+  cells = lines[1].split(SEPARATOR);
+  const number = parseInt(getLabelledValue(cells[0]));
+  const name = getLabelledValue(cells[1]);
+
+  cells = lines[3].split(SEPARATOR);
+  const balance = parseInt(cells[4]);
+
   return {
     bank,
-    lastUpdate: getDateFromString(date)
-  };
-}
-
-function parseSecondLine(line: string): SecondLine {
-  const cells = line.split(SEPARATOR);
-
-  return {
-    number: parseInt(getLabelledValue(cells[0])),
-    name: getLabelledValue(cells[1])
-  };
-}
-
-function parseFourthLine(line: string): FourthLine {
-  const cells = line.split(SEPARATOR);
-
-  return {
-    balance: parseInt(cells[4])
+    lastUpdate,
+    number,
+    name,
+    balance,
+    operations: []
   };
 }
 
