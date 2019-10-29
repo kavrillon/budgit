@@ -1,7 +1,7 @@
 <template>
-  <main id="app">
+  <div id="app">
     <router-view />
-  </main>
+  </div>
 </template>
 <script lang="ts">
 import Vue from "vue";

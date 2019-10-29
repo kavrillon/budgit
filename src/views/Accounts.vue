@@ -1,5 +1,5 @@
 <template>
-  <section class="accounts">
+  <main class="accounts">
     <h1 class="accounts__title">List of accounts</h1>
     <div class="accounts__list">
       <account-summary
@@ -8,7 +8,7 @@
         :account="account"
       />
     </div>
-  </section>
+  </main>
 </template>
 <script lang="ts">
 import Vue from "vue";
