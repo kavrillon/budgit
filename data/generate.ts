@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as moment from 'moment';
 import { Account, Operation } from '../src/@types';
 
 export type FirstLine = {
@@ -72,7 +73,7 @@ function mergeAccounts(
 function parseInfosLines(lines: string[]): Account {
   let cells = lines[0].split(SEPARATOR);
   const bank = parseInt(getLabelledValue(cells[0]));
-  const lastUpdate = getDateFromString(getLabelledValue(cells[3]));
+  const lastUpdate = getFormattedDate(getLabelledValue(cells[3]), 'DD/MM/YYYY');
 
   cells = lines[1].split(SEPARATOR);
   const number = parseInt(getLabelledValue(cells[0]));
@@ -101,7 +102,7 @@ function parseOperationLines(lines: string[]): Operation[] {
 
     results.push({
       number: cells[1],
-      date: getDateFromString(cells[0]),
+      date: getFormattedDate(cells[0], 'DD/MM/YY'),
       name: cells[2],
       infos: cells[5],
       value: parseValue(value)
@@ -123,11 +124,9 @@ function getLabelledValue(line: string): string {
   return value[1].trim();
 }
 
-function getDateFromString(line: string): Date {
-  const dateParts = line.split('/');
-
+function getFormattedDate(line: string, format: string): string {
   try {
-    return new Date(+dateParts[2], +dateParts[1] - 1, +dateParts[0]);
+    return moment(line, format).format('DD/MM/YYYY');
   } catch (_) {
     throw new Error(`Date format is not correct: ${line}`);
   }

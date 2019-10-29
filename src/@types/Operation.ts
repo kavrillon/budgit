@@ -1,6 +1,6 @@
 export type Operation = {
   number: string;
-  date: Date;
+  date: string;
   name: string;
   infos: string;
   value: number;

@@ -2,7 +2,7 @@ import { Operation } from "./Operation";
 
 export type Account = {
   bank: number;
-  lastUpdate: Date;
+  lastUpdate: string;
   number: number;
   name: string;
   balance: number;

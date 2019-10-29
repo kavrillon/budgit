@@ -8,7 +8,7 @@
       {{ account.name }}
     </h2>
     <footer class="account-summary__footer">
-      {{ formattedLastUpdated }}
+      {{ account.lastUpdated }}
     </footer>
   </router-link>
 </template>
@@ -21,11 +21,6 @@ export default Vue.extend({
     account: {
       type: Object as () => Account,
       required: true
-    }
-  },
-  computed: {
-    formattedLastUpdated() {
-      return new Intl.DateTimeFormat("fr-FR").format(this.account.lastUpdate);
     }
   }
 });
