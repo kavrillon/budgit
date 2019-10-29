@@ -5,15 +5,15 @@
   </section>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import { getAccount } from '@/services/account.service';
-import { Account } from '@/@types';
+import Vue from "vue";
+import { getAccount } from "@/services/account.service";
+import { Account } from "@/@types";
 
 export default Vue.extend({
   data() {
     return {
       account: null as Account | null,
-      error: ''
+      error: ""
     };
   },
   async created() {

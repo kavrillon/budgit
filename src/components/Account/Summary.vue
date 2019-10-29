@@ -13,8 +13,8 @@
   </router-link>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import { Account } from '@/@types';
+import Vue from "vue";
+import { Account } from "@/@types";
 
 export default Vue.extend({
   props: {
@@ -25,7 +25,7 @@ export default Vue.extend({
   },
   computed: {
     formattedLastUpdated() {
-      return new Intl.DateTimeFormat('fr-FR').format(this.account.lastUpdate);
+      return new Intl.DateTimeFormat("fr-FR").format(this.account.lastUpdate);
     }
   }
 });
