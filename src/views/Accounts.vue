@@ -13,7 +13,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { getAccounts } from "@/services/account.service";
-import { Account } from "@/@types";
+import { Account, Operation } from "@/@types";
 import AccountSummary from "@/components/Account/Summary.vue";
 
 export default Vue.extend({
@@ -30,3 +30,15 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss" scoped>
+.accounts {
+  padding: $gutter-size;
+
+  &__title {
+    @include title;
+
+    margin: 0 0 $gutter-size;
+    padding: 0;
+  }
+}
+</style>

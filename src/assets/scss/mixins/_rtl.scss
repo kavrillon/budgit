@@ -1,0 +1,71 @@
+// Mixin: RTL Mode
+
+@function opposite-direction($directions) {
+  $opposite-directions: ();
+  $direction-map: (
+    'right': 'left',
+    'left': 'right',
+    'ltr': 'rtl',
+    'rtl': 'ltr',
+    'padding-left': 'padding-right',
+    'padding-right': 'padding-left',
+    'margin-left': 'margin-right',
+    'margin-right': 'margin-left'
+  );
+
+  @each $direction in $directions {
+    @if map-has-key($direction-map, $direction) {
+      $opposite-directions: append(
+        $opposite-directions,
+        unquote(map-get($direction-map, $direction))
+      );
+    } @else {
+      @warn "No opposite direction can be found for `#{$direction}`. Direction omitted.";
+    }
+  }
+
+  @return $opposite-directions;
+}
+
+@function opposite-value($value) {
+  $opposite-value: ();
+  $value-map: (
+    right: left,
+    left: right
+  );
+
+  @if map-has-key($value-map, $value) {
+    $opposite-value: append($opposite-value, map-get($value-map, $value));
+  } @else {
+    @warn "No opposite value can be found for `#{$value}`. Value omitted.";
+  }
+
+  @return $opposite-value;
+}
+
+/**
+Use: 
+@include rtl-prop(padding-left, 30px);
+@include rtl-prop(margin-right, 30px);
+*/
+@mixin rtl-prop($prop, $value) {
+  .app--ltr & {
+    #{$prop}: $value;
+  }
+  .app--rtl & {
+    #{opposite-direction(#{$prop})}: $value;
+  }
+}
+
+/**
+Use: 
+@include rtl-value(text-align, left);
+*/
+@mixin rtl-value($prop, $value) {
+  .app--ltr & {
+    #{$prop}: $value;
+  }
+  .app--rtl & {
+    #{$prop}: #{opposite-value(#{$value})};
+  }
+}
