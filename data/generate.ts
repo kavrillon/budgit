@@ -65,9 +65,15 @@ function mergeAccounts(
     existingAccount.lastUpdate = currentAccount.lastUpdate;
     existingAccount.balance = currentAccount.balance;
   }
-  existingAccount.operations = existingAccount.operations
-    .concat(currentAccount.operations)
-    .sort((a, b) => (a.date > b.date ? -1 : 1));
+
+  currentAccount.operations.forEach((currentOp: Operation) => {
+    const found = existingAccount.operations.find(
+      (ex: Operation) => ex.number === currentOp.number
+    );
+    if (typeof found === 'undefined') {
+      existingAccount.operations.push(currentOp);
+    }
+  });
 }
 
 function parseInfosLines(lines: string[]): Account {
