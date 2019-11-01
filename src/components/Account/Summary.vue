@@ -25,3 +25,8 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss" scoped>
+.account-summary {
+  @include link;
+}
+</style>

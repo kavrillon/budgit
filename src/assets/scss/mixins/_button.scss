@@ -1,0 +1,56 @@
+// Mixins: Button
+
+@mixin button-clear {
+  line-height: $default-font-size;
+  cursor: pointer;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    outline: 0;
+  }
+}
+
+@mixin button {
+  @include button-clear;
+
+  display: inline-block;
+  z-index: 1;
+  position: relative;
+  text-transform: uppercase;
+  padding: $gutter-size-half $gutter-size;
+  transition: color 0.4s;
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+    transform: scale3d(0.7, 1, 1);
+    transition: transform 0.4s, opacity 0.4s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+    content: '';
+  }
+
+  &:not(:disabled):focus,
+  &:not(:disabled):hover {
+    &:not(:disabled):before {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.3;
+  }
+}

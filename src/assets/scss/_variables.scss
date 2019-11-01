@@ -1,0 +1,43 @@
+// Variables
+
+// Variables: Generic Colors
+$black: #000;
+$mine-shaft: #3c3c3c;
+$blue-stone: #006063;
+$blue-egg-blue: #00c3c9;
+
+// Variables: Contextualized Colors
+$color-primary: $blue-egg-blue;
+$color-primary-hover: $blue-stone;
+$color-text: $black;
+$color-text-light: $mine-shaft;
+
+// Gutters
+$gutter-size-small: 16px;
+$gutter-size-large: 24px;
+
+$gutter-size: var(--gutter-size);
+$gutter-size-half: calc(var(--gutter-size) / 2);
+
+// Variables: Breakpoints
+$xs: 480px;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xlg: 1500px;
+
+// Variables: Transitions
+$transition-effect-default: ease-in-out;
+
+$transition-duration-fast: 160ms;
+$transition-duration-medium: 320ms;
+$transition-duration-slow: 480ms;
+$transition-duration-very-slow: 768ms;
+
+// Fonts
+$default-font: 'Montserrat', arial, sans-serif;
+$default-font-size: 16px;
+$default-line-height: 20px;
+
+// Borders
+$border-radius-default: 0;
