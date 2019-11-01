@@ -1,0 +1,39 @@
+name: Validation CI
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Installation & Build
+        run: |
+          yarn install
+          yarn build
+        env:
+          CI: true
+      - name: Seeds Generation
+        run: |
+          BUDGIT_DATA_PATH=./data/seeds/ yarn data:generate
+        env:
+          CI: true
+      - name: Unit Testing
+        run: |
+          yarn test:unit
+        env:
+          CI: true
+      - name: E2E Testing
+        run: |
+          yarn test:e2e
+        env:
+          CI: true
