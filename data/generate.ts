@@ -16,6 +16,7 @@ export type FourthLine = {
   balance: number;
 };
 
+const DATE_FORMAT = 'DD/MM/YYYY';
 const ACCOUNTS: Account[] = [];
 const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH;
 const RESULT_FOLDER = './data/json/';
@@ -48,11 +49,23 @@ sourceFiles.forEach((sourceFile: string) => {
   const existingAccount = ACCOUNTS.find(
     acc => acc.number === infosLines.number
   );
+
   if (typeof existingAccount !== 'undefined') {
     mergeAccounts(existingAccount, currentAccount);
   } else {
     ACCOUNTS.push(currentAccount);
   }
+});
+
+// Ordering by date DESC
+ACCOUNTS.forEach((acc: Account) => {
+  acc.operations.sort(function(a, b) {
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    const date1 = parseInt(moment(a.date, DATE_FORMAT).format('X'));
+    const date2 = parseInt(moment(b.date, DATE_FORMAT).format('X'));
+    return date2 - date1;
+  });
 });
 
 fs.writeFileSync(`${RESULT_FOLDER}/accounts.json`, JSON.stringify(ACCOUNTS));
@@ -79,7 +92,7 @@ function mergeAccounts(
 function parseInfosLines(lines: string[]): Account {
   let cells = lines[0].split(SEPARATOR);
   const bank = parseInt(getLabelledValue(cells[0]));
-  const lastUpdate = getFormattedDate(getLabelledValue(cells[3]), 'DD/MM/YYYY');
+  const lastUpdate = getFormattedDate(getLabelledValue(cells[3]), DATE_FORMAT);
 
   cells = lines[1].split(SEPARATOR);
   const number = parseInt(getLabelledValue(cells[0]));
@@ -132,7 +145,7 @@ function getLabelledValue(line: string): string {
 
 function getFormattedDate(line: string, format: string): string {
   try {
-    return moment(line, format).format('DD/MM/YYYY');
+    return moment(line, format).format(DATE_FORMAT);
   } catch (_) {
     throw new Error(`Date format is not correct: ${line}`);
   }
