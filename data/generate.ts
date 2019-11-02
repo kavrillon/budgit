@@ -27,6 +27,8 @@ let sourceFiles = fs
 
 console.log('');
 console.log('### Start CSV parsing ###');
+console.log('Path: ' + SOURCE_FOLDER);
+
 sourceFiles.forEach((sourceFile: string) => {
   console.log('SourceFile: ', sourceFile);
   const lines = fs
