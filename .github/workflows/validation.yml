@@ -24,7 +24,7 @@ jobs:
           CI: true
       - name: Seeds Generation
         run: |
-          BUDGIT_DATA_PATH=./data/seeds/ yarn data:generate
+          yarn data:seeds
         env:
           CI: true
       - name: Unit Testing
