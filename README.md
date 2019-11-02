@@ -1,4 +1,6 @@
-# kan-budgit
+# Budg'It
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/acb3ea28c14e45b18a1e79f6e5584077)](https://www.codacy.com/manual/kavrillon/budgit?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kavrillon/budgit&amp;utm_campaign=Badge_Grade)
 
 ## Project setup
 

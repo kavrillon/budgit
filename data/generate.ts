@@ -61,7 +61,7 @@ sourceFiles.forEach((sourceFile: string) => {
 
 // Ordering by date DESC
 ACCOUNTS.forEach((acc: Account) => {
-  acc.operations.sort(function(a, b) {
+  acc.operations.sort(function(a: Operation, b: Operation) {
     // Turn your strings into dates, and then subtract them
     // to get a value that is either negative, positive, or zero.
     const date1 = parseInt(moment(a.date, DATE_FORMAT).format('X'));
