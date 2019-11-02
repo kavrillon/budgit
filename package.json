@@ -5,11 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "deploy": "yarn data:seeds && vue-cli-service build",
     "lint": "vue-cli-service lint",
     "format": "vue-cli-service lint --fix",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage",
-    "data:generate": "ts-node --skip-project ./data/generate.ts"
+    "data:generate": "ts-node --skip-project ./data/generate.ts",
+    "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:generate"
   },
   "dependencies": {
     "@types/node": "^12.11.7",
