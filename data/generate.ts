@@ -19,7 +19,7 @@ export type FourthLine = {
 const DATE_FORMAT = 'DD/MM/YYYY';
 const ACCOUNTS: Account[] = [];
 const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH;
-const RESULT_FOLDER = './data/json/';
+const RESULT_FOLDER = './public/data/';
 const SEPARATOR = ';';
 let sourceFiles = fs
   .readdirSync(SOURCE_FOLDER)
