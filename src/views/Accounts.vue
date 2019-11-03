@@ -11,23 +11,23 @@
   </main>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import { getAccounts } from "@/services/account.service";
-import { Account, Operation } from "@/@types";
-import AccountSummary from "@/components/Account/Summary.vue";
+import Vue from 'vue';
+import { getAccounts } from '@/services/account.service';
+import { Account, Operation } from '@/@types';
+import AccountSummary from '@/components/Account/Summary.vue';
 
 export default Vue.extend({
   components: {
-    AccountSummary
+    AccountSummary,
   },
   data() {
     return {
-      accounts: [] as Account[]
+      accounts: [] as Account[],
     };
   },
   async created() {
     this.accounts = await getAccounts();
-  }
+  },
 });
 </script>
 <style lang="scss" scoped>

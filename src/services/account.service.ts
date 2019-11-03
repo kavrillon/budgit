@@ -1,7 +1,7 @@
-import { Account } from "@/@types/index";
-import { get } from "@/services/api.service";
+import { Account } from '@/@types/index';
+import { get } from '@/services/api.service';
 
-const JSON_PATH = "/data/accounts.json";
+const JSON_PATH = '/data/accounts.json';
 
 export async function getAccounts(): Promise<Account[]> {
   let accounts: Account[] = [];
@@ -21,7 +21,7 @@ export async function getAccount(number: number): Promise<Account | null> {
     (account: Account) => account.number === number
   );
 
-  if (typeof account !== "undefined") {
+  if (typeof account !== 'undefined') {
     return Promise.resolve(account);
   }
   return Promise.resolve(null);
