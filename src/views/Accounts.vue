@@ -20,13 +20,13 @@ export default Vue.extend({
   components: {
     AccountSummary,
   },
-  async created() {
-    this.accounts = await getAccounts();
-  },
   data() {
     return {
       accounts: [] as Account[],
     };
+  },
+  async created() {
+    this.accounts = await getAccounts();
   },
 });
 </script>

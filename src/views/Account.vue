@@ -1,5 +1,5 @@
 <template>
-  <main class="account" v-if="account">
+  <main v-if="account" class="account">
     <section class="account__header">
       <h1 class="account__header__title">Account: {{ account.name }}</h1>
       <figure class="account__header__balance">{{ account.balance }} €</figure>
@@ -27,6 +27,12 @@ import { getAccount } from '@/services/account.service';
 import { Account, Operation } from '@/@types';
 
 export default Vue.extend({
+  data() {
+    return {
+      account: null as Account | null,
+      error: '',
+    };
+  },
   computed: {
     years(): string[] {
       if (this.account !== null) {
@@ -46,12 +52,6 @@ export default Vue.extend({
   },
   async created() {
     this.account = await getAccount(parseInt(this.$route.params.number));
-  },
-  data() {
-    return {
-      account: null as Account | null,
-      error: '',
-    };
   },
 });
 </script>
