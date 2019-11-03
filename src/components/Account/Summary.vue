@@ -13,16 +13,16 @@
   </router-link>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import { Account } from "@/@types";
+import Vue from 'vue';
+import { Account } from '@/@types';
 
 export default Vue.extend({
   props: {
     account: {
       type: Object as () => Account,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 });
 </script>
 <style lang="scss" scoped>

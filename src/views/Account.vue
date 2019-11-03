@@ -22,15 +22,15 @@
   </main>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import { getAccount } from "@/services/account.service";
-import { Account, Operation } from "@/@types";
+import Vue from 'vue';
+import { getAccount } from '@/services/account.service';
+import { Account, Operation } from '@/@types';
 
 export default Vue.extend({
   data() {
     return {
       account: null as Account | null,
-      error: ""
+      error: '',
     };
   },
   computed: {
@@ -38,7 +38,7 @@ export default Vue.extend({
       if (this.account !== null) {
         return this.account.operations.reduce(
           (acc: string[], item: Operation) => {
-            const year = item.date.split("/")[2];
+            const year = item.date.split('/')[2];
             if (acc.indexOf(year) === -1) {
               acc.push(year);
             }
@@ -48,11 +48,11 @@ export default Vue.extend({
         );
       }
       return [];
-    }
+    },
   },
   async created() {
     this.account = await getAccount(parseInt(this.$route.params.number));
-  }
+  },
 });
 </script>
 <style lang="scss" scoped>
