@@ -45,7 +45,7 @@ sourceFiles.forEach((sourceFile: string) => {
     number: infosLines.number,
     name: infosLines.name,
     balance: infosLines.balance,
-    operations: operationLines
+    operations: operationLines,
   };
 
   const existingAccount = ACCOUNTS.find(
@@ -109,7 +109,7 @@ function parseInfosLines(lines: string[]): Account {
     number,
     name,
     balance,
-    operations: []
+    operations: [],
   };
 }
 
@@ -126,7 +126,7 @@ function parseOperationLines(lines: string[]): Operation[] {
       date: getFormattedDate(cells[0], 'DD/MM/YY'),
       name: cells[2],
       infos: cells[5],
-      value: parseValue(value)
+      value: parseValue(value),
     });
   });
   return results;
