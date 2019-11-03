@@ -40,11 +40,11 @@ sourceFiles.forEach((sourceFile: string) => {
   const operationLines = parseOperationLines(lines);
 
   const currentAccount: Account = {
+    balance: infosLines.balance,
     bank: infosLines.bank,
     lastUpdate: infosLines.lastUpdate,
-    number: infosLines.number,
     name: infosLines.name,
-    balance: infosLines.balance,
+    number: infosLines.number,
     operations: operationLines,
   };
 
@@ -104,11 +104,11 @@ function parseInfosLines(lines: string[]): Account {
   const balance = parseInt(cells[4]);
 
   return {
+    balance,
     bank,
     lastUpdate,
-    number,
     name,
-    balance,
+    number,
     operations: [],
   };
 }
@@ -122,10 +122,10 @@ function parseOperationLines(lines: string[]): Operation[] {
     const value = cells[3] !== '' ? cells[3] : cells[4];
 
     results.push({
-      number: cells[1],
       date: getFormattedDate(cells[0], 'DD/MM/YY'),
-      name: cells[2],
       infos: cells[5],
+      name: cells[2],
+      number: cells[1],
       value: parseValue(value),
     });
   });
