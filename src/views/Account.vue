@@ -27,12 +27,6 @@ import { getAccount } from '@/services/account.service';
 import { Account, Operation } from '@/@types';
 
 export default Vue.extend({
-  data() {
-    return {
-      account: null as Account | null,
-      error: '',
-    };
-  },
   computed: {
     years(): string[] {
       if (this.account !== null) {
@@ -52,6 +46,12 @@ export default Vue.extend({
   },
   async created() {
     this.account = await getAccount(parseInt(this.$route.params.number));
+  },
+  data() {
+    return {
+      account: null as Account | null,
+      error: '',
+    };
   },
 });
 </script>
