@@ -1,0 +1,15 @@
+// Mixins: Transitions
+
+/**
+ * Create a increasing delay for each child of a container, creating a an interval effect on transition
+ * Sample call:
+@include transition-children-delay(5, 0.3s, 0.15s);
+*/
+
+@mixin transition-children-delay($length, $base, $step) {
+  @for $i from 1 through $length {
+    &:nth-child(#{$i}) {
+      transition-delay: calc(#{$base} + #{$i} * #{$step});
+    }
+  }
+}

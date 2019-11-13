@@ -7,10 +7,12 @@
     'left': 'right',
     'ltr': 'rtl',
     'rtl': 'ltr',
+    'border-left': 'border-right',
+    'border-right': 'border-left',
     'padding-left': 'padding-right',
     'padding-right': 'padding-left',
     'margin-left': 'margin-right',
-    'margin-right': 'margin-left'
+    'margin-right': 'margin-left',
   );
 
   @each $direction in $directions {
@@ -31,7 +33,7 @@
   $opposite-value: ();
   $value-map: (
     right: left,
-    left: right
+    left: right,
   );
 
   @if map-has-key($value-map, $value) {
@@ -49,10 +51,10 @@ Use:
 @include rtl-prop(margin-right, 30px);
 */
 @mixin rtl-prop($prop, $value) {
-  .app--ltr & {
+  [dir='ltr'] & {
     #{$prop}: $value;
   }
-  .app--rtl & {
+  [dir='rtl'] & {
     #{opposite-direction(#{$prop})}: $value;
   }
 }
@@ -62,10 +64,23 @@ Use:
 @include rtl-value(text-align, left);
 */
 @mixin rtl-value($prop, $value) {
-  .app--ltr & {
+  [dir='ltr'] & {
     #{$prop}: $value;
   }
-  .app--rtl & {
+  [dir='rtl'] & {
     #{$prop}: #{opposite-value(#{$value})};
+  }
+}
+
+/**
+Use: 
+@include rtl(transform, rotate(-90deg), rotate(90deg));
+*/
+@mixin rtl($prop, $ltr, $rtl) {
+  [dir='ltr'] & {
+    #{$prop}: $ltr;
+  }
+  [dir='rtl'] & {
+    #{$prop}: $rtl;
   }
 }

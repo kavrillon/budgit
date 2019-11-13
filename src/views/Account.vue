@@ -3,6 +3,7 @@
     <section class="account__header">
       <h1 class="account__header__title">Account: {{ account.name }}</h1>
       <figure class="account__header__balance">{{ account.balance }} €</figure>
+      <figure class="account__header__update">{{ account.lastUpdate }}</figure>
     </section>
     <section class="account__operations">
       <header class="account__operations__head">

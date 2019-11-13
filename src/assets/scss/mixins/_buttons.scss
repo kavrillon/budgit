@@ -1,0 +1,73 @@
+// Mixins: Buttons
+
+@mixin btn {
+  @include btn-reset;
+
+  border-radius: 30px;
+  background: $gray-seashell;
+  padding: 15px 25px;
+  color: $text-color;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: darken($gray-seashell, 15%);
+    text-decoration: none;
+    color: $text-color;
+  }
+
+  &__icon {
+    margin-right: 10px;
+    vertical-align: middle;
+    font-size: 20px;
+  }
+
+  &__text {
+    vertical-align: middle;
+  }
+}
+
+@mixin btn-reset {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+  text-transform: none;
+  font-family: $font-family-default;
+  font-size: 1em;
+  font-weight: 400;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+@mixin btn-highlight {
+  @include btn;
+
+  background: $secondary;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: $secondary-dark;
+    color: $text-color;
+  }
+}
+
+@mixin btn-primary {
+  @include btn;
+
+  background: $primary;
+  color: $white;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: $primary-dark;
+    color: $white;
+  }
+}
