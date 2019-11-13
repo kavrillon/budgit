@@ -1,0 +1,43 @@
+// Mixins: Containers
+
+/**
+ * Make bottom or top of a container rounded
+*/
+@mixin rounded-separator($height: 50px, $position: "bottom") {
+  margin: 0 -30px;
+  border-#{$position}-left-radius: 50% $height;
+  border-#{$position}-right-radius: 50% $height;
+  padding: 0 30px;
+  overflow: hidden;
+}
+
+/**
+ * Make bottom or top of a container rounded, but inverted
+*/
+@mixin inverted-rounded-separator(
+  $bg-color,
+  $position: "bottom",
+  $height: 50px
+) {
+  $opposite-position: "top";
+
+  @if ($position == "top") {
+    $opposite-position: "bottom";
+  }
+
+  position: relative;
+  padding-#{$position}: $height;
+  overflow: hidden;
+
+  &:after {
+    position: absolute;
+    right: -30px;
+    #{$position}: 0;
+    left: -30px;
+    border-#{$opposite-position}-left-radius: 50% $height;
+    border-#{$opposite-position}-right-radius: 50% $height;
+    background-color: $bg-color;
+    height: $height;
+    content: "";
+  }
+}

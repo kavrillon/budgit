@@ -5,6 +5,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.7rem;
+  color: $color-primary;
 }
 
 @mixin subtitle {
@@ -72,7 +73,7 @@
 // Global link style
 @mixin link(
   $color: $color-primary,
-  $hover-color: $color-primary-hover,
+  $hover-color: darken($color-primary, 20%),
   $hoverUnderlined: true
 ) {
   @if $hoverUnderlined {
@@ -81,10 +82,10 @@
 
   transition: color $transition-duration-fast $transition-effect-default;
   text-decoration: none;
-  color: $color-primary;
+  color: $color;
 
   &:focus,
   &:hover {
-    color: $color-primary-hover;
+    color: $hover-color;
   }
 }

@@ -4,6 +4,7 @@
 
 // Some SCSS re-use (no CSS in it)
 @import './abstract.scss';
+@import './montserrat';
 
 // All global styles
 @import '~normalize-scss/sass/normalize/import-now';
@@ -17,9 +18,10 @@
 }
 
 body {
-  font-size: $default-font-size;
-  line-height: $default-line-height;
-  font-family: $default-font;
+  background: $grey-wild-sand;
+  font-size: $font-size-default;
+  line-height: $font-line-height-default;
+  font-family: $font-default;
 }
 
 figure {

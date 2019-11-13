@@ -3,6 +3,5 @@
  * If you add some css in this file, each rules will be duplicated for each component in the app.
 */
 
-@import './variables';
-@import './mixins';
-@import './fonts';
+@import './variables/index';
+@import './mixins/index';

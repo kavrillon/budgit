@@ -1,4 +1,6 @@
-// Mixins: Animations
+// Mixins: Loaders
+
+// Keyframes
 
 @keyframes spin {
   0% {
@@ -16,13 +18,14 @@
   }
 }
 
-@mixin spinner($size: 20px) {
-  transform: translate(-50%, -50%);
+// Spin
+
+@mixin spinner {
+  position: relative;
   transition: all 0.3s;
   transition-timing-function: ease-in;
-  opacity: 1;
-  width: $size;
-  height: $size;
+  width: 20px;
+  height: 20px;
   animation: spin 1s infinite;
 
   &:after {
@@ -39,6 +42,6 @@
     border-color: currentColor currentColor currentColor transparent;
     background: center center no-repeat;
     background-size: cover;
-    content: '';
+    content: "";
   }
 }
