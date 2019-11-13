@@ -76,7 +76,10 @@ function mergeAccounts(
   existingAccount: Account,
   currentAccount: Account
 ): void {
-  if (currentAccount.lastUpdate > existingAccount.lastUpdate) {
+  if (
+    moment(currentAccount.lastUpdate, DATE_FORMAT) >
+    moment(existingAccount.lastUpdate, DATE_FORMAT)
+  ) {
     existingAccount.lastUpdate = currentAccount.lastUpdate;
     existingAccount.balance = currentAccount.balance;
   }
