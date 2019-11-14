@@ -5,20 +5,42 @@
       <figure class="account__header__balance">{{ account.balance }} €</figure>
       <figure class="account__header__update">{{ account.lastUpdate }}</figure>
     </section>
-    <section class="account__operations">
-      <header class="account__operations__head">
-        Operations: {{ account.operations.length }}
-      </header>
-      {{ years.length }}
-      <ul class="account__operations__list">
-        <li
-          v-for="(op, index) in account.operations"
-          :key="index"
-          class="account__operations__list__item"
-        >
-          {{ op.date }} - {{ op.name }}: {{ op.value }}
-        </li>
-      </ul>
+    <section class="account__history">
+      <div
+        class="account__history__year"
+        v-for="(year, index) in account.history"
+        :key="index"
+      >
+        <div class="account__history__year__header">
+          {{ year.label }}
+          {{ year.balance }}
+          {{ year.incomes }}
+          {{ year.outgoings }}
+        </div>
+        <div class="account__history__year__months">
+          <div
+            v-for="(month, indexOp) in year.months"
+            :key="indexOp"
+            class="account__history__year__months__month"
+          >
+            <div class="account__history__year__months__month__header">
+              {{ month.label }}
+              {{ month.balance }}
+              {{ month.incomes }}
+              {{ month.outgoings }}
+            </div>
+            <ul class="account__history__year__months__month__operations">
+              <li
+                v-for="(operation, indexOp) in month.operations"
+                :key="indexOp"
+                class="account__history__year__months__month__operations__item"
+              >
+                {{ operation.date }} - {{ operation.value }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 </template>
@@ -33,23 +55,6 @@ export default Vue.extend({
       account: null as Account | null,
       error: '',
     };
-  },
-  computed: {
-    years(): string[] {
-      if (this.account !== null) {
-        return this.account.operations.reduce(
-          (acc: string[], item: Operation) => {
-            const year = item.date.split('/')[2];
-            if (acc.indexOf(year) === -1) {
-              acc.push(year);
-            }
-            return acc;
-          },
-          []
-        );
-      }
-      return [];
-    },
   },
   async created() {
     this.account = await getAccount(parseInt(this.$route.params.number));

@@ -1,4 +1,4 @@
-import { Account } from '@/@types/index';
+import { Account } from '@/@types';
 import { get } from '@/services/api.service';
 
 const JSON_PATH = '/data/accounts.json';
