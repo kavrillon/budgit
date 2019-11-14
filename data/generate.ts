@@ -1,6 +1,11 @@
 import * as fs from 'fs';
 import * as moment from 'moment';
-import { Account, Operation } from '../src/@types';
+import {
+  Account,
+  Operation,
+  YearlyHistory,
+  MonthlyHistory,
+} from '../src/@types';
 
 export type FirstLine = {
   bank: number;
@@ -21,18 +26,55 @@ const ACCOUNTS: Account[] = [];
 const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH;
 const RESULT_FOLDER = './public/data/';
 const SEPARATOR = ';';
-let sourceFiles = fs
-  .readdirSync(SOURCE_FOLDER)
-  .filter((file: string) => file.endsWith('.csv'));
 
-console.log('');
-console.log('### Start CSV parsing ###');
-console.log('Path: ' + SOURCE_FOLDER);
+/* 
+  PRIVATE METHODS
+ */
 
-sourceFiles.forEach((sourceFile: string) => {
+const saveAccounts = (accounts: Account[]) => {
+  fs.writeFileSync(`${RESULT_FOLDER}/accounts.json`, JSON.stringify(accounts));
+};
+
+const parseFolder = (folder: string): void => {
+  let sourceFiles = fs
+    .readdirSync(folder)
+    .filter((file: string) => file.endsWith('.csv'));
+
+  console.log('');
+  console.log('### Start CSV parsing ###');
+  console.log('Path: ' + folder);
+  sourceFiles.forEach((file: string) => parseFile(folder, file));
+
+  // Ordering
+  ACCOUNTS.forEach((acc: Account) => {
+    // Sort by year DESC
+    acc.history.sort((a: YearlyHistory, b: YearlyHistory) =>
+      a.label < b.label ? 1 : -1
+    );
+
+    // Sort by month DESC
+    acc.history.forEach((year: YearlyHistory) => {
+      year.months.sort((a: MonthlyHistory, b: MonthlyHistory) =>
+        a.label < b.label ? 1 : -1
+      );
+
+      year.months.forEach((month: MonthlyHistory) => {
+        month.operations.sort((a: Operation, b: Operation) => {
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          const date1 = parseInt(moment(a.date, DATE_FORMAT).format('X'));
+          const date2 = parseInt(moment(b.date, DATE_FORMAT).format('X'));
+          return date2 - date1;
+        });
+      });
+    });
+  });
+};
+
+const parseFile = (folder: string, sourceFile: string): void => {
   console.log('SourceFile: ', sourceFile);
   const lines = fs
-    .readFileSync(SOURCE_FOLDER + sourceFile, 'utf8')
+    .readFileSync(folder + sourceFile, 'utf8')
     .split('\n')
     .filter(Boolean);
 
@@ -45,7 +87,7 @@ sourceFiles.forEach((sourceFile: string) => {
     number: infosLines.number,
     name: infosLines.name,
     balance: infosLines.balance,
-    operations: operationLines,
+    history: getHistoryFromOperations(operationLines),
   };
 
   const existingAccount = ACCOUNTS.find(
@@ -53,29 +95,129 @@ sourceFiles.forEach((sourceFile: string) => {
   );
 
   if (typeof existingAccount !== 'undefined') {
-    mergeAccounts(existingAccount, currentAccount);
+    mergeAccountData(existingAccount, currentAccount, operationLines);
   } else {
     ACCOUNTS.push(currentAccount);
   }
-});
+};
 
-// Ordering by date DESC
-ACCOUNTS.forEach((acc: Account) => {
-  acc.operations.sort(function(a: Operation, b: Operation) {
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
-    const date1 = parseInt(moment(a.date, DATE_FORMAT).format('X'));
-    const date2 = parseInt(moment(b.date, DATE_FORMAT).format('X'));
-    return date2 - date1;
+const getHistoryFromOperations = (
+  operations: Operation[],
+  existingHistory: YearlyHistory[] = []
+): YearlyHistory[] => {
+  const history: YearlyHistory[] = existingHistory;
+
+  operations.forEach((operation: Operation) => {
+    if (!isInHistory(history, operation)) {
+      let existingYear = history.find(existing => {
+        return existing.label === operation.year;
+      });
+
+      if (typeof existingYear === 'undefined') {
+        existingYear = initYearlyHistory(operation.year);
+        history.push(existingYear);
+      }
+      updateYearlyHistory(existingYear, operation);
+
+      let existingMonth = existingYear.months.find(existing => {
+        return existing.label === operation.month;
+      });
+
+      if (typeof existingMonth === 'undefined') {
+        existingMonth = initMonthlyHistory(operation.month);
+        existingYear.months.push(existingMonth);
+      }
+      updateMonthlyHistory(existingMonth, operation);
+    }
   });
-});
 
-fs.writeFileSync(`${RESULT_FOLDER}/accounts.json`, JSON.stringify(ACCOUNTS));
+  return history;
+};
 
-function mergeAccounts(
+const initYearlyHistory = (label: number): YearlyHistory => {
+  return {
+    balance: 0,
+    incomes: 0,
+    label: label,
+    months: [],
+    outgoings: 0,
+  };
+};
+
+const initMonthlyHistory = (label: number): MonthlyHistory => {
+  return {
+    balance: 0,
+    incomes: 0,
+    label: label,
+    operations: [],
+    outgoings: 0,
+  };
+};
+
+const updateYearlyHistory = (
+  year: YearlyHistory,
+  operation: Operation
+): void => {
+  year.balance = round(year.balance + operation.value);
+  year.incomes =
+    operation.value > 0 ? round(year.incomes + operation.value) : year.incomes;
+  year.outgoings =
+    operation.value < 0
+      ? round(year.outgoings + operation.value)
+      : year.outgoings;
+};
+
+const updateMonthlyHistory = (
+  month: MonthlyHistory,
+  operation: Operation
+): void => {
+  month.balance = round(month.balance + operation.value);
+  month.incomes =
+    operation.value > 0
+      ? round(month.incomes + operation.value)
+      : month.incomes;
+  month.outgoings =
+    operation.value < 0
+      ? round(month.outgoings + operation.value)
+      : month.outgoings;
+  month.operations.push(operation);
+};
+
+const isInHistory = (
+  history: YearlyHistory[],
+  operation: Operation
+): Boolean => {
+  const existingYear = history.find(existing => {
+    return existing.label === operation.year;
+  });
+
+  if (typeof existingYear === 'undefined') {
+    return false;
+  } else {
+    const existingMonth = existingYear.months.find(existing => {
+      return existing.label === operation.month;
+    });
+
+    if (typeof existingMonth === 'undefined') {
+      return false;
+    } else {
+      const existingOperation = existingMonth.operations.find(existing => {
+        return existing.number === operation.number;
+      });
+
+      if (typeof existingOperation === 'undefined') {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+const mergeAccountData = (
   existingAccount: Account,
-  currentAccount: Account
-): void {
+  currentAccount: Account,
+  operations: Operation[] = []
+): void => {
   if (
     moment(currentAccount.lastUpdate, DATE_FORMAT) >
     moment(existingAccount.lastUpdate, DATE_FORMAT)
@@ -84,17 +226,13 @@ function mergeAccounts(
     existingAccount.balance = currentAccount.balance;
   }
 
-  currentAccount.operations.forEach((currentOp: Operation) => {
-    const found = existingAccount.operations.find(
-      (ex: Operation) => ex.number === currentOp.number
-    );
-    if (typeof found === 'undefined') {
-      existingAccount.operations.push(currentOp);
-    }
-  });
-}
+  existingAccount.history = getHistoryFromOperations(
+    operations,
+    existingAccount.history
+  );
+};
 
-function parseInfosLines(lines: string[]): Account {
+const parseInfosLines = (lines: string[]): Account => {
   let cells = lines[0].split(SEPARATOR);
   const bank = parseInt(getLabelledValue(cells[0]));
   const lastUpdate = getFormattedDate(getLabelledValue(cells[3]), DATE_FORMAT);
@@ -112,11 +250,11 @@ function parseInfosLines(lines: string[]): Account {
     number,
     name,
     balance,
-    operations: [],
+    history: [],
   };
-}
+};
 
-function parseOperationLines(lines: string[]): Operation[] {
+const parseOperationLines = (lines: string[]): Operation[] => {
   const operationLines = lines.slice(5, lines.length - 1);
   let results: Operation[] = [];
 
@@ -127,31 +265,52 @@ function parseOperationLines(lines: string[]): Operation[] {
     results.push({
       number: cells[1],
       date: getFormattedDate(cells[0], 'DD/MM/YY'),
+      day: parseInt(getFormattedDate(cells[0], 'DD/MM/YY', 'DD')),
+      month: parseInt(getFormattedDate(cells[0], 'DD/MM/YY', 'MM')),
+      year: parseInt(getFormattedDate(cells[0], 'DD/MM/YY', 'YYYY')),
       name: cells[2],
       infos: cells[5],
       value: parseValue(value),
     });
   });
   return results;
-}
+};
 
-function parseValue(value: string): number {
+const parseValue = (value: string): number => {
   const formattedValue = value.replace(',', '.').replace('+', '');
   return parseFloat(formattedValue);
-}
+};
 
-function getLabelledValue(line: string): string {
+const getLabelledValue = (line: string): string => {
   const value = line.split(':');
   if (typeof value[1] === 'undefined') {
     throw new Error(`Labelled value does not exists: ${line}`);
   }
   return value[1].trim();
-}
+};
 
-function getFormattedDate(line: string, format: string): string {
+const getFormattedDate = (
+  line: string,
+  sourceFormat: string,
+  destinationFormat: string = DATE_FORMAT
+): string => {
   try {
-    return moment(line, format).format(DATE_FORMAT);
+    return moment(line, sourceFormat).format(destinationFormat);
   } catch (_) {
     throw new Error(`Date format is not correct: ${line}`);
   }
-}
+};
+
+const round = (number: number) => {
+  var newnumber = new Number(number + '').toFixed(2);
+  return parseFloat(newnumber);
+};
+
+/**
+ * START PARSING
+ */
+
+// Parse folder to generate ACCOUNT object
+parseFolder(SOURCE_FOLDER);
+// Save accounts
+saveAccounts(ACCOUNTS);

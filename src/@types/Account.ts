@@ -1,4 +1,4 @@
-import { Operation } from './Operation';
+import { YearlyHistory } from './index';
 
 export type Account = {
   bank: number;
@@ -6,5 +6,5 @@ export type Account = {
   number: number;
   name: string;
   balance: number;
-  operations: Operation[];
+  history: YearlyHistory[];
 };
