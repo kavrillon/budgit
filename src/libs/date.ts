@@ -5,7 +5,7 @@ const DATE_FORMAT = 'DD/MM/YYYY';
 export const stringToFormattedDate = (
   line: string,
   sourceFormat: string,
-  destinationFormat: string = DATE_FORMAT
+  destinationFormat: string = DATE_FORMAT,
 ): string => {
   try {
     return moment(line, sourceFormat).format(destinationFormat);
