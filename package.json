@@ -10,8 +10,8 @@
     "format": "vue-cli-service lint --fix src/ data/",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage",
-    "data:generate": "ts-node --skip-project ./data/generate.ts",
-    "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:generate"
+    "data:import": "ts-node --skip-project ./src/import/index.ts",
+    "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:import"
   },
   "dependencies": {
     "@types/node": "^12.11.7",
