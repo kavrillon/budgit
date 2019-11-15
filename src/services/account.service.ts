@@ -1,7 +1,8 @@
-import { Account, Operation } from '../@types';
-import { get } from '../services/api.service';
-import * as moment from 'moment';
-import { getHistoryFromOperations } from './history.service';
+import moment from 'moment';
+
+import { Account, Operation } from '@/@types';
+import { get } from '@/services/api.service';
+import { getHistoryFromOperations } from '@/services/history.service';
 
 const JSON_PATH = '/data/accounts.json';
 export const ACCOUNT_DATE_FORMAT = 'DD/MM/YYYY';

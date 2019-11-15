@@ -1,5 +1,5 @@
-import { MonthlyHistory, Operation, YearlyHistory } from '../@types';
-import { round } from '../libs/number';
+import { MonthlyHistory, Operation, YearlyHistory } from '@/@types';
+import { round } from '@/libs/number';
 
 export const initYearlyHistory = (label: number): YearlyHistory => {
   return {

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 import { importBPCE } from './bpce';
-import { Account } from '../@types';
+import { Account } from '@/@types';
 
 const RESULT_FOLDER = './public/data/';
 const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH + 'bpce/';
