@@ -1,7 +1,10 @@
-import { Account } from '@/@types';
-import { get } from '@/services/api.service';
+import { Account, Operation } from '../@types';
+import { get } from '../services/api.service';
+import * as moment from 'moment';
+import { getHistoryFromOperations } from './history.service';
 
 const JSON_PATH = '/data/accounts.json';
+export const ACCOUNT_DATE_FORMAT = 'DD/MM/YYYY';
 
 export async function getAccounts(): Promise<Account[]> {
   let accounts: Account[] = [];
@@ -26,3 +29,22 @@ export async function getAccount(number: number): Promise<Account | null> {
   }
   return Promise.resolve(null);
 }
+
+export const mergeAccountData = (
+  existingAccount: Account,
+  newAccount: Account,
+  operations: Operation[] = []
+): void => {
+  if (
+    moment(newAccount.lastUpdate, ACCOUNT_DATE_FORMAT) >
+    moment(existingAccount.lastUpdate, ACCOUNT_DATE_FORMAT)
+  ) {
+    existingAccount.lastUpdate = newAccount.lastUpdate;
+    existingAccount.balance = newAccount.balance;
+  }
+
+  existingAccount.history = getHistoryFromOperations(
+    operations,
+    existingAccount.history
+  );
+};
