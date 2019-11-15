@@ -1,3 +1,5 @@
+/*eslint-disable no-magic-numbers */
+
 import * as fs from 'fs';
 import moment from 'moment';
 
@@ -14,9 +16,9 @@ const SEPARATOR = ';';
  * @param sourceFolder string: path of the folder containing exports
  */
 export const importBPCE = (sourceFolder: string): Account[] => {
-  let bpceAccounts: Account[] = [];
+  const bpceAccounts: Account[] = [];
 
-  let sourceFiles = fs
+  const sourceFiles = fs
     .readdirSync(sourceFolder)
     .filter((file: string) => file.endsWith('.csv'));
 
@@ -24,20 +26,20 @@ export const importBPCE = (sourceFolder: string): Account[] => {
   console.log('### Start BPCE CSV parsing ###');
   console.log('Path: ' + sourceFolder);
   sourceFiles.forEach((file: string) =>
-    parseFile(bpceAccounts, sourceFolder, file)
+    parseFile(bpceAccounts, sourceFolder, file),
   );
 
   // Ordering
   bpceAccounts.forEach((acc: Account) => {
     // Sort by year DESC
     acc.history.sort((a: YearlyHistory, b: YearlyHistory) =>
-      a.label < b.label ? 1 : -1
+      a.label < b.label ? 1 : -1,
     );
 
     // Sort by month DESC
     acc.history.forEach((year: YearlyHistory) => {
       year.months.sort((a: MonthlyHistory, b: MonthlyHistory) =>
-        a.label < b.label ? 1 : -1
+        a.label < b.label ? 1 : -1,
       );
 
       year.months.forEach((month: MonthlyHistory) => {
@@ -62,7 +64,7 @@ export const importBPCE = (sourceFolder: string): Account[] => {
 const parseFile = (
   accounts: Account[],
   folder: string,
-  sourceFile: string
+  sourceFile: string,
 ): void => {
   console.log('SourceFile: ', sourceFile);
   const lines = fs
@@ -74,16 +76,16 @@ const parseFile = (
   const operationLines = parseOperationLines(lines);
 
   const currentAccount: Account = {
-    bank: infosLines.bank,
-    lastUpdate: infosLines.lastUpdate,
-    number: infosLines.number,
-    name: infosLines.name,
     balance: infosLines.balance,
+    bank: infosLines.bank,
     history: getHistoryFromOperations(operationLines),
+    lastUpdate: infosLines.lastUpdate,
+    name: infosLines.name,
+    number: infosLines.number,
   };
 
   const existingAccount = accounts.find(
-    acc => acc.number === infosLines.number
+    acc => acc.number === infosLines.number,
   );
 
   if (typeof existingAccount !== 'undefined') {
@@ -98,7 +100,7 @@ const parseInfosLines = (lines: string[]): Account => {
   const bank = parseInt(parseLabelledValue(cells[0]));
   const lastUpdate = stringToFormattedDate(
     parseLabelledValue(cells[3]),
-    DATE_FORMAT
+    DATE_FORMAT,
   );
 
   cells = lines[1].split(SEPARATOR);
@@ -109,32 +111,32 @@ const parseInfosLines = (lines: string[]): Account => {
   const balance = parseInt(cells[4]);
 
   return {
-    bank,
-    lastUpdate,
-    number,
-    name,
     balance,
+    bank,
     history: [],
+    lastUpdate,
+    name,
+    number,
   };
 };
 
 const parseOperationLines = (lines: string[]): Operation[] => {
   const operationLines = lines.slice(5, lines.length - 1);
-  let results: Operation[] = [];
+  const results: Operation[] = [];
 
   operationLines.forEach(line => {
     const cells = line.split(SEPARATOR);
     const value = cells[3] !== '' ? cells[3] : cells[4];
 
     results.push({
-      number: cells[1],
       date: stringToFormattedDate(cells[0], 'DD/MM/YY'),
       day: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'DD')),
-      month: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'MM')),
-      year: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'YYYY')),
-      name: cells[2],
       infos: cells[5],
+      month: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'MM')),
+      name: cells[2],
+      number: cells[1],
       value: parseValue(value),
+      year: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'YYYY')),
     });
   });
   return results;

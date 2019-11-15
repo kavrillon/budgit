@@ -19,7 +19,7 @@ const importAccounts = (sourceFolder: string, resultFolder: string): void => {
 
   fs.writeFileSync(
     `${resultFolder}/accounts.json`,
-    JSON.stringify(allAccounts)
+    JSON.stringify(allAccounts),
   );
 };
 

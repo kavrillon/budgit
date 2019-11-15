@@ -22,7 +22,7 @@ export async function getAccount(number: number): Promise<Account | null> {
   const jsonAccounts = await get(JSON_PATH);
 
   const account: Account | undefined = jsonAccounts.find(
-    (account: Account) => account.number === number
+    (account: Account) => account.number === number,
   );
 
   if (typeof account !== 'undefined') {
@@ -34,7 +34,7 @@ export async function getAccount(number: number): Promise<Account | null> {
 export const mergeAccountData = (
   existingAccount: Account,
   newAccount: Account,
-  operations: Operation[] = []
+  operations: Operation[] = [],
 ): void => {
   if (
     moment(newAccount.lastUpdate, ACCOUNT_DATE_FORMAT) >
@@ -46,6 +46,6 @@ export const mergeAccountData = (
 
   existingAccount.history = getHistoryFromOperations(
     operations,
-    existingAccount.history
+    existingAccount.history,
   );
 };

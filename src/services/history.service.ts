@@ -23,7 +23,7 @@ export const initMonthlyHistory = (label: number): MonthlyHistory => {
 
 export const isInHistory = (
   history: YearlyHistory[],
-  operation: Operation
+  operation: Operation,
 ): Boolean => {
   const existingYear = history.find(existing => {
     return existing.label === operation.year;
@@ -53,7 +53,7 @@ export const isInHistory = (
 
 export const getHistoryFromOperations = (
   operations: Operation[],
-  existingHistory: YearlyHistory[] = []
+  existingHistory: YearlyHistory[] = [],
 ): YearlyHistory[] => {
   const history: YearlyHistory[] = existingHistory;
 
@@ -86,7 +86,7 @@ export const getHistoryFromOperations = (
 
 export const updateYearlyHistory = (
   year: YearlyHistory,
-  operation: Operation
+  operation: Operation,
 ): void => {
   year.balance = round(year.balance + operation.value);
   year.incomes =
@@ -99,7 +99,7 @@ export const updateYearlyHistory = (
 
 export const updateMonthlyHistory = (
   month: MonthlyHistory,
-  operation: Operation
+  operation: Operation,
 ): void => {
   month.balance = round(month.balance + operation.value);
   month.incomes =
