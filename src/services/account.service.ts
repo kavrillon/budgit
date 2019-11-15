@@ -7,7 +7,7 @@ import { getHistoryFromOperations } from '@/services/history.service';
 const JSON_PATH = '/data/accounts.json';
 export const ACCOUNT_DATE_FORMAT = 'DD/MM/YYYY';
 
-export async function getAccounts(): Promise<Account[]> {
+export const getAccounts = async (): Promise<Account[]> => {
   let accounts: Account[] = [];
 
   const jsonAccounts = await get(JSON_PATH);
@@ -16,9 +16,9 @@ export async function getAccounts(): Promise<Account[]> {
   });
 
   return Promise.resolve(accounts);
-}
+};
 
-export async function getAccount(number: number): Promise<Account | null> {
+export const getAccount = async (number: number): Promise<Account | null> => {
   const jsonAccounts = await get(JSON_PATH);
 
   const account: Account | undefined = jsonAccounts.find(
@@ -29,7 +29,7 @@ export async function getAccount(number: number): Promise<Account | null> {
     return Promise.resolve(account);
   }
   return Promise.resolve(null);
-}
+};
 
 export const mergeAccountData = (
   existingAccount: Account,
