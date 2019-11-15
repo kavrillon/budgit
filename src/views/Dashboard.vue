@@ -1,6 +1,8 @@
 <template>
   <main class="accounts">
     <h1 class="accounts__title">List of accounts</h1>
+    <header class="accounts__resume">Total: {{ total | amount(0) }}</header>
+
     <div class="accounts__list">
       <account-summary
         v-for="(account, index) in accounts"
@@ -25,6 +27,13 @@ export default Vue.extend({
       accounts: [] as Account[],
     };
   },
+  computed: {
+    total(): number {
+      return this.accounts.reduce((total, account) => {
+        return (total += account.balance);
+      }, 0);
+    },
+  },
   async created() {
     this.accounts = await getAccounts();
   },
@@ -33,12 +42,20 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .accounts {
   padding: $gutter-size;
+  text-align: center;
 
   &__title {
     @include title;
 
     margin: 0 0 $gutter-size;
     padding: 0;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
   }
 }
 </style>

@@ -18,9 +18,23 @@
 }
 
 body {
-  background: $grey-wild-sand;
+  background: $color-bg-main;
   font-size: $font-size-default;
   line-height: $font-line-height-default;
+  font-family: $font-default;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  line-height: $font-line-height-default;
+  font-size: $font-size-default;
+  font-weight: 400;
   font-family: $font-default;
 }
 
