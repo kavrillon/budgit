@@ -10,7 +10,7 @@
     "format": "vue-cli-service lint --fix src/ data/",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage",
-    "data:import": "ts-node --skip-project ./src/import/index.ts",
+    "data:import": "ts-node --project ./tsconfig-import.json -r  tsconfig-paths/register ./import/index.ts",
     "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:import"
   },
   "dependencies": {
@@ -48,6 +48,7 @@
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
     "ts-jest": "^23.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.4.3",
     "vue-template-compiler": "^2.6.10"
   }

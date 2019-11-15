@@ -1,14 +1,10 @@
 import * as fs from 'fs';
-import * as moment from 'moment';
-import {
-  Account,
-  Operation,
-  YearlyHistory,
-  MonthlyHistory,
-} from '../../@types';
-import { mergeAccountData } from '../../services/account.service';
-import { getHistoryFromOperations } from '../../services/history.service';
-import { stringToFormattedDate } from '../../libs/date';
+import moment from 'moment';
+
+import { Account, Operation, YearlyHistory, MonthlyHistory } from '@/@types';
+import { mergeAccountData } from '@/services/account.service';
+import { getHistoryFromOperations } from '@/services/history.service';
+import { stringToFormattedDate } from '@/libs/date';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
 const SEPARATOR = ';';
