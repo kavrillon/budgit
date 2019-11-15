@@ -5,7 +5,6 @@
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.7rem;
-  color: $color-primary;
 }
 
 @mixin subtitle {
@@ -71,6 +70,17 @@
 }
 
 // Global link style
+@mixin link-reset {
+  text-decoration: none;
+  color: $color-text;
+  cursor: default;
+
+  &:focus,
+  &:hover {
+    color: $color-text;
+  }
+}
+
 @mixin link(
   $color: $color-primary,
   $hover-color: darken($color-primary, 20%),
