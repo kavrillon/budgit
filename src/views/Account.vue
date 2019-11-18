@@ -1,5 +1,5 @@
 <template>
-  <main class="account" v-if="account">
+  <main class="account" v-if="account !== null">
     <section class="account__header">
       <h1 class="account__header__title">Account: {{ account.name }}</h1>
       <account-summary :account="account" />
