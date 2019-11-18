@@ -1,7 +1,8 @@
 import * as fs from 'fs';
+import rmfr from 'rmfr';
 
 import { importBPCE } from './bpce';
-import { Account } from '@/@types';
+import { Account, Board } from '@/@types';
 
 const RESULT_FOLDER = './public/data/';
 const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH + 'bpce/';
@@ -11,16 +12,47 @@ const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH + 'bpce/';
  * @param sourceFolder string: source of all export files
  * @param resultFolder string: path where to put the generated json file
  */
-const importAccounts = (sourceFolder: string, resultFolder: string): void => {
+const importAccounts = async (
+  sourceFolder: string,
+  resultFolder: string,
+): Promise<void> => {
   let allAccounts: Account[] = [];
 
   const bpceAccounts: Account[] = importBPCE(sourceFolder);
   allAccounts = allAccounts.concat(bpceAccounts);
 
-  fs.writeFileSync(
-    `${resultFolder}/accounts.json`,
-    JSON.stringify(allAccounts),
-  );
+  const board: Board = {
+    id: 1,
+    accounts: allAccounts,
+    balance: allAccounts.reduce((total, account) => {
+      return (total += account.balance);
+    }, 0),
+  };
+
+  // Save accounts
+  await cleanFolder(resultFolder);
+  saveBoard(resultFolder, board);
+};
+
+const saveBoard = (folder: string, board: Board): void => {
+  fs.mkdirSync(`${folder}/board/`);
+  fs.mkdirSync(`${folder}/board/${board.id}`);
+  fs.mkdirSync(`${folder}/board/${board.id}/accounts`);
+
+  fs.writeFileSync(`${folder}/board/${board.id}.json`, JSON.stringify(board));
+
+  board.accounts.forEach((account: Account) => {
+    fs.writeFileSync(
+      `${folder}/board/${board.id}/accounts/${account.number}.json`,
+      JSON.stringify(account),
+    );
+  });
+};
+
+const cleanFolder = async (folder: string): Promise<void> => {
+  await rmfr(folder);
+  fs.mkdirSync(`${folder}`);
+  fs.writeFileSync(`${folder}/.gitkeep`, '');
 };
 
 // Launching bank account imports

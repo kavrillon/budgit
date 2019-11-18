@@ -1,11 +1,15 @@
 <template>
-  <main class="accounts">
+  <main class="accounts" v-if="board !== null">
     <h1 class="accounts__title">List of accounts</h1>
-    <header class="accounts__resume">Total: {{ total | amount(0) }}</header>
+    <header class="accounts__resume">
+      <div class="accounts__resume__line">
+        Total: {{ board.balance | amount(0) }}
+      </div>
+    </header>
 
     <div class="accounts__list">
       <account-summary
-        v-for="(account, index) in accounts"
+        v-for="(account, index) in board.accounts"
         :key="index"
         :account="account"
       />
@@ -14,8 +18,8 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { getAccounts } from '@/services/account.service';
-import { Account, Operation } from '@/@types';
+import { getBoard } from '@/services/board.service';
+import { Account, Board, Operation } from '@/@types';
 import AccountSummary from '@/components/Account/Summary.vue';
 
 export default Vue.extend({
@@ -24,18 +28,11 @@ export default Vue.extend({
   },
   data() {
     return {
-      accounts: [] as Account[],
+      board: null as Board | null,
     };
   },
-  computed: {
-    total(): number {
-      return this.accounts.reduce((total, account) => {
-        return (total += account.balance);
-      }, 0);
-    },
-  },
   async created() {
-    this.accounts = await getAccounts();
+    this.board = await getBoard(1);
   },
 });
 </script>

@@ -4,7 +4,7 @@ import { Account, Operation } from '@/@types';
 import { get } from '@/services/api.service';
 import { getHistoryFromOperations } from '@/services/history.service';
 
-const JSON_PATH = '/data/accounts.json';
+const JSON_PATH = '/data/board/1/accounts';
 export const ACCOUNT_DATE_FORMAT = 'DD/MM/YYYY';
 
 export const getAccounts = async (): Promise<Account[]> => {
@@ -19,11 +19,7 @@ export const getAccounts = async (): Promise<Account[]> => {
 };
 
 export const getAccount = async (number: number): Promise<Account | null> => {
-  const jsonAccounts = await get(JSON_PATH);
-
-  const account: Account | undefined = jsonAccounts.find(
-    (account: Account) => account.number === number,
-  );
+  const account: Account = await get(`${JSON_PATH}/${number}.json`);
 
   if (typeof account !== 'undefined') {
     return Promise.resolve(account);
