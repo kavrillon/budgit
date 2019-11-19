@@ -25,7 +25,7 @@ const importAccounts = async (
     accounts: allAccounts,
     id: 1,
     total: allAccounts.reduce((total, account) => {
-      return (total += account.total);
+      return total + account.total;
     }, 0),
   };
 

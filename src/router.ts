@@ -4,19 +4,19 @@ import Dashboard from './views/Dashboard.vue';
 
 Vue.use(Router);
 
-export default new Router({
+export const router = new Router({
   base: process.env.BASE_URL,
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'home',
       component: Dashboard,
+      name: 'home',
+      path: '/',
     },
     {
-      path: '/account/:number',
-      name: 'account',
       component: () => import('./views/Account.vue'),
+      name: 'account',
+      path: '/account/:number',
     },
   ],
 });
