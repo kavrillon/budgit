@@ -8,7 +8,7 @@ const JSON_PATH = '/data/accounts';
 export const ACCOUNT_DATE_FORMAT = 'DD/MM/YYYY';
 
 export const getAccounts = async (): Promise<Account[]> => {
-  let accounts: Account[] = [];
+  const accounts: Account[] = [];
 
   const jsonAccounts = await get(JSON_PATH);
   jsonAccounts.forEach((account: Account) => {

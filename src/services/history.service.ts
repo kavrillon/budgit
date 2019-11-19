@@ -112,3 +112,36 @@ export const updateMonthHistory = (
       : month.outgoings;
   month.operations.push(operation);
 };
+
+export const getHistoryForYear = (
+  history: YearHistory[],
+  year: number,
+): YearHistory | null => {
+  const existingYear = history.find(existing => {
+    return existing.label === year;
+  });
+
+  if (typeof existingYear !== 'undefined') {
+    return existingYear;
+  }
+  return null;
+};
+
+export const getOperationsForMonth = (
+  history: YearHistory[],
+  year: number,
+  month: number,
+): Operation[] => {
+  const yearHistory = getHistoryForYear(history, year);
+  if (yearHistory !== null) {
+    const monthHistory = yearHistory.months.find(existing => {
+      return existing.label === month;
+    });
+
+    if (typeof monthHistory !== 'undefined') {
+      return monthHistory.operations;
+    }
+  }
+
+  return [];
+};

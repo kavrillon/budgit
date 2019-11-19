@@ -14,6 +14,30 @@
         :account="account"
       />
     </div>
+
+    <div class="accounts__operations">
+      <h2 class="accounts__operations__title">Operations this month</h2>
+      <ul class="accounts__operations__list">
+        <li
+          v-for="(operation, index) in board.lastOperations"
+          :key="index"
+          class="accounts__operations__list__item"
+        >
+          <div class="accounts__operations__list__item__date">
+            {{ operation.date }}
+          </div>
+          <div class="accounts__operations__list__item__account">
+            {{ operation.accountName }}
+          </div>
+          <div class="accounts__operations__list__item__name">
+            {{ operation.name }}
+          </div>
+          <div class="accounts__operations__list__item__value">
+            {{ operation.value }}
+          </div>
+        </li>
+      </ul>
+    </div>
   </main>
 </template>
 <script lang="ts">
@@ -39,7 +63,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .accounts {
   padding: $gutter-size;
-  text-align: center;
 
   &__title {
     @include title;
@@ -53,6 +76,39 @@ export default Vue.extend({
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+  }
+
+  &__operations {
+    &__title {
+      @include title;
+    }
+
+    &__list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &__item {
+        display: flex;
+        justify-content: flex-start;
+
+        &__date {
+          flex: 0 0 150px;
+        }
+
+        &__account {
+          flex: 1 1 auto;
+        }
+
+        &__name {
+          flex: 1 1 auto;
+        }
+
+        &__value {
+          flex: 0 0 auto;
+        }
+      }
+    }
   }
 }
 </style>
