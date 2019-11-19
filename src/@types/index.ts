@@ -1,5 +1,5 @@
 export * from './Account';
 export * from './Board';
-export * from './MonthlyHistory';
+export * from './MonthHistory';
 export * from './Operation';
-export * from './YearlyHistory';
+export * from './YearHistory';

@@ -3,7 +3,7 @@
 import * as fs from 'fs';
 import moment from 'moment';
 
-import { Account, Operation, YearlyHistory, MonthlyHistory } from '@/@types';
+import { Account, Operation, YearHistory, MonthHistory } from '@/@types';
 import { mergeAccountData } from '@/services/account.service';
 import { getHistoryFromOperations } from '@/services/history.service';
 import { stringToFormattedDate } from '@/libs/date';
@@ -32,17 +32,17 @@ export const importBPCE = (sourceFolder: string): Account[] => {
   // Ordering
   bpceAccounts.forEach((acc: Account) => {
     // Sort by year DESC
-    acc.history.sort((a: YearlyHistory, b: YearlyHistory) =>
+    acc.history.sort((a: YearHistory, b: YearHistory) =>
       a.label < b.label ? 1 : -1,
     );
 
     // Sort by month DESC
-    acc.history.forEach((year: YearlyHistory) => {
-      year.months.sort((a: MonthlyHistory, b: MonthlyHistory) =>
+    acc.history.forEach((year: YearHistory) => {
+      year.months.sort((a: MonthHistory, b: MonthHistory) =>
         a.label < b.label ? 1 : -1,
       );
 
-      year.months.forEach((month: MonthlyHistory) => {
+      year.months.forEach((month: MonthHistory) => {
         month.operations.sort((a: Operation, b: Operation) => {
           // Turn your strings into dates, and then subtract them
           // to get a value that is either negative, positive, or zero.

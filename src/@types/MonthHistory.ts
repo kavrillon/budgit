@@ -1,6 +1,6 @@
 import { Operation } from './index';
 
-export type MonthlyHistory = {
+export type MonthHistory = {
   label: number;
   balance: number;
   incomes: number;
