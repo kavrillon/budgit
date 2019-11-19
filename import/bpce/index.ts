@@ -76,12 +76,12 @@ const parseFile = (
   const operationLines = parseOperationLines(lines);
 
   const currentAccount: Account = {
-    balance: infosLines.balance,
     bank: infosLines.bank,
     history: getHistoryFromOperations(operationLines),
     lastUpdate: infosLines.lastUpdate,
     name: infosLines.name,
     number: infosLines.number,
+    total: infosLines.total,
   };
 
   const existingAccount = accounts.find(
@@ -108,15 +108,15 @@ const parseInfosLines = (lines: string[]): Account => {
   const name = parseLabelledValue(cells[1]);
 
   cells = lines[3].split(SEPARATOR);
-  const balance = parseInt(cells[4]);
+  const total = parseInt(cells[4]);
 
   return {
-    balance,
     bank,
     history: [],
     lastUpdate,
     name,
     number,
+    total,
   };
 };
 
