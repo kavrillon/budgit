@@ -72,8 +72,8 @@ const parseFile = (
     .split('\n')
     .filter(Boolean);
 
-  const infosLines = parseInfosLines(lines);
-  const operationLines = parseOperationLines(lines);
+  const infosLines: Account = parseInfosLines(lines);
+  const operationLines: Operation[] = parseOperationLines(lines, infosLines);
 
   const currentAccount: Account = {
     bank: infosLines.bank,
@@ -120,7 +120,10 @@ const parseInfosLines = (lines: string[]): Account => {
   };
 };
 
-const parseOperationLines = (lines: string[]): Operation[] => {
+const parseOperationLines = (
+  lines: string[],
+  account: Account,
+): Operation[] => {
   const operationLines = lines.slice(5, lines.length - 1);
   const results: Operation[] = [];
 
@@ -129,6 +132,9 @@ const parseOperationLines = (lines: string[]): Operation[] => {
     const value = cells[3] !== '' ? cells[3] : cells[4];
 
     results.push({
+      accountName: account.name,
+      accountNumber: account.number,
+      bank: account.bank,
       date: stringToFormattedDate(cells[0], 'DD/MM/YY'),
       day: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'DD')),
       infos: cells[5],
