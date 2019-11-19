@@ -35,15 +35,14 @@ const importAccounts = async (
 };
 
 const saveBoard = (folder: string, board: Board): void => {
-  fs.mkdirSync(`${folder}/board/`);
-  fs.mkdirSync(`${folder}/board/${board.id}`);
-  fs.mkdirSync(`${folder}/board/${board.id}/accounts`);
+  fs.mkdirSync(`${folder}/board`);
+  fs.mkdirSync(`${folder}/accounts`);
 
   fs.writeFileSync(`${folder}/board/${board.id}.json`, JSON.stringify(board));
 
   board.accounts.forEach((account: Account) => {
     fs.writeFileSync(
-      `${folder}/board/${board.id}/accounts/${account.number}.json`,
+      `${folder}/accounts/${account.number}.json`,
       JSON.stringify(account),
     );
   });

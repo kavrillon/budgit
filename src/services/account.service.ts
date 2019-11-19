@@ -4,7 +4,7 @@ import { Account, Operation } from '@/@types';
 import { get } from '@/services/api.service';
 import { getHistoryFromOperations } from '@/services/history.service';
 
-const JSON_PATH = '/data/board/1/accounts';
+const JSON_PATH = '/data/accounts';
 export const ACCOUNT_DATE_FORMAT = 'DD/MM/YYYY';
 
 export const getAccounts = async (): Promise<Account[]> => {
