@@ -3,6 +3,7 @@ import rmfr from 'rmfr';
 
 import { importBPCE } from './bpce';
 import { Account, Board } from '@/@types';
+import { createBoardFromAccounts } from '@/services/board.service';
 
 const RESULT_FOLDER = './public/data/';
 const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH + 'bpce/';
@@ -19,31 +20,27 @@ const importAccounts = async (
   let allAccounts: Account[] = [];
 
   const bpceAccounts: Account[] = importBPCE(sourceFolder);
+
+  // Getting all accounts
   allAccounts = allAccounts.concat(bpceAccounts);
 
-  const board: Board = {
-    id: 1,
-    accounts: allAccounts,
-    balance: allAccounts.reduce((total, account) => {
-      return (total += account.balance);
-    }, 0),
-  };
+  // Creating the default board from accounts
+  const board: Board = createBoardFromAccounts(allAccounts, 1);
 
   // Save accounts
   await cleanFolder(resultFolder);
-  saveBoard(resultFolder, board);
+  save(resultFolder, board, allAccounts);
 };
 
-const saveBoard = (folder: string, board: Board): void => {
-  fs.mkdirSync(`${folder}/board/`);
-  fs.mkdirSync(`${folder}/board/${board.id}`);
-  fs.mkdirSync(`${folder}/board/${board.id}/accounts`);
+const save = (folder: string, board: Board, accounts: Account[]): void => {
+  fs.mkdirSync(`${folder}/board`);
+  fs.mkdirSync(`${folder}/accounts`);
 
   fs.writeFileSync(`${folder}/board/${board.id}.json`, JSON.stringify(board));
 
-  board.accounts.forEach((account: Account) => {
+  accounts.forEach((account: Account) => {
     fs.writeFileSync(
-      `${folder}/board/${board.id}/accounts/${account.number}.json`,
+      `${folder}/accounts/${account.number}.json`,
       JSON.stringify(account),
     );
   });

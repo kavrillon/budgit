@@ -1,10 +1,10 @@
-import { YearlyHistory } from './index';
+import { YearHistory } from './index';
 
 export type Account = {
   bank: number;
+  history: YearHistory[];
   lastUpdate: string;
   number: number;
   name: string;
-  balance: number;
-  history: YearlyHistory[];
+  total: number;
 };

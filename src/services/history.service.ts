@@ -1,7 +1,7 @@
-import { MonthlyHistory, Operation, YearlyHistory } from '@/@types';
+import { MonthHistory, Operation, YearHistory } from '@/@types';
 import { round } from '@/libs/number';
 
-export const initYearlyHistory = (label: number): YearlyHistory => {
+export const initYearHistory = (label: number): YearHistory => {
   return {
     balance: 0,
     incomes: 0,
@@ -11,7 +11,7 @@ export const initYearlyHistory = (label: number): YearlyHistory => {
   };
 };
 
-export const initMonthlyHistory = (label: number): MonthlyHistory => {
+export const initMonthHistory = (label: number): MonthHistory => {
   return {
     balance: 0,
     incomes: 0,
@@ -22,7 +22,7 @@ export const initMonthlyHistory = (label: number): MonthlyHistory => {
 };
 
 export const isInHistory = (
-  history: YearlyHistory[],
+  history: YearHistory[],
   operation: Operation,
 ): Boolean => {
   const existingYear = history.find(existing => {
@@ -53,9 +53,9 @@ export const isInHistory = (
 
 export const getHistoryFromOperations = (
   operations: Operation[],
-  existingHistory: YearlyHistory[] = [],
-): YearlyHistory[] => {
-  const history: YearlyHistory[] = existingHistory;
+  existingHistory: YearHistory[] = [],
+): YearHistory[] => {
+  const history: YearHistory[] = existingHistory;
 
   operations.forEach((operation: Operation) => {
     if (!isInHistory(history, operation)) {
@@ -64,28 +64,28 @@ export const getHistoryFromOperations = (
       });
 
       if (typeof existingYear === 'undefined') {
-        existingYear = initYearlyHistory(operation.year);
+        existingYear = initYearHistory(operation.year);
         history.push(existingYear);
       }
-      updateYearlyHistory(existingYear, operation);
+      updateYearHistory(existingYear, operation);
 
       let existingMonth = existingYear.months.find(existing => {
         return existing.label === operation.month;
       });
 
       if (typeof existingMonth === 'undefined') {
-        existingMonth = initMonthlyHistory(operation.month);
+        existingMonth = initMonthHistory(operation.month);
         existingYear.months.push(existingMonth);
       }
-      updateMonthlyHistory(existingMonth, operation);
+      updateMonthHistory(existingMonth, operation);
     }
   });
 
   return history;
 };
 
-export const updateYearlyHistory = (
-  year: YearlyHistory,
+export const updateYearHistory = (
+  year: YearHistory,
   operation: Operation,
 ): void => {
   year.balance = round(year.balance + operation.value);
@@ -97,8 +97,8 @@ export const updateYearlyHistory = (
       : year.outgoings;
 };
 
-export const updateMonthlyHistory = (
-  month: MonthlyHistory,
+export const updateMonthHistory = (
+  month: MonthHistory,
   operation: Operation,
 ): void => {
   month.balance = round(month.balance + operation.value);
