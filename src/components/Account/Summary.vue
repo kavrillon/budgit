@@ -8,7 +8,7 @@
     </h2>
 
     <figure class="account-summary__balance">
-      {{ account.balance | amount(0) }}
+      {{ account.total | amount(0) }}
     </figure>
 
     <footer class="account-summary__footer">

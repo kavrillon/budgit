@@ -22,10 +22,10 @@ const importAccounts = async (
   allAccounts = allAccounts.concat(bpceAccounts);
 
   const board: Board = {
-    id: 1,
     accounts: allAccounts,
-    balance: allAccounts.reduce((total, account) => {
-      return (total += account.balance);
+    id: 1,
+    total: allAccounts.reduce((total, account) => {
+      return (total += account.total);
     }, 0),
   };
 

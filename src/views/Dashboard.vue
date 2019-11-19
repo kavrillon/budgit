@@ -3,7 +3,7 @@
     <h1 class="accounts__title">List of accounts</h1>
     <header class="accounts__resume">
       <div class="accounts__resume__line">
-        Total: {{ board.balance | amount(0) }}
+        Total: {{ board.total | amount(0) }}
       </div>
     </header>
 

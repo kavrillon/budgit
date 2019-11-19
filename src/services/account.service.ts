@@ -37,7 +37,7 @@ export const mergeAccountData = (
     moment(existingAccount.lastUpdate, ACCOUNT_DATE_FORMAT)
   ) {
     existingAccount.lastUpdate = newAccount.lastUpdate;
-    existingAccount.balance = newAccount.balance;
+    existingAccount.total = newAccount.total;
   }
 
   existingAccount.history = getHistoryFromOperations(
