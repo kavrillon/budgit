@@ -1,8 +1,8 @@
-import { Operation, YearHistory } from './index';
+import { History, Operation } from './index';
 
 export type Account = {
   bank: number;
-  history: YearHistory[];
+  history?: History;
   lastUpdate: string;
   number: number;
   name: string;

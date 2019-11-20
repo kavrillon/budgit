@@ -19,7 +19,7 @@
       <h2 class="dashboard__history__title">History</h2>
       <div
         class="dashboard__history__year"
-        v-for="(year, index) in board.history"
+        v-for="(year, index) in board.history.years"
         :key="index"
       >
         <div class="dashboard__history__year__header">

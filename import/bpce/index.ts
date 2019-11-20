@@ -1,15 +1,24 @@
 /*eslint-disable no-magic-numbers */
 
 import * as fs from 'fs';
-import moment from 'moment';
 
-import { Account, Operation, YearHistory, MonthHistory } from '@/@types';
+import { Account, Operation } from '@/@types';
 import { mergeAccountData } from '@/services/account.service';
 import { getHistoryFromOperations } from '@/services/history.service';
 import { stringToFormattedDate } from '@/libs/date';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
 const SEPARATOR = ';';
+
+type AccountInfos = {
+  bank: number;
+  lastUpdate: string;
+  number: number;
+  name: string;
+  startDate: string;
+  startTotal: number;
+  total: number;
+};
 
 /**
  * Returns JSON containing all BPCE csv export files in the source folder
@@ -29,29 +38,9 @@ export const importBPCE = (sourceFolder: string): Account[] => {
     parseFile(bpceAccounts, sourceFolder, file),
   );
 
-  // Ordering
+  // Generate history for each accounts
   bpceAccounts.forEach((acc: Account) => {
-    // Sort by year DESC
-    acc.history.sort((a: YearHistory, b: YearHistory) =>
-      a.label < b.label ? 1 : -1,
-    );
-
-    // Sort by month DESC
-    acc.history.forEach((year: YearHistory) => {
-      year.months.sort((a: MonthHistory, b: MonthHistory) =>
-        a.label < b.label ? 1 : -1,
-      );
-
-      year.months.forEach((month: MonthHistory) => {
-        month.operations.sort((a: Operation, b: Operation) => {
-          // Turn your strings into dates, and then subtract them
-          // to get a value that is either negative, positive, or zero.
-          const date1 = parseInt(moment(a.date, DATE_FORMAT).format('X'));
-          const date2 = parseInt(moment(b.date, DATE_FORMAT).format('X'));
-          return date2 - date1;
-        });
-      });
-    });
+    acc.history = getHistoryFromOperations(acc.operations);
   });
 
   return bpceAccounts;
@@ -72,23 +61,22 @@ const parseFile = (
     .split('\n')
     .filter(Boolean);
 
-  const infosLines: Account = parseInfosLines(lines);
-  const operationLines: Operation[] = parseOperationLines(lines, infosLines);
+  const accountInfos: AccountInfos = parseInfosLines(lines);
+  const operationLines: Operation[] = parseOperationLines(lines, accountInfos);
 
   const currentAccount: Account = {
-    bank: infosLines.bank,
-    history: getHistoryFromOperations(operationLines),
-    lastUpdate: infosLines.lastUpdate,
-    name: infosLines.name,
-    number: infosLines.number,
+    bank: accountInfos.bank,
+    lastUpdate: accountInfos.lastUpdate,
+    name: accountInfos.name,
+    number: accountInfos.number,
     operations: operationLines,
-    startDate: infosLines.startDate,
-    startTotal: infosLines.startTotal,
-    total: infosLines.total,
+    startDate: accountInfos.startDate,
+    startTotal: accountInfos.startTotal,
+    total: accountInfos.total,
   };
 
   const existingAccount = accounts.find(
-    acc => acc.number === infosLines.number,
+    acc => acc.number === accountInfos.number,
   );
 
   if (typeof existingAccount !== 'undefined') {
@@ -98,7 +86,7 @@ const parseFile = (
   }
 };
 
-const parseInfosLines = (lines: string[]): Account => {
+const parseInfosLines = (lines: string[]): AccountInfos => {
   let cells = lines[0].split(SEPARATOR);
   const bank = parseInt(parseLabelledValue(cells[0]));
   const lastUpdate = stringToFormattedDate(
@@ -123,11 +111,9 @@ const parseInfosLines = (lines: string[]): Account => {
 
   return {
     bank,
-    history: [],
     lastUpdate,
     name,
     number,
-    operations: [],
     startDate,
     startTotal,
     total,
@@ -136,7 +122,7 @@ const parseInfosLines = (lines: string[]): Account => {
 
 const parseOperationLines = (
   lines: string[],
-  account: Account,
+  accountInfos: AccountInfos,
 ): Operation[] => {
   const operationLines = lines.slice(5, lines.length - 1);
   const results: Operation[] = [];
@@ -146,9 +132,9 @@ const parseOperationLines = (
     const value = cells[3] !== '' ? cells[3] : cells[4];
 
     results.push({
-      accountName: account.name,
-      accountNumber: account.number,
-      bank: account.bank,
+      accountName: accountInfos.name,
+      accountNumber: accountInfos.number,
+      bank: accountInfos.bank,
       date: stringToFormattedDate(cells[0], 'DD/MM/YY'),
       day: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'DD')),
       infos: cells[5],
