@@ -1,13 +1,13 @@
 <template>
-  <main class="accounts" v-if="board !== null">
-    <h1 class="accounts__title">List of accounts</h1>
-    <header class="accounts__resume">
-      <div class="accounts__resume__line">
+  <main class="dashboard" v-if="board !== null">
+    <h1 class="dashboard__title">List of accounts</h1>
+    <header class="dashboard__resume">
+      <div class="dashboard__resume__line">
         Total: {{ board.total | amount(0) }}
       </div>
     </header>
 
-    <div class="accounts__list">
+    <div class="dashboard__list">
       <account-summary
         v-for="(account, index) in board.accounts"
         :key="index"
@@ -15,51 +15,51 @@
       />
     </div>
 
-    <section class="accounts__history">
-      <h2 class="accounts__history__title">History</h2>
+    <section class="dashboard__history">
+      <h2 class="dashboard__history__title">History</h2>
       <div
-        class="accounts__history__year"
+        class="dashboard__history__year"
         v-for="(year, index) in board.history"
         :key="index"
       >
-        <div class="accounts__history__year__header">
-          <div class="accounts__history__year__header__label">
+        <div class="dashboard__history__year__header">
+          <div class="dashboard__history__year__header__label">
             {{ year.label }}
           </div>
-          <div class="accounts__history__year__header__balance">
+          <div class="dashboard__history__year__header__balance">
             Balance: {{ year.balance | amount(0) }}
           </div>
-          <div class="accounts__history__year__header__incomes">
+          <div class="dashboard__history__year__header__incomes">
             Incomes: {{ year.incomes | amount(0) }}
           </div>
-          <div class="accounts__history__year__header__outgoings">
+          <div class="dashboard__history__year__header__outgoings">
             Outgoings: {{ year.outgoings | amount(0) }}
           </div>
         </div>
-        <div class="accounts__history__year__months">
+        <div class="dashboard__history__year__months">
           <div
             v-for="(month, indexOp) in year.months"
             :key="indexOp"
-            class="accounts__history__year__months__month"
+            class="dashboard__history__year__months__month"
           >
-            <div class="accounts__history__year__months__month__header">
+            <div class="dashboard__history__year__months__month__header">
               <div
-                class="accounts__history__year__months__month__header__label"
+                class="dashboard__history__year__months__month__header__label"
               >
                 {{ month.label }}
               </div>
               <div
-                class="accounts__history__year__months__month__header__balance"
+                class="dashboard__history__year__months__month__header__balance"
               >
                 Balance: {{ month.balance | amount(0) }}
               </div>
               <div
-                class="accounts__history__year__months__month__header__incomes"
+                class="dashboard__history__year__months__month__header__incomes"
               >
                 Incomes: {{ month.incomes | amount(0) }}
               </div>
               <div
-                class="accounts__history__year__months__month__header__outgoings"
+                class="dashboard__history__year__months__month__header__outgoings"
               >
                 Outgoings: {{ month.outgoings | amount(0) }}
               </div>
@@ -69,24 +69,24 @@
       </div>
     </section>
 
-    <div class="accounts__operations">
-      <h2 class="accounts__operations__title">Operations this month</h2>
-      <ul class="accounts__operations__list">
+    <div class="dashboard__operations">
+      <h2 class="dashboard__operations__title">Operations this month</h2>
+      <ul class="dashboard__operations__list">
         <li
           v-for="(operation, index) in board.lastOperations"
           :key="index"
-          class="accounts__operations__list__item"
+          class="dashboard__operations__list__item"
         >
-          <div class="accounts__operations__list__item__date">
+          <div class="dashboard__operations__list__item__date">
             {{ operation.date }}
           </div>
-          <div class="accounts__operations__list__item__account">
+          <div class="dashboard__operations__list__item__account">
             {{ operation.accountName }}
           </div>
-          <div class="accounts__operations__list__item__name">
+          <div class="dashboard__operations__list__item__name">
             {{ operation.name }}
           </div>
-          <div class="accounts__operations__list__item__value">
+          <div class="dashboard__operations__list__item__value">
             {{ operation.value }}
           </div>
         </li>
@@ -115,7 +115,7 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss" scoped>
-.accounts {
+.dashboard {
   padding: $gutter-size;
 
   &__title {
