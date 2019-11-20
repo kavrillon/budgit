@@ -6,5 +6,7 @@ export type Account = {
   lastUpdate: string;
   number: number;
   name: string;
+  startDate: string;
+  startTotal: number;
   total: number;
 };

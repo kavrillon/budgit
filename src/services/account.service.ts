@@ -40,6 +40,14 @@ export const mergeAccountData = (
     existingAccount.total = newAccount.total;
   }
 
+  if (
+    moment(newAccount.startDate, ACCOUNT_DATE_FORMAT) <
+    moment(existingAccount.startDate, ACCOUNT_DATE_FORMAT)
+  ) {
+    existingAccount.startDate = newAccount.startDate;
+    existingAccount.startTotal = newAccount.startTotal;
+  }
+
   existingAccount.history = getHistoryFromOperations(
     operations,
     existingAccount.history,
