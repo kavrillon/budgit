@@ -81,6 +81,8 @@ const parseFile = (
     lastUpdate: infosLines.lastUpdate,
     name: infosLines.name,
     number: infosLines.number,
+    startDate: infosLines.startDate,
+    startTotal: infosLines.startTotal,
     total: infosLines.total,
   };
 
@@ -103,6 +105,11 @@ const parseInfosLines = (lines: string[]): Account => {
     DATE_FORMAT,
   );
 
+  const startDate = stringToFormattedDate(
+    parseLabelledValue(cells[2]),
+    DATE_FORMAT,
+  );
+
   cells = lines[1].split(SEPARATOR);
   const number = parseInt(parseLabelledValue(cells[0]));
   const name = parseLabelledValue(cells[1]);
@@ -110,12 +117,17 @@ const parseInfosLines = (lines: string[]): Account => {
   cells = lines[3].split(SEPARATOR);
   const total = parseInt(cells[4]);
 
+  cells = lines[lines.length - 1].split(SEPARATOR);
+  const startTotal = parseInt(cells[4]);
+
   return {
     bank,
     history: [],
     lastUpdate,
     name,
     number,
+    startDate,
+    startTotal,
     total,
   };
 };
