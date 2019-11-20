@@ -52,4 +52,24 @@ export const mergeAccountData = (
     operations,
     existingAccount.history,
   );
+
+  operations.forEach((op: Operation) => {
+    if (isOperationInAccount(existingAccount, op) === false) {
+      existingAccount.operations.push(op);
+    }
+  });
+};
+
+export const isOperationInAccount = (
+  account: Account,
+  operation: Operation,
+): Boolean => {
+  const existingOperation = account.operations.find(accountOp => {
+    return accountOp.number === operation.number;
+  });
+
+  if (typeof existingOperation === 'undefined') {
+    return false;
+  }
+  return true;
 };
