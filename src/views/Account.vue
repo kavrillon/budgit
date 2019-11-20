@@ -8,7 +8,7 @@
       <h2 class="account__header__title">History</h2>
       <div
         class="account__history__year"
-        v-for="(year, index) in account.history"
+        v-for="(year, index) in account.history.years"
         :key="index"
       >
         <div class="account__history__year__header">
@@ -53,7 +53,11 @@
             </div>
             <ul class="account__history__year__months__month__operations">
               <li
-                v-for="(operation, indexOp) in month.operations"
+                v-for="(operation, indexOp) in getOperationsForMonth(
+                  account.operations,
+                  year.label,
+                  month.label,
+                )"
                 :key="indexOp"
                 class="account__history__year__months__month__operations__item"
               >
@@ -83,6 +87,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { getAccount } from '@/services/account.service';
+import { getOperationsForMonth } from '@/services/operation.service';
 import AccountSummary from '@/components/Account/Summary.vue';
 import { Account, Operation } from '@/@types';
 
@@ -98,6 +103,9 @@ export default Vue.extend({
   },
   async created() {
     this.account = await getAccount(parseInt(this.$route.params.number));
+  },
+  methods: {
+    getOperationsForMonth,
   },
 });
 </script>

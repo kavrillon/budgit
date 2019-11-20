@@ -1,4 +1,4 @@
-import { MonthHistory, Operation, YearHistory } from '@/@types';
+import { History, MonthHistory, Operation, YearHistory } from '@/@types';
 import { round } from '@/libs/number';
 
 export const initYearHistory = (label: number): YearHistory => {
@@ -16,88 +16,8 @@ export const initMonthHistory = (label: number): MonthHistory => {
     balance: 0,
     incomes: 0,
     label: label,
-    operations: [],
     outgoings: 0,
   };
-};
-
-export const isInHistory = (
-  history: YearHistory[],
-  operation: Operation,
-): Boolean => {
-  const existingYear = history.find(existing => {
-    return existing.label === operation.year;
-  });
-
-  if (typeof existingYear === 'undefined') {
-    return false;
-  } else {
-    const existingMonth = existingYear.months.find(existing => {
-      return existing.label === operation.month;
-    });
-
-    if (typeof existingMonth === 'undefined') {
-      return false;
-    } else {
-      const existingOperation = existingMonth.operations.find(existing => {
-        return existing.number === operation.number;
-      });
-
-      if (typeof existingOperation === 'undefined') {
-        return false;
-      }
-    }
-  }
-  return true;
-};
-
-export const getOperationsFromHistory = (
-  history: YearHistory[],
-): Operation[] => {
-  const operations: Operation[] = history.reduce(
-    (operations: Operation[], year: YearHistory) => {
-      return operations.concat(
-        year.months.reduce((operations: Operation[], month: MonthHistory) => {
-          return operations.concat(month.operations);
-        }, []),
-      );
-    },
-    [],
-  );
-  return operations;
-};
-
-export const getHistoryFromOperations = (
-  operations: Operation[],
-  existingHistory: YearHistory[] = [],
-): YearHistory[] => {
-  const history: YearHistory[] = existingHistory;
-
-  operations.forEach((operation: Operation) => {
-    if (!isInHistory(history, operation)) {
-      let existingYear = history.find(existing => {
-        return existing.label === operation.year;
-      });
-
-      if (typeof existingYear === 'undefined') {
-        existingYear = initYearHistory(operation.year);
-        history.push(existingYear);
-      }
-      updateYearHistory(existingYear, operation);
-
-      let existingMonth = existingYear.months.find(existing => {
-        return existing.label === operation.month;
-      });
-
-      if (typeof existingMonth === 'undefined') {
-        existingMonth = initMonthHistory(operation.month);
-        existingYear.months.push(existingMonth);
-      }
-      updateMonthHistory(existingMonth, operation);
-    }
-  });
-
-  return history;
 };
 
 export const updateYearHistory = (
@@ -126,38 +46,54 @@ export const updateMonthHistory = (
     operation.value < 0
       ? round(month.outgoings + operation.value)
       : month.outgoings;
-  month.operations.push(operation);
 };
 
-export const getHistoryForYear = (
-  history: YearHistory[],
-  year: number,
-): YearHistory | null => {
-  const existingYear = history.find(existing => {
-    return existing.label === year;
+export const sortHistory = (history: History): History => {
+  // Sort by year DESC a copy of the given item
+  const years = history.years
+    .concat()
+    .sort((a: YearHistory, b: YearHistory) => (a.label < b.label ? 1 : -1));
+
+  // Sort by month DESC
+  years.forEach((year: YearHistory) => {
+    year.months.sort((a: MonthHistory, b: MonthHistory) =>
+      a.label < b.label ? 1 : -1,
+    );
   });
 
-  if (typeof existingYear !== 'undefined') {
-    return existingYear;
-  }
-  return null;
+  return {
+    years,
+  };
 };
 
-export const getOperationsForMonth = (
-  history: YearHistory[],
-  year: number,
-  month: number,
-): Operation[] => {
-  const yearHistory = getHistoryForYear(history, year);
-  if (yearHistory !== null) {
-    const monthHistory = yearHistory.months.find(existing => {
-      return existing.label === month;
+export const getHistoryFromOperations = (operations: Operation[]): History => {
+  let history: History = {
+    years: [],
+  };
+
+  operations.forEach((operation: Operation) => {
+    let existingYear = history.years.find(existing => {
+      return existing.label === operation.year;
     });
 
-    if (typeof monthHistory !== 'undefined') {
-      return monthHistory.operations;
+    if (typeof existingYear === 'undefined') {
+      existingYear = initYearHistory(operation.year);
+      history.years.push(existingYear);
     }
-  }
+    updateYearHistory(existingYear, operation);
 
-  return [];
+    let existingMonth = existingYear.months.find(existing => {
+      return existing.label === operation.month;
+    });
+
+    if (typeof existingMonth === 'undefined') {
+      existingMonth = initMonthHistory(operation.month);
+      existingYear.months.push(existingMonth);
+    }
+    updateMonthHistory(existingMonth, operation);
+  });
+
+  history = sortHistory(history);
+
+  return history;
 };

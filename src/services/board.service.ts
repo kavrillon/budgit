@@ -1,12 +1,11 @@
-import moment from 'moment';
-
-import { Account, Board, Operation, YearHistory } from '@/@types';
+import { Account, Board, Operation } from '@/@types';
+import { getCurrentYear, getCurrentMonth } from '@/libs/date';
 import { get } from '@/services/api.service';
+import { getHistoryFromOperations } from './history.service';
 import {
+  getOperationsFromAccounts,
   getOperationsForMonth,
-  getHistoryFromOperations,
-  getOperationsFromHistory,
-} from './history.service';
+} from './operation.service';
 
 const JSON_PATH = '/data/board';
 
@@ -19,52 +18,24 @@ export const createBoardFromAccounts = (
   accounts: Account[],
   id: number,
 ): Board => {
+  const allOperations: Operation[] = getOperationsFromAccounts(accounts);
+
   const board = {
     accounts: accounts.map((account: Account) => ({
       ...account,
-      history: [], // No need history for board
+      operations: [], // No need history for board
     })),
-    lastOperations: getLastOperationsFromAccounts(accounts),
+    history: getHistoryFromOperations(allOperations),
     id,
+    lastOperations: getOperationsForMonth(
+      allOperations,
+      getCurrentYear(),
+      getCurrentMonth(),
+    ),
     total: accounts.reduce((total, account) => {
       return total + account.total;
     }, 0),
-    history: getHistoryFromAccounts(accounts),
   };
 
   return board;
-};
-
-export const getHistoryFromAccounts = (accounts: Account[]): YearHistory[] => {
-  const operations: Operation[] = accounts.reduce(
-    (operations: Operation[], account: Account) => {
-      return operations.concat(getOperationsFromHistory(account.history));
-    },
-    [],
-  );
-
-  return getHistoryFromOperations(operations);
-};
-
-export const getLastOperationsFromAccounts = (
-  accounts: Account[],
-): Operation[] => {
-  const now = moment();
-
-  const operations: Operation[] = accounts.reduce(
-    (operations: Operation[], account: Account) => {
-      return operations.concat(
-        getOperationsForMonth(account.history, now.year(), now.month()),
-      );
-    },
-    [],
-  );
-
-  operations.sort((a: Operation, b: Operation) => {
-    const date1 = parseInt(moment(a.date, 'DD/MM/YYYY').format('X'));
-    const date2 = parseInt(moment(b.date, 'DD/MM/YYYY').format('X'));
-    return date2 - date1;
-  });
-
-  return operations;
 };

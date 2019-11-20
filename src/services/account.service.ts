@@ -1,11 +1,9 @@
-import moment from 'moment';
-
 import { Account, Operation } from '@/@types';
+import { getTimestamp } from '@/libs/date';
 import { get } from '@/services/api.service';
-import { getHistoryFromOperations } from '@/services/history.service';
+import { isOperationInList } from '@/services/operation.service';
 
 const JSON_PATH = '/data/accounts';
-export const ACCOUNT_DATE_FORMAT = 'DD/MM/YYYY';
 
 export const getAccounts = async (): Promise<Account[]> => {
   const accounts: Account[] = [];
@@ -33,43 +31,23 @@ export const mergeAccountData = (
   operations: Operation[] = [],
 ): void => {
   if (
-    moment(newAccount.lastUpdate, ACCOUNT_DATE_FORMAT) >
-    moment(existingAccount.lastUpdate, ACCOUNT_DATE_FORMAT)
+    getTimestamp(newAccount.lastUpdate) >
+    getTimestamp(existingAccount.lastUpdate)
   ) {
     existingAccount.lastUpdate = newAccount.lastUpdate;
     existingAccount.total = newAccount.total;
   }
 
   if (
-    moment(newAccount.startDate, ACCOUNT_DATE_FORMAT) <
-    moment(existingAccount.startDate, ACCOUNT_DATE_FORMAT)
+    getTimestamp(newAccount.startDate) < getTimestamp(existingAccount.startDate)
   ) {
     existingAccount.startDate = newAccount.startDate;
     existingAccount.startTotal = newAccount.startTotal;
   }
 
-  existingAccount.history = getHistoryFromOperations(
-    operations,
-    existingAccount.history,
-  );
-
   operations.forEach((op: Operation) => {
-    if (isOperationInAccount(existingAccount, op) === false) {
+    if (!isOperationInList(existingAccount.operations, op)) {
       existingAccount.operations.push(op);
     }
   });
-};
-
-export const isOperationInAccount = (
-  account: Account,
-  operation: Operation,
-): Boolean => {
-  const existingOperation = account.operations.find(accountOp => {
-    return accountOp.number === operation.number;
-  });
-
-  if (typeof existingOperation === 'undefined') {
-    return false;
-  }
-  return true;
 };
