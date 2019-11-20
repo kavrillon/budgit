@@ -15,6 +15,60 @@
       />
     </div>
 
+    <section class="accounts__history">
+      <h2 class="accounts__history__title">History</h2>
+      <div
+        class="accounts__history__year"
+        v-for="(year, index) in board.history"
+        :key="index"
+      >
+        <div class="accounts__history__year__header">
+          <div class="accounts__history__year__header__label">
+            {{ year.label }}
+          </div>
+          <div class="accounts__history__year__header__balance">
+            Balance: {{ year.balance | amount(0) }}
+          </div>
+          <div class="accounts__history__year__header__incomes">
+            Incomes: {{ year.incomes | amount(0) }}
+          </div>
+          <div class="accounts__history__year__header__outgoings">
+            Outgoings: {{ year.outgoings | amount(0) }}
+          </div>
+        </div>
+        <div class="accounts__history__year__months">
+          <div
+            v-for="(month, indexOp) in year.months"
+            :key="indexOp"
+            class="accounts__history__year__months__month"
+          >
+            <div class="accounts__history__year__months__month__header">
+              <div
+                class="accounts__history__year__months__month__header__label"
+              >
+                {{ month.label }}
+              </div>
+              <div
+                class="accounts__history__year__months__month__header__balance"
+              >
+                Balance: {{ month.balance | amount(0) }}
+              </div>
+              <div
+                class="accounts__history__year__months__month__header__incomes"
+              >
+                Incomes: {{ month.incomes | amount(0) }}
+              </div>
+              <div
+                class="accounts__history__year__months__month__header__outgoings"
+              >
+                Outgoings: {{ month.outgoings | amount(0) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class="accounts__operations">
       <h2 class="accounts__operations__title">Operations this month</h2>
       <ul class="accounts__operations__list">
@@ -76,6 +130,62 @@ export default Vue.extend({
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+  }
+
+  &__history {
+    &__title {
+      @include title;
+    }
+
+    &__year {
+      &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 0 $gutter-size;
+      }
+
+      &__months {
+        margin: 0 0 $gutter-size;
+
+        &__month {
+          margin: 0 0 $gutter-size;
+          background: $color-bg-alt;
+          padding: $gutter-size;
+
+          &__header {
+            @include heading;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 0 $gutter-size;
+          }
+
+          &__operations {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            &__item {
+              display: flex;
+
+              &__date {
+                flex: 0 0 150px;
+              }
+
+              &__name {
+                flex: 1 1 auto;
+              }
+
+              &__amount {
+                flex: 0 0 auto;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   &__operations {

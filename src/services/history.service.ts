@@ -51,6 +51,22 @@ export const isInHistory = (
   return true;
 };
 
+export const getOperationsFromHistory = (
+  history: YearHistory[],
+): Operation[] => {
+  const operations: Operation[] = history.reduce(
+    (operations: Operation[], year: YearHistory) => {
+      return operations.concat(
+        year.months.reduce((operations: Operation[], month: MonthHistory) => {
+          return operations.concat(month.operations);
+        }, []),
+      );
+    },
+    [],
+  );
+  return operations;
+};
+
 export const getHistoryFromOperations = (
   operations: Operation[],
   existingHistory: YearHistory[] = [],
