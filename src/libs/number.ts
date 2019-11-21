@@ -5,14 +5,17 @@ export const round = (number: number): number => {
 
 export const formatAmount = (
   number: number,
-  decimals: number,
+  decimals: number = 2,
   positivePrefix: Boolean = false,
 ): string => {
-  let result =
-    number
-      .toFixed(decimals)
-      .replace('.', ',') // replace decimal point character with ,
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' €';
+  const parts = number
+    .toFixed(decimals)
+    .toString()
+    .split('.');
+
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  let result = parts.join(',') + ' €';
 
   if (positivePrefix && number > 0) result = '+' + result;
   return result;
