@@ -8,8 +8,10 @@
     "deploy": "yarn data:seeds && vue-cli-service build",
     "lint": "vue-cli-service lint src/ import/",
     "format": "vue-cli-service lint --fix src/ import/",
+    "test": "yarn test:unit && yarn test:e2e",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage",
+    "test:unit:watch": "vue-cli-service test:unit --watch",
     "data:import": "ts-node --project ./tsconfig-import.json -r  tsconfig-paths/register ./import/index.ts",
     "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:import"
   },
