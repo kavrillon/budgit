@@ -1,8 +1,3 @@
-export const round = (number: number): number => {
-  var newnumber = new Number(number + '').toFixed(2);
-  return parseFloat(newnumber);
-};
-
 export const formatAmount = (
   number: number,
   decimals: number = 2,
@@ -19,4 +14,9 @@ export const formatAmount = (
 
   if (positivePrefix && number > 0) result = '+' + result;
   return result;
+};
+
+export const round = (number: number): number => {
+  var newnumber = new Number(number + '').toFixed(2);
+  return parseFloat(newnumber);
 };

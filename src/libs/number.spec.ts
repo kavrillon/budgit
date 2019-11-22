@@ -1,21 +1,5 @@
 import { formatAmount, round } from './number';
 
-describe('round', () => {
-  it('should round the number with 2 decimals', () => {
-    expect(round(432.543546)).toBe(432.54);
-  });
-
-  it('should round upper when the next decimal is 5', () => {
-    expect(round(432.54553)).toBe(432.55);
-    expect(round(432.54753)).toBe(432.55);
-  });
-
-  it('should round down when the next decimal lower than 5', () => {
-    expect(round(432.54253)).toBe(432.54);
-    expect(round(432.54453)).toBe(432.54);
-  });
-});
-
 describe('formatAmount', () => {
   it('should add a the currency symbol', () => {
     expect(formatAmount(432, 0, false).endsWith('€')).toBe(true);
@@ -68,5 +52,21 @@ describe('formatAmount', () => {
     it('should add a + symbol when the result is positive', () => {
       expect(formatAmount(432.543546, 2, true)).toMatch('+432,54 €');
     });
+  });
+});
+
+describe('round', () => {
+  it('should round the number with 2 decimals', () => {
+    expect(round(432.543546)).toBe(432.54);
+  });
+
+  it('should round upper when the next decimal is 5', () => {
+    expect(round(432.54553)).toBe(432.55);
+    expect(round(432.54753)).toBe(432.55);
+  });
+
+  it('should round down when the next decimal lower than 5', () => {
+    expect(round(432.54253)).toBe(432.54);
+    expect(round(432.54453)).toBe(432.54);
   });
 });
