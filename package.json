@@ -12,7 +12,7 @@
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage && cat ./coverage/lcov.info | codacy-coverage --language typescript --token $CODACY_PROJECT_TOKEN",
     "test:unit:watch": "vue-cli-service test:unit --watch",
-    "data:import": "ts-node --project ./tsconfig-import.json -r  tsconfig-paths/register ./import/index.ts",
+    "data:import": "ts-node --project ./tsconfig-import.json -r tsconfig-paths/register ./import/index.ts",
     "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:import"
   },
   "dependencies": {
