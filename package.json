@@ -10,7 +10,7 @@
     "format": "vue-cli-service lint --fix src/ import/",
     "test": "yarn test:unit && yarn test:e2e",
     "test:e2e": "vue-cli-service test:e2e --headless",
-    "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage",
+    "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage && cat ./coverage/lcov.info | codacy-coverage --token $CODACY_PROJECT_TOKEN",
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "data:import": "ts-node --project ./tsconfig-import.json -r  tsconfig-paths/register ./import/index.ts",
     "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:import"
@@ -45,6 +45,7 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "codacy-coverage": "^3.4.0",
     "eslint": "^6.6.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^6.0.1",
