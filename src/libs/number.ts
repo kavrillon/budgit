@@ -1,6 +1,6 @@
 export const formatAmount = (
   number: number,
-  decimals: number = 2,
+  decimals = 2,
   positivePrefix: Boolean = false,
 ): string => {
   const parts = number
@@ -17,6 +17,6 @@ export const formatAmount = (
 };
 
 export const round = (number: number): number => {
-  var newnumber = new Number(number + '').toFixed(2);
-  return parseFloat(newnumber);
+  const result = new Number(number + '').toFixed(2);
+  return parseFloat(result);
 };
