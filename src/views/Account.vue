@@ -15,6 +15,12 @@
           <div class="account__history__year__header__label">
             {{ year.label }}
           </div>
+          <div class="account__history__year__header__start">
+            Start total: {{ year.totalStart | amount(0) }}
+          </div>
+          <div class="account__history__year__header__end">
+            End total: {{ year.totalEnd | amount(0) }}
+          </div>
           <div class="account__history__year__header__balance">
             Balance: {{ year.balance | amount(0) }}
           </div>
@@ -34,6 +40,12 @@
             <div class="account__history__year__months__month__header">
               <div class="account__history__year__months__month__header__label">
                 {{ month.label }}
+              </div>
+              <div class="account__history__year__months__month__header__start">
+                Start total: {{ month.totalStart | amount(0) }}
+              </div>
+              <div class="account__history__year__months__month__header__end">
+                End total: {{ month.totalEnd | amount(0) }}
               </div>
               <div
                 class="account__history__year__months__month__header__balance"

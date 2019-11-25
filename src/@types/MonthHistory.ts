@@ -3,4 +3,6 @@ export type MonthHistory = {
   balance: number;
   incomes: number;
   outgoings: number;
+  totalEnd: number;
+  totalStart: number;
 };

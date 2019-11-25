@@ -6,4 +6,6 @@ export type YearHistory = {
   incomes: number;
   outgoings: number;
   months: MonthHistory[];
+  totalEnd: number;
+  totalStart: number;
 };
