@@ -40,7 +40,7 @@ export const importBPCE = (sourceFolder: string): Account[] => {
 
   // Generate history for each accounts
   bpceAccounts.forEach((acc: Account) => {
-    acc.history = getHistoryFromOperations(acc.operations);
+    acc.history = getHistoryFromOperations(acc.operations, acc.total);
   });
 
   return bpceAccounts;

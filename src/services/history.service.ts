@@ -8,6 +8,8 @@ export const initYearHistory = (label: number): YearHistory => {
     label: label,
     months: [],
     outgoings: 0,
+    totalEnd: 0,
+    totalStart: 0,
   };
 };
 
@@ -17,6 +19,8 @@ export const initMonthHistory = (label: number): MonthHistory => {
     incomes: 0,
     label: label,
     outgoings: 0,
+    totalEnd: 0,
+    totalStart: 0,
   };
 };
 
@@ -66,7 +70,10 @@ export const sortHistory = (history: History): History => {
   };
 };
 
-export const getHistoryFromOperations = (operations: Operation[]): History => {
+export const getHistoryFromOperations = (
+  operations: Operation[],
+  totalEnd: number,
+): History => {
   let history: History = {
     years: [],
   };
@@ -93,7 +100,23 @@ export const getHistoryFromOperations = (operations: Operation[]): History => {
     updateMonthHistory(existingMonth, operation);
   });
 
+  // History sorting
   history = sortHistory(history);
+
+  // Total calculation
+  let yearTotal = totalEnd;
+  history.years.forEach((year: YearHistory) => {
+    year.totalEnd = yearTotal;
+    yearTotal -= year.balance;
+    year.totalStart = yearTotal;
+
+    let monthTotal = year.totalEnd;
+    year.months.forEach((month: MonthHistory) => {
+      month.totalEnd = monthTotal;
+      monthTotal -= month.balance;
+      month.totalStart = monthTotal;
+    });
+  });
 
   return history;
 };
