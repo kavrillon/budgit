@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import { Account, Operation } from '@/@types';
 import { mergeAccountData } from '@/services/account.service';
 import { getHistoryFromOperations } from '@/services/history.service';
-import { stringToFormattedDate } from '@/libs/date';
+import { formatDateString } from '@/libs/date';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
 const SEPARATOR = ';';
@@ -89,15 +89,12 @@ const parseFile = (
 const parseInfosLines = (lines: string[]): AccountInfos => {
   let cells = lines[0].split(SEPARATOR);
   const bank = parseInt(parseLabelledValue(cells[0]));
-  const lastUpdate = stringToFormattedDate(
+  const lastUpdate = formatDateString(
     parseLabelledValue(cells[3]),
     DATE_FORMAT,
   );
 
-  const startDate = stringToFormattedDate(
-    parseLabelledValue(cells[2]),
-    DATE_FORMAT,
-  );
+  const startDate = formatDateString(parseLabelledValue(cells[2]), DATE_FORMAT);
 
   cells = lines[1].split(SEPARATOR);
   const number = parseInt(parseLabelledValue(cells[0]));
@@ -135,14 +132,14 @@ const parseOperationLines = (
       accountName: accountInfos.name,
       accountNumber: accountInfos.number,
       bank: accountInfos.bank,
-      date: stringToFormattedDate(cells[0], 'DD/MM/YY'),
-      day: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'DD')),
+      date: formatDateString(cells[0], 'DD/MM/YY'),
+      day: parseInt(formatDateString(cells[0], 'DD/MM/YY', 'DD')),
       infos: cells[5],
-      month: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'MM')),
+      month: parseInt(formatDateString(cells[0], 'DD/MM/YY', 'MM')),
       name: cells[2],
       number: cells[1],
       value: parseValue(value),
-      year: parseInt(stringToFormattedDate(cells[0], 'DD/MM/YY', 'YYYY')),
+      year: parseInt(formatDateString(cells[0], 'DD/MM/YY', 'YYYY')),
     });
   });
   return results;
