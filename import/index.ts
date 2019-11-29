@@ -5,7 +5,7 @@ import { importBPCE } from './bpce';
 import { Account, Board } from '@/@types';
 import { createBoardFromAccounts } from '@/services/board.service';
 
-const RESULT_FOLDER = './public/data/';
+const RESULT_FOLDER = './public/data';
 const SOURCE_FOLDER = process.env.BUDGIT_DATA_PATH + 'bpce/';
 
 /**
@@ -19,7 +19,8 @@ const importAccounts = async (
 ): Promise<void> => {
   let allAccounts: Account[] = [];
 
-  const bpceAccounts: Account[] = importBPCE(sourceFolder);
+  const existingAccounts: Account[] = loadAccounts(resultFolder);
+  const bpceAccounts: Account[] = importBPCE(sourceFolder, existingAccounts);
 
   // Getting all accounts
   allAccounts = allAccounts.concat(bpceAccounts);
@@ -32,11 +33,24 @@ const importAccounts = async (
   save(resultFolder, board, allAccounts);
 };
 
+const loadAccounts = (folder: string): Account[] => {
+  const accounts: Account[] = [];
+  if (fs.existsSync(`${folder}/accounts`)) {
+    fs.readdirSync(`${folder}/accounts`).forEach(file => {
+      const contentFile = JSON.parse(
+        fs.readFileSync(`${folder}/accounts/${file}`, 'utf8'),
+      );
+      accounts.push(contentFile);
+    });
+  }
+  return accounts;
+};
+
 const save = (folder: string, board: Board, accounts: Account[]): void => {
-  fs.mkdirSync(`${folder}/board`);
+  fs.mkdirSync(`${folder}/boards`);
   fs.mkdirSync(`${folder}/accounts`);
 
-  fs.writeFileSync(`${folder}/board/${board.id}.json`, JSON.stringify(board));
+  fs.writeFileSync(`${folder}/boards/${board.id}.json`, JSON.stringify(board));
 
   accounts.forEach((account: Account) => {
     fs.writeFileSync(

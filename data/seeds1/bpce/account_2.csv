@@ -1,0 +1,10 @@
+Code de la banque : BANK_CODE_2;Code de l'agence : AGENCY_CODE_2;Date de d�but de t�l�chargement : 01/01/2019;Date de fin de t�l�chargement : 18/01/2019;
+Num�ro de compte : 000000000002;Nom du compte : ACCOUNT_NAME_2;Devise : EUR;
+
+Solde en fin de p�riode;;;;2160
+Date;Num�ro d'op�ration;Libell�;D�bit;Cr�dit;D�tail;
+16/01/19;OP-2-4;Libelle OP 2-4;-200;;Details OP 2-4;
+15/01/19;OP-2-3;Libelle OP 2-3;;+1500;Details OP 2-3;
+18/01/19;OP-2-2;Libelle OP 2-2;-40,00;;Details OP 2-2;
+06/01/19;OP-2-1;Libelle OP 2-1;-100,00;;Details OP 2-1;
+Solde en d�but de p�riode;;;;1000
