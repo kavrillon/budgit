@@ -24,8 +24,11 @@ type AccountInfos = {
  * Returns JSON containing all BPCE csv export files in the source folder
  * @param sourceFolder string: path of the folder containing exports
  */
-export const importBPCE = (sourceFolder: string): Account[] => {
-  const bpceAccounts: Account[] = [];
+export const importBPCE = (
+  sourceFolder: string,
+  existingAccounts: Account[],
+): Account[] => {
+  const bpceAccounts: Account[] = existingAccounts;
 
   const sourceFiles = fs
     .readdirSync(sourceFolder)

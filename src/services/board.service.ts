@@ -7,7 +7,7 @@ import {
   getOperationsForMonth,
 } from './operation.service';
 
-const JSON_PATH = '/data/board';
+const JSON_PATH = '/data/boards';
 
 export const getBoard = async (id: number): Promise<Board> => {
   const jsonBoard = await get(`${JSON_PATH}/${id}.json`);
