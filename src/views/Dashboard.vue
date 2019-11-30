@@ -14,6 +14,10 @@
         :account="account"
       />
     </div>
+    <section class="dashboard__history">
+      <h2 class="dashboard__history__title">Savings</h2>
+      <figure>{{ savingsTotal | amount(0) }}</figure>
+    </section>
 
     <section class="dashboard__history">
       <h2 class="dashboard__history__title">History</h2>
@@ -114,6 +118,16 @@ export default Vue.extend({
     return {
       board: null as Board | null,
     };
+  },
+  computed: {
+    savingsTotal(): number {
+      if (this.board !== null) {
+        return this.board.accounts.reduce((total, account) => {
+          return total + (account.savings ? account.total : 0);
+        }, 0);
+      }
+      return 0;
+    },
   },
   async created() {
     this.board = await getBoard(1);

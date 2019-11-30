@@ -2,6 +2,7 @@
   <router-link
     :to="{ name: 'account', params: { number: account.number } }"
     class="account-summary"
+    :class="{ 'account-summary--savings': account.savings }"
   >
     <h2 class="account-summary__name">
       {{ account.name }}
@@ -45,6 +46,10 @@ export default Vue.extend({
   margin: $gutter-size 0;
   padding: $gutter-size;
   cursor: pointer;
+
+  &--savings {
+    background: darken($color-bg-alt, 15%);
+  }
 
   &__balance {
     @include title;
