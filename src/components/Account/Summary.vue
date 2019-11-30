@@ -11,8 +11,12 @@
       {{ account.total | amount(0) }}
     </figure>
 
+    <figure class="account-summary__start">
+      {{ account.startTotal | amount(0) }}
+    </figure>
+
     <footer class="account-summary__footer">
-      {{ account.lastUpdate }}
+      {{ account.startDate }} to {{ account.lastUpdate }}
     </footer>
   </router-link>
 </template>
@@ -45,7 +49,11 @@ export default Vue.extend({
   &__balance {
     @include title;
 
-    margin: $gutter-size-small 0;
+    margin: $gutter-size-small 0 0;
+  }
+
+  &__start {
+    margin-bottom: $gutter-size-small;
   }
 }
 </style>

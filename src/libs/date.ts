@@ -1,15 +1,33 @@
 import moment from 'moment';
 
-const DATE_FORMAT = 'DD/MM/YYYY';
+export const DATE_FORMAT = 'DD/MM/YYYY';
 
-export const stringToFormattedDate = (
-  line: string,
+export const formatDateString = (
+  entry: string,
   sourceFormat: string,
   destinationFormat: string = DATE_FORMAT,
 ): string => {
-  try {
-    return moment(line, sourceFormat).format(destinationFormat);
-  } catch (_) {
-    throw new Error(`Date format is not correct: ${line}`);
+  const result = moment(entry, sourceFormat).format(destinationFormat);
+
+  if (result === 'Invalid date') {
+    throw new Error('Invalid date');
   }
+
+  return result;
+};
+
+export const getCurrentMonth = (): number => {
+  return moment().month() + 1;
+};
+
+export const getCurrentYear = (): number => {
+  return moment().year();
+};
+
+export const getTimestamp = (date: string): number => {
+  const result = parseInt(moment(date, DATE_FORMAT).format('X'));
+  if (isNaN(result)) {
+    throw new Error('Invalid date');
+  }
+  return result;
 };

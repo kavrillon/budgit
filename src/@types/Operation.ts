@@ -1,10 +1,13 @@
 export type Operation = {
-  number: string;
+  accountName: string;
+  accountNumber: number;
+  bank: number;
   date: string;
-  month: number;
-  year: number;
   day: number;
-  name: string;
   infos: string;
+  month: number;
+  name: string;
+  number: string;
   value: number;
+  year: number;
 };

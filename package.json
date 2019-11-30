@@ -5,13 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "yarn data:seeds && vue-cli-service build",
+    "deploy": "yarn data:seeds1 && yarn data:seeds2 && vue-cli-service build",
     "lint": "vue-cli-service lint src/ import/",
     "format": "vue-cli-service lint --fix src/ import/",
+    "test": "yarn test:unit && yarn test:e2e",
     "test:e2e": "vue-cli-service test:e2e --headless",
-    "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage",
-    "data:import": "ts-node --project ./tsconfig-import.json -r  tsconfig-paths/register ./import/index.ts",
-    "data:seeds": "BUDGIT_DATA_PATH=./data/seeds/ yarn data:import"
+    "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage && cat ./coverage/lcov.info | codacy-coverage --language typescript --token $CODACY_PROJECT_TOKEN",
+    "test:unit:watch": "vue-cli-service test:unit --watch",
+    "data:clean": "rm -rf ./public/data/accounts/* && rm -rf ./public/data/boards/*",
+    "data:import": "ts-node --project ./tsconfig-import.json -r tsconfig-paths/register ./import/index.ts",
+    "data:seeds1": "BUDGIT_DATA_PATH=./data/seeds1/ yarn data:import",
+    "data:seeds2": "BUDGIT_DATA_PATH=./data/seeds2/ yarn data:import"
   },
   "dependencies": {
     "@types/node": "^12.12.8",
@@ -43,6 +47,7 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "codacy-coverage": "^3.4.0",
     "eslint": "^6.6.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^6.0.1",
