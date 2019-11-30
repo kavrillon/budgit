@@ -7,6 +7,7 @@ export type Account = {
   number: number;
   name: string;
   operations: Operation[];
+  savings: Boolean;
   startDate: string;
   startTotal: number;
   total: number;

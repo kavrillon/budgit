@@ -73,6 +73,7 @@ const parseFile = (
     name: accountInfos.name,
     number: accountInfos.number,
     operations: operationLines,
+    savings: false,
     startDate: accountInfos.startDate,
     startTotal: accountInfos.startTotal,
     total: accountInfos.total,
