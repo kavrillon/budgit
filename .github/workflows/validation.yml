@@ -22,6 +22,11 @@ jobs:
           yarn build
         env:
           CI: true
+      - name: Linting
+        run: |
+          yarn lint
+        env:
+          CI: true
       - name: Seeds Generation
         run: |
           yarn data:seeds1 && yarn data:seeds2
