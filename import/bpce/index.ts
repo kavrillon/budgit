@@ -1,6 +1,6 @@
 /*eslint-disable no-magic-numbers */
 
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 
 import { Account, Operation } from '@/@types';
 import { mergeAccountData } from '@/services/account.service';
