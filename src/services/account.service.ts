@@ -5,6 +5,12 @@ import { isOperationInList } from '@/services/operation.service';
 
 const JSON_PATH = '/data/accounts';
 
+export const getAccount = (number: number): Promise<Account | null> => {
+  return get(`${JSON_PATH}/${number}.json`)
+    .then(data => Promise.resolve(data))
+    .catch(_ => Promise.reject(`No account ${number}`));
+};
+
 export const getAccounts = async (): Promise<Account[]> => {
   const accounts: Account[] = [];
 
@@ -14,15 +20,6 @@ export const getAccounts = async (): Promise<Account[]> => {
   });
 
   return Promise.resolve(accounts);
-};
-
-export const getAccount = async (number: number): Promise<Account | null> => {
-  const account: Account = await get(`${JSON_PATH}/${number}.json`);
-
-  if (typeof account !== 'undefined') {
-    return Promise.resolve(account);
-  }
-  return Promise.resolve(null);
 };
 
 export const mergeAccountData = (
