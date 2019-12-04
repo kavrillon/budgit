@@ -57,7 +57,7 @@
     "sass-loader": "8.0.0",
     "ts-jest": "24.2.0",
     "tsconfig-paths": "3.9.0",
-    "typescript": "3.7.2",
+    "typescript": "3.7.3",
     "vue-template-compiler": "2.6.10"
   }
 }
