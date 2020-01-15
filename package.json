@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@types/fs-extra": "8.0.1",
-    "@types/node": "13.1.5",
+    "@types/node": "13.1.7",
     "@types/rmfr": "2.0.0",
     "core-js": "3.6.4",
     "fs-extra": "8.1.0",
