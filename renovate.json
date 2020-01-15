@@ -1,5 +1,11 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    {
+      "schedule": "every weekend",
+      "patch": {
+        "enabled": false
+      }
+    }
   ]
 }
