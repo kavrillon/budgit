@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Dashboard from './views/Dashboard.vue';
+import Board from './views/Board.vue';
 
 Vue.use(Router);
 
@@ -9,14 +9,9 @@ export const router = new Router({
   mode: 'history',
   routes: [
     {
-      component: Dashboard,
+      component: Board,
       name: 'home',
       path: '/',
-    },
-    {
-      component: () => import('./views/Account.vue'),
-      name: 'account',
-      path: '/account/:number',
     },
   ],
 });
