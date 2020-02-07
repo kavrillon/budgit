@@ -10,6 +10,7 @@
     "format": "vue-cli-service lint --fix src/ import/",
     "test": "yarn test:unit && yarn test:e2e",
     "test:e2e": "vue-cli-service test:e2e --headless",
+    "test:e2e:watch": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit --passWithNoTests --coverage && cat ./coverage/lcov.info | codacy-coverage --language typescript --token $CODACY_PROJECT_TOKEN",
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "data:clean": "rm -rf ./public/data/accounts/* && rm -rf ./public/data/boards/*",
