@@ -10,8 +10,8 @@ export const router = new Router({
   routes: [
     {
       component: Board,
-      name: 'home',
-      path: '/',
+      name: 'board',
+      path: '/board/0',
     },
   ],
 });
