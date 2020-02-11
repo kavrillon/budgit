@@ -26,7 +26,7 @@ const importAccounts = async (
   allAccounts = allAccounts.concat(bpceAccounts);
 
   // Creating the default board from accounts
-  const board: Board = createBoardFromAccounts(allAccounts, 1);
+  const board: Board = createBoardFromAccounts(allAccounts, 0);
 
   // Save accounts
   await cleanFolder(resultFolder);
