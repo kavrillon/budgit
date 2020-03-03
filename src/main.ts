@@ -1,16 +1,13 @@
 import Vue from 'vue';
 import App from './App.vue';
-import { router } from './router';
-import { registerFilters } from './filters';
-import { store } from './store';
 import './registerServiceWorker';
+import router from './router';
+import store from './store';
 
 Vue.config.productionTip = false;
 
-registerFilters();
-
 new Vue({
-  render: h => h(App),
   router,
   store,
+  render: h => h(App),
 }).$mount('#app');
