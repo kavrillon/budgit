@@ -11,17 +11,36 @@ jest.mock('axios', () => ({
 describe('Home', () => {
   let wrapper: Wrapper<Vue>;
 
-  beforeAll(() => {
-    wrapper = shallowMount(Home);
-  });
   describe('on init', () => {
-    it('should call the api', async () => {
-      await wrapper.vm.$nextTick;
-      expect(axios.get).toHaveBeenCalledWith('/data/boards.json');
+    describe('initial state', () => {
+      beforeEach(() => {
+        wrapper = shallowMount(Home, {
+          methods: { loadData: jest.fn() },
+        });
+      });
+
+      it('should be loading', () => {
+        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(true);
+      });
     });
 
-    it('should load boards', () => {
-      expect(wrapper.findAll('[data-test="boardListItem"]').length).toBe(2);
+    describe('data loading', () => {
+      beforeEach(() => {
+        wrapper = shallowMount(Home);
+      });
+
+      it('should call the api', async () => {
+        await wrapper.vm.$nextTick;
+        expect(axios.get).toHaveBeenCalledWith('/data/boards.json');
+      });
+
+      it('should load boards', () => {
+        expect(wrapper.findAll('[data-test="boardListItem"]').length).toBe(2);
+      });
+
+      it('should not be loading', () => {
+        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(false);
+      });
     });
   });
 });

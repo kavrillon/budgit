@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <div v-if="loading" class="home__loading" data-test="boardLoading">
+      Loading...
+    </div>
     <div class="home__list" data-test="boardList">
       <div
         class="home__list__item"
@@ -27,10 +30,17 @@ export default Vue.extend({
   data() {
     return {
       items: null as Board[] | null,
+      loading: true,
     };
   },
-  async created() {
-    this.items = (await axios.get<Board[]>('/data/boards.json')).data;
+  created() {
+    this.loadData();
+  },
+  methods: {
+    async loadData() {
+      this.items = (await axios.get<Board[]>('/data/boards.json')).data;
+      this.loading = false;
+    },
   },
 });
 </script>
