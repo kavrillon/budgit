@@ -1,0 +1,40 @@
+@import './abstract.scss';
+@import './fonts';
+
+// Custom properties
+:root {
+  --gutter: 16px;
+
+  @media (min-width: $sm) {
+    --gutter: 24px;
+  }
+}
+
+// Global styles
+
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+html {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+  margin: 0;
+  background-color: $color-bg;
+  padding: 0;
+  color: $color-text;
+  font-size: $font-size;
+  line-height: 1.15;
+  font-family: $font-family;
+}
