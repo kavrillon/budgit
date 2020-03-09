@@ -4,7 +4,7 @@
     class="board-summary"
     data-test="boardSummary"
   >
-    {{ board.name }}
+    <span class="board-summary__text">{{ board.name }}</span>
   </router-link>
 </template>
 <script lang="ts">
@@ -22,3 +22,20 @@ export default Vue.extend({
   },
 });
 </script>
+<style lang="scss" scoped>
+.board-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 100%;
+  background: $color-primary;
+  text-decoration: none;
+  color: $color-text-opposite;
+
+  &__text {
+    @include title;
+
+    flex: 0 0 auto;
+  }
+}
+</style>

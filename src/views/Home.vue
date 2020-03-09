@@ -53,3 +53,41 @@ export default Vue.extend({
   },
 });
 </script>
+<style lang="scss" scoped>
+.home {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  overflow: hidden;
+  justify-content: stretch;
+  align-items: stretch;
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 1 1 auto;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: $gutter-large 0;
+
+    @media (min-width: $sm) {
+      padding: 0 $gutter-large;
+    }
+
+    &__item {
+      display: flex;
+      padding: $gutter-large $gutter-xlarge;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: stretch;
+      flex: 1 1 100%;
+
+      @media (min-width: $sm) {
+        flex: 1 1 auto;
+        padding: $gutter-xlarge $gutter-large;
+      }
+    }
+  }
+}
+</style>
