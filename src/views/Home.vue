@@ -38,10 +38,10 @@ export default Vue.extend({
     };
   },
   created() {
-    this.loadData();
+    this.init();
   },
   methods: {
-    async loadData() {
+    async init() {
       try {
         const result = await axios.get<Board[]>('/data/boards.json');
         this.items = result.data;

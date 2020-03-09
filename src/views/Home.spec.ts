@@ -13,7 +13,7 @@ describe('Home', () => {
     describe('initial state', () => {
       beforeEach(() => {
         wrapper = shallowMount(Home, {
-          methods: { loadData: jest.fn() },
+          methods: { init: jest.fn() },
         });
       });
 
