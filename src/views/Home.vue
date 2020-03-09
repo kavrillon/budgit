@@ -1,9 +1,12 @@
 <template>
   <div class="home">
+    <div v-if="error" class="home__error" data-test="boardError">
+      Error
+    </div>
     <div v-if="loading" class="home__loading" data-test="boardLoading">
       Loading...
     </div>
-    <div class="home__list" data-test="boardList">
+    <div v-if="!loading && !error" class="home__list" data-test="boardList">
       <div
         class="home__list__item"
         v-for="(item, key) in items"
@@ -29,6 +32,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      error: null,
       items: null as Board[] | null,
       loading: true,
     };
@@ -38,7 +42,12 @@ export default Vue.extend({
   },
   methods: {
     async loadData() {
-      this.items = (await axios.get<Board[]>('/data/boards.json')).data;
+      try {
+        const result = await axios.get<Board[]>('/data/boards.json');
+        this.items = result.data;
+      } catch (e) {
+        this.error = e;
+      }
       this.loading = false;
     },
   },
