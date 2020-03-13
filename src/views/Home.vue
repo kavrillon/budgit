@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <div v-if="error" class="home__error" data-test="boardError">
+    <div v-if="error" class="home__error" data-test="boardsError">
       Error
     </div>
-    <div v-if="loading" class="home__loading" data-test="boardLoading">
+    <div v-if="loading" class="home__loading" data-test="boardsLoading">
       Loading...
     </div>
-    <div v-if="!loading && !error" class="home__list" data-test="boardList">
+    <div v-if="!loading && !error" class="home__list" data-test="boardsList">
       <div
         class="home__list__item"
         v-for="(item, key) in items"
         :key="key"
-        data-test="boardListItem"
+        data-test="boardsListItem"
       >
         <board-summary :board="item" />
       </div>

@@ -18,7 +18,7 @@ describe('Home', () => {
       });
 
       it('should be loading', () => {
-        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(true);
+        expect(wrapper.find('[data-test="boardsLoading"]').exists()).toBe(true);
       });
     });
 
@@ -36,15 +36,17 @@ describe('Home', () => {
       });
 
       it('should load boards', () => {
-        expect(wrapper.findAll('[data-test="boardListItem"]').length).toBe(2);
+        expect(wrapper.findAll('[data-test="boardsListItem"]').length).toBe(2);
       });
 
       it('should not display an error', () => {
-        expect(wrapper.find('[data-test="boardError"]').exists()).toBe(false);
+        expect(wrapper.find('[data-test="boardsError"]').exists()).toBe(false);
       });
 
       it('should not be loading', () => {
-        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(false);
+        expect(wrapper.find('[data-test="boardsLoading"]').exists()).toBe(
+          false,
+        );
       });
     });
 
@@ -58,15 +60,17 @@ describe('Home', () => {
 
       it('should display an error', async () => {
         await wrapper.vm.$nextTick;
-        expect(wrapper.find('[data-test="boardError"]').exists()).toBe(true);
+        expect(wrapper.find('[data-test="boardsError"]').exists()).toBe(true);
       });
 
       it('should not display content', async () => {
-        expect(wrapper.find('[data-test="boardList"]').exists()).toBe(false);
+        expect(wrapper.find('[data-test="boardsList"]').exists()).toBe(false);
       });
 
       it('should not be loading anymore', () => {
-        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(false);
+        expect(wrapper.find('[data-test="boardsLoading"]').exists()).toBe(
+          false,
+        );
       });
     });
   });
