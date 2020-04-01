@@ -62,6 +62,12 @@ describe('Board', () => {
       it('should not be loading', () => {
         expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(false);
       });
+
+      it('should display the board title', () => {
+        expect(wrapper.find('[data-test="boardTitle"]').text()).toBe(
+          'Test board',
+        );
+      });
     });
 
     describe('when no data', () => {

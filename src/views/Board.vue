@@ -7,7 +7,9 @@
       Loading...
     </div>
     <div v-if="board && !error" class="board__item" data-test="board">
-      {{ board.name }}
+      <h1 class="board__item__title" data-test="boardTitle">
+        {{ board.name }}
+      </h1>
     </div>
   </div>
 </template>
@@ -65,6 +67,12 @@ export default Vue.extend({
     align-items: center;
     justify-content: center;
     flex: 1 1 auto;
+  }
+
+  &__item {
+    &__title {
+      @include title;
+    }
   }
 }
 </style>
