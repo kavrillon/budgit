@@ -6,14 +6,6 @@ describe('Displaying board list', () => {
       cy.server();
     });
 
-    describe('initial state', () => {
-      it('should be loading', () => {
-        cy.route({ url: '/data/boards.json', delay: 100 }).as('getBoards');
-        cy.visit('/');
-        cy.get('[data-test="boardsLoading"]').should('exist');
-      });
-    });
-
     describe('when data exists', () => {
       beforeEach(() => {
         cy.route({ url: '/data/boards.json', delay: 100 }).as('getBoards');
