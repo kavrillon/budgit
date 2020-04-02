@@ -1,4 +1,14 @@
+// eslint-disable-next-line
+const path = require('path');
+
 module.exports = {
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@libs': path.resolve(__dirname, 'libs/'),
+      },
+    },
+  },
   css: {
     loaderOptions: {
       sass: {
