@@ -45,11 +45,6 @@ describe('PageBoard', () => {
         });
       });
 
-      it('should call the api', async () => {
-        await wrapper.vm.$nextTick;
-        expect(axios.get).toHaveBeenCalledWith('/data/boards.json');
-      });
-
       it('should load the requested board', async () => {
         await wrapper.vm.$nextTick;
         expect(wrapper.find('[data-test="board"]').exists()).toBe(true);
@@ -75,7 +70,11 @@ describe('PageBoard', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.reject('Error'),
         );
-        wrapper = shallowMount(PageBoard);
+        wrapper = shallowMount(PageBoard, {
+          mocks: {
+            $route,
+          },
+        });
       });
 
       it('should display an error', async () => {

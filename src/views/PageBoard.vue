@@ -17,13 +17,13 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
-import axios from 'axios';
 import { Board } from '@/@types';
+import { boardService } from '@/services/board.service';
 
 @Component
 export default class PageBoard extends Vue {
   board: Board | null = null;
-  error: Error | null = null;
+  error: string | null = null;
   loading = true;
 
   created() {
@@ -31,19 +31,11 @@ export default class PageBoard extends Vue {
   }
 
   async init() {
-    try {
-      const result = await axios.get<Board[]>('/data/boards.json');
-      if (result.data && result.data.length > 0) {
-        this.board =
-          result.data.find(i => i.id === parseInt(this.$route.params.id)) ||
-          null;
+    const id = parseInt(this.$route.params.id);
+    this.board = await boardService.getBoard(id);
 
-        if (this.board === null) {
-          throw new Error('No data');
-        }
-      }
-    } catch (e) {
-      this.error = e;
+    if (this.board === null) {
+      this.error = 'No board matching the request';
     }
 
     this.loading = false;

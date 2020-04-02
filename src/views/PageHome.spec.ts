@@ -30,11 +30,6 @@ describe('PageHome', () => {
         wrapper = shallowMount(PageHome);
       });
 
-      it('should call the api', async () => {
-        await wrapper.vm.$nextTick;
-        expect(axios.get).toHaveBeenCalledWith('/data/boards.json');
-      });
-
       it('should load boards', () => {
         expect(wrapper.findAll('[data-test="boardsListItem"]').length).toBe(2);
       });

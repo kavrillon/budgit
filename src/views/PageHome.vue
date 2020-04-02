@@ -21,10 +21,10 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import axios from 'axios';
 
 import { Board } from '@/@types';
 import BoardSummary from '@/components/Board/Summary.vue';
+import { boardService } from '@/services/board.service';
 
 @Component({
   components: {
@@ -32,7 +32,7 @@ import BoardSummary from '@/components/Board/Summary.vue';
   },
 })
 export default class PageHome extends Vue {
-  error: Error | null = null;
+  error: string | null = null;
   items: Board[] | null = null;
   loading = true;
 
@@ -41,11 +41,9 @@ export default class PageHome extends Vue {
   }
 
   async init() {
-    try {
-      const result = await axios.get<Board[]>('/data/boards.json');
-      this.items = result.data;
-    } catch (e) {
-      this.error = e;
+    this.items = await boardService.getBoards();
+    if (this.items === null) {
+      this.error = 'No board';
     }
     this.loading = false;
   }
