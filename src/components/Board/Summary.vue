@@ -8,19 +8,14 @@
   </router-link>
 </template>
 <script lang="ts">
-import Vue from 'vue';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 
 import { Board } from '@/@types';
 
-export default Vue.extend({
-  name: 'BoardSummary',
-  props: {
-    board: {
-      type: Object as () => Board,
-      required: true,
-    },
-  },
-});
+@Component
+export default class BoardSummary extends Vue {
+  @Prop() readonly board!: Board;
+}
 </script>
 <style lang="scss" scoped>
 .board-summary {

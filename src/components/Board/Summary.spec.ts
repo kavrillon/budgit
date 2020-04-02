@@ -1,6 +1,6 @@
 import { shallowMount, Wrapper, RouterLinkStub } from '@vue/test-utils';
 
-import BoardSummary from './BoardSummary.vue';
+import BoardSummary from './Summary.vue';
 
 import mockBoards from '../../../public/data/boards.json';
 

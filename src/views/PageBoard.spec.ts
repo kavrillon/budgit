@@ -1,7 +1,7 @@
 import { shallowMount, Wrapper } from '@vue/test-utils';
 import axios from 'axios';
 
-import Board from './Board.vue';
+import PageBoard from './PageBoard.vue';
 import mockBoards from '../../public/data/boards.json';
 
 const $route = {
@@ -17,13 +17,13 @@ const $routeNoData = {
 
 jest.mock('axios');
 
-describe('Board', () => {
+describe('PageBoard', () => {
   let wrapper: Wrapper<Vue>;
 
   describe('on init', () => {
     describe('initial state', () => {
       beforeEach(() => {
-        wrapper = shallowMount(Board, {
+        wrapper = shallowMount(PageBoard, {
           methods: { init: jest.fn() },
         });
       });
@@ -38,7 +38,7 @@ describe('Board', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
         );
-        wrapper = shallowMount(Board, {
+        wrapper = shallowMount(PageBoard, {
           mocks: {
             $route,
           },
@@ -75,7 +75,7 @@ describe('Board', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.reject('Error'),
         );
-        wrapper = shallowMount(Board);
+        wrapper = shallowMount(PageBoard);
       });
 
       it('should display an error', async () => {
@@ -97,7 +97,7 @@ describe('Board', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
         );
-        wrapper = shallowMount(Board, {
+        wrapper = shallowMount(PageBoard, {
           mocks: {
             $route: $routeNoData,
           },

@@ -20,38 +20,36 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Vue, Component } from 'vue-property-decorator';
 import axios from 'axios';
 
 import { Board } from '@/@types';
-import BoardSummary from '@/components/Board/BoardSummary.vue';
+import BoardSummary from '@/components/Board/Summary.vue';
 
-export default Vue.extend({
+@Component({
   components: {
     BoardSummary,
   },
-  data() {
-    return {
-      error: null,
-      items: null as Board[] | null,
-      loading: true,
-    };
-  },
+})
+export default class PageHome extends Vue {
+  error: Error | null = null;
+  items: Board[] | null = null;
+  loading = true;
+
   created() {
     this.init();
-  },
-  methods: {
-    async init() {
-      try {
-        const result = await axios.get<Board[]>('/data/boards.json');
-        this.items = result.data;
-      } catch (e) {
-        this.error = e;
-      }
-      this.loading = false;
-    },
-  },
-});
+  }
+
+  async init() {
+    try {
+      const result = await axios.get<Board[]>('/data/boards.json');
+      this.items = result.data;
+    } catch (e) {
+      this.error = e;
+    }
+    this.loading = false;
+  }
+}
 </script>
 <style lang="scss" scoped>
 .home {

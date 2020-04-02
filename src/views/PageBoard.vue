@@ -15,43 +15,40 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import axios from 'axios';
+import { Vue, Component } from 'vue-property-decorator';
 
+import axios from 'axios';
 import { Board } from '@/@types';
 
-export default Vue.extend({
-  data() {
-    return {
-      board: null as Board | null,
-      error: null as Error | null,
-      loading: true,
-    };
-  },
+@Component
+export default class PageBoard extends Vue {
+  board: Board | null = null;
+  error: Error | null = null;
+  loading = true;
+
   created() {
     this.init();
-  },
-  methods: {
-    async init() {
-      try {
-        const result = await axios.get<Board[]>('/data/boards.json');
-        if (result.data && result.data.length > 0) {
-          this.board =
-            result.data.find(i => i.id === parseInt(this.$route.params.id)) ||
-            null;
+  }
 
-          if (this.board === null) {
-            throw new Error('No data');
-          }
+  async init() {
+    try {
+      const result = await axios.get<Board[]>('/data/boards.json');
+      if (result.data && result.data.length > 0) {
+        this.board =
+          result.data.find(i => i.id === parseInt(this.$route.params.id)) ||
+          null;
+
+        if (this.board === null) {
+          throw new Error('No data');
         }
-      } catch (e) {
-        this.error = e;
       }
+    } catch (e) {
+      this.error = e;
+    }
 
-      this.loading = false;
-    },
-  },
-});
+    this.loading = false;
+  }
+}
 </script>
 <style lang="scss" scoped>
 .board {

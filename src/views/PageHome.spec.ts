@@ -1,18 +1,18 @@
 import { shallowMount, Wrapper } from '@vue/test-utils';
 import axios from 'axios';
 
-import Home from './Home.vue';
+import PageHome from './PageHome.vue';
 import mockBoards from '../../public/data/boards.json';
 
 jest.mock('axios');
 
-describe('Home', () => {
+describe('PageHome', () => {
   let wrapper: Wrapper<Vue>;
 
   describe('on init', () => {
     describe('initial state', () => {
       beforeEach(() => {
-        wrapper = shallowMount(Home, {
+        wrapper = shallowMount(PageHome, {
           methods: { init: jest.fn() },
         });
       });
@@ -27,7 +27,7 @@ describe('Home', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
         );
-        wrapper = shallowMount(Home);
+        wrapper = shallowMount(PageHome);
       });
 
       it('should call the api', async () => {
@@ -55,7 +55,7 @@ describe('Home', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.reject('Error'),
         );
-        wrapper = shallowMount(Home);
+        wrapper = shallowMount(PageHome);
       });
 
       it('should display an error', async () => {
