@@ -8,7 +8,7 @@ describe('Displaying board list', () => {
 
     describe('when data exists', () => {
       beforeEach(() => {
-        cy.route({ url: '/data/boards.json', delay: 100 }).as('getBoards');
+        cy.route({ url: '/api/boards', delay: 100 }).as('getBoards');
         cy.visit('/');
         cy.wait('@getBoards');
       });
@@ -31,7 +31,7 @@ describe('Displaying board list', () => {
     describe('when no data', () => {
       beforeEach(() => {
         cy.route({
-          url: '/data/boards.json',
+          url: '/api/boards',
           response: {},
           status: 404,
         }).as('getBoards');
@@ -56,9 +56,7 @@ describe('Displaying board list', () => {
   describe('on item click', () => {
     it('should redirect to board page', () => {
       cy.visit('/');
-      cy.get('[data-test="boardSummary"]')
-        .first()
-        .click();
+      cy.get('[data-test="boardSummary"]').first().click();
 
       cy.url().should('eql', baseUrl + 'board/0');
     });

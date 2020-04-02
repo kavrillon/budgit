@@ -3,6 +3,12 @@
   command = "yarn build"
 
 [[redirects]]
+  from = "/api/boards"
+  to = "/data/boards.json"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

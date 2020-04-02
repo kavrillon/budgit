@@ -5,7 +5,7 @@ describe('Displaying board', () => {
     describe('when data exists', () => {
       before(() => {
         cy.server();
-        cy.route({ url: '/data/boards.json', delay: 100 }).as('getBoard');
+        cy.route({ url: '/api/boards', delay: 100 }).as('getBoard');
         cy.visit(route);
         cy.wait('@getBoard');
       });
@@ -31,7 +31,7 @@ describe('Displaying board', () => {
       beforeEach(() => {
         cy.server();
         cy.route({
-          url: '/data/boards.json',
+          url: '/api/boards',
           response: {},
           status: 404,
         }).as('getBoards');

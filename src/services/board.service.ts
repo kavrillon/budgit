@@ -5,7 +5,7 @@ import { Board } from '@/@types';
 class BoardService {
   async getBoards(): Promise<Board[] | null> {
     try {
-      const result = await axios.get<Board[]>('/data/boards.json');
+      const result = await axios.get<Board[]>('/api/boards');
       return result.data;
     } catch (e) {
       return null;
