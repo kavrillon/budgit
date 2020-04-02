@@ -1,10 +1,12 @@
 [
   {
     "id": 0,
-    "name": "Test board"
+    "name": "Test board",
+    "total": 1234.1234
   },
   {
     "id": 1,
-    "name": "Demo board"
+    "name": "Demo board",
+    "total": 4321
   }
 ]

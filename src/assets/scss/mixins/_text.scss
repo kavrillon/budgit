@@ -4,3 +4,8 @@
   font-size: 2.4rem;
   font-weight: 300;
 }
+
+@mixin highlight {
+  font-size: 4rem;
+  font-weight: 300;
+}

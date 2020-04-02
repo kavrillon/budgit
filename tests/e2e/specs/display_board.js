@@ -23,7 +23,15 @@ describe('Displaying board', () => {
       });
 
       it('should display the board title', () => {
-        cy.get('[data-test="boardTitle"]').should('contain', 'Test board');
+        cy.get('[data-test="boardTitle"]').should($el =>
+          expect($el.text().trim()).to.equal('Test board'),
+        );
+      });
+
+      it('should display the current total', () => {
+        cy.get('[data-test="boardTotal"]').should($el =>
+          expect($el.text().trim()).to.equal('+1.234 €'),
+        );
       });
     });
 

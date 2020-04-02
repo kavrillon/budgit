@@ -10,6 +10,9 @@
       <h1 class="board__item__title" data-test="boardTitle">
         {{ board.name }}
       </h1>
+      <section class="board__item__resume">
+        <board-total :board="board" />
+      </section>
     </div>
   </div>
 </template>
@@ -18,9 +21,14 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 import { Board } from '@/@types';
+import BoardTotal from '@/components/Board/Total.vue';
 import { boardService } from '@/services/board.service';
 
-@Component
+@Component({
+  components: {
+    BoardTotal,
+  },
+})
 export default class PageBoard extends Vue {
   board: Board | null = null;
   error: string | null = null;
