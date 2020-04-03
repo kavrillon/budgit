@@ -1,14 +1,6 @@
 @import './abstract.scss';
 @import './fonts';
-
-// Custom properties
-:root {
-  --gutter: 16px;
-
-  @media (min-width: $sm) {
-    --gutter: 24px;
-  }
-}
+@import './custom-props';
 
 // Global styles
 
@@ -20,14 +12,13 @@
 
 html {
   display: flex;
-  flex-direction: column;
   overflow: hidden;
   height: 100%;
 }
 
 body {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1 1 auto;
   overflow: hidden;
   margin: 0;

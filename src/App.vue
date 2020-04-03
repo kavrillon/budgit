@@ -9,7 +9,7 @@
 
 .app {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1 1 auto;
   overflow: hidden;
 }

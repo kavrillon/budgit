@@ -1,0 +1,13 @@
+// Custom properties
+
+:root {
+  --gutter: 16px;
+  --font-size-title: 1.8rem;
+  --font-size-highlight: 3rem;
+
+  @media (min-width: $sm) {
+    --gutter: 24px;
+    --font-size-title: 2.4rem;
+    --font-size-highlight: 4rem;
+  }
+}

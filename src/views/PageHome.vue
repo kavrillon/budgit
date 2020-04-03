@@ -6,14 +6,21 @@
     <div v-if="loading" class="home__loading" data-test="boardsLoading">
       Loading...
     </div>
-    <div v-if="!loading && !error" class="home__list" data-test="boardsList">
-      <div
-        class="home__list__item"
-        v-for="(item, key) in items"
-        :key="key"
-        data-test="boardsListItem"
-      >
-        <board-summary :board="item" />
+    <div v-if="!loading && !error" class="home__content">
+      <h1 class="home__content__title">
+        Your boards
+      </h1>
+      <div class="home__content__board">
+        <ul class="home__content__board__list" data-test="boardsList">
+          <li
+            class="home__content__board__list__item"
+            v-for="(item, key) in items"
+            :key="key"
+            data-test="boardsListItem"
+          >
+            <board-summary :board="item" />
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -52,36 +59,55 @@ export default class PageHome extends Vue {
 <style lang="scss" scoped>
 .home {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: 1 1 auto;
-  overflow: hidden;
-  justify-content: stretch;
-  align-items: stretch;
+  width: 100%;
 
-  &__list {
+  &__content {
     display: flex;
-    flex-direction: row;
-    align-items: stretch;
+    flex-direction: column;
     flex: 1 1 auto;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: $gutter-large 0;
+    overflow: hidden;
 
-    @media (min-width: $sm) {
-      padding: 0 $gutter-large;
+    &__title {
+      @include title;
+
+      flex: 0 0 auto;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: $gutter-lg;
+      width: 100%;
     }
 
-    &__item {
-      display: flex;
-      padding: $gutter-large $gutter-xlarge;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: stretch;
+    &__board {
       flex: 1 1 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      overflow-y: auto;
+      width: 100%;
 
-      @media (min-width: $sm) {
-        flex: 1 1 auto;
-        padding: $gutter-xlarge $gutter-large;
+      &__list {
+        flex: 1 1 100%;
+        overflow-y: auto;
+        margin: 0 auto;
+        padding: 0 $gutter-lg;
+        list-style: none;
+        max-width: 1200px;
+
+        @media (min-width: $sm) {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
+
+        &__item {
+          margin-bottom: $gutter-lg;
+
+          @media (min-width: $sm) {
+            flex: 0 0 calc(50% - #{$gutter});
+          }
+        }
       }
     }
   }

@@ -1,11 +1,13 @@
 // Mixins text
 
 @mixin title {
-  font-size: 2.4rem;
+  margin: 0;
+  padding: 0;
+  font-size: $font-size-title;
   font-weight: 300;
 }
 
 @mixin highlight {
-  font-size: 4rem;
+  font-size: $font-size-highlight;
   font-weight: 300;
 }

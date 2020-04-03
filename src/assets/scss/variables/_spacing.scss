@@ -1,6 +1,6 @@
 // Spacings
 
 $gutter: var(--gutter);
-$gutter-small: calc(#{$gutter} / 2);
-$gutter-large: calc(#{$gutter} * 2);
-$gutter-xlarge: calc(#{$gutter} * 4);
+$gutter-sm: calc(#{$gutter} / 2);
+$gutter-lg: calc(#{$gutter} * 2);
+$gutter-xlg: calc(#{$gutter} * 4);

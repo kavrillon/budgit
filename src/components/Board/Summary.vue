@@ -26,6 +26,8 @@ export default class BoardSummary extends Vue {
   background: $color-primary;
   text-decoration: none;
   color: $color-text-opposite;
+  padding: $gutter;
+  height: 275px;
 
   &__text {
     @include title;
