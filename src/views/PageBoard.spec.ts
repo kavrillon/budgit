@@ -1,4 +1,4 @@
-import { shallowMount, Wrapper } from '@vue/test-utils';
+import { mount, Wrapper } from '@vue/test-utils';
 import axios from 'axios';
 
 import PageBoard from './PageBoard.vue';
@@ -23,13 +23,13 @@ describe('PageBoard', () => {
   describe('on init', () => {
     describe('initial state', () => {
       beforeEach(() => {
-        wrapper = shallowMount(PageBoard, {
+        wrapper = mount(PageBoard, {
           methods: { init: jest.fn() },
         });
       });
 
       it('should be loading', () => {
-        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(true);
+        expect(wrapper.find('[data-test="pageLoading"]').exists()).toBe(true);
       });
     });
 
@@ -38,7 +38,7 @@ describe('PageBoard', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
         );
-        wrapper = shallowMount(PageBoard, {
+        wrapper = mount(PageBoard, {
           mocks: {
             $route,
           },
@@ -50,16 +50,8 @@ describe('PageBoard', () => {
         expect(wrapper.find('[data-test="board"]').exists()).toBe(true);
       });
 
-      it('should not display an error', () => {
-        expect(wrapper.find('[data-test="boardError"]').exists()).toBe(false);
-      });
-
-      it('should not be loading', () => {
-        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(false);
-      });
-
       it('should display the board title', () => {
-        expect(wrapper.find('[data-test="boardTitle"]').text()).toBe(
+        expect(wrapper.find('[data-test="pageTitle"]').text()).toBe(
           'Test board',
         );
       });
@@ -70,7 +62,7 @@ describe('PageBoard', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.reject('Error'),
         );
-        wrapper = shallowMount(PageBoard, {
+        wrapper = mount(PageBoard, {
           mocks: {
             $route,
           },
@@ -79,15 +71,7 @@ describe('PageBoard', () => {
 
       it('should display an error', async () => {
         await wrapper.vm.$nextTick;
-        expect(wrapper.find('[data-test="boardError"]').exists()).toBe(true);
-      });
-
-      it('should not display content', async () => {
-        expect(wrapper.find('[data-test="board"]').exists()).toBe(false);
-      });
-
-      it('should not be loading anymore', () => {
-        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(false);
+        expect(wrapper.find('[data-test="pageError"]').exists()).toBe(true);
       });
     });
 
@@ -96,7 +80,7 @@ describe('PageBoard', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
         );
-        wrapper = shallowMount(PageBoard, {
+        wrapper = mount(PageBoard, {
           mocks: {
             $route: $routeNoData,
           },
@@ -105,15 +89,7 @@ describe('PageBoard', () => {
 
       it('should display an error', async () => {
         await wrapper.vm.$nextTick;
-        expect(wrapper.find('[data-test="boardError"]').exists()).toBe(true);
-      });
-
-      it('should not display content', () => {
-        expect(wrapper.find('[data-test="board"]').exists()).toBe(false);
-      });
-
-      it('should not be loading anymore', () => {
-        expect(wrapper.find('[data-test="boardLoading"]').exists()).toBe(false);
+        expect(wrapper.find('[data-test="pageError"]').exists()).toBe(true);
       });
     });
   });

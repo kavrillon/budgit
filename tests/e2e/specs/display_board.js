@@ -15,15 +15,15 @@ describe('Displaying board', () => {
       });
 
       it('should not display an error', () => {
-        cy.get('[data-test="boardError"]').should('not.exist');
+        cy.get('[data-test="pageError"]').should('not.exist');
       });
 
       it('should not be loading anymore', () => {
-        cy.get('[data-test="boardLoading"]').should('not.exist');
+        cy.get('[data-test="pageLoading"]').should('not.exist');
       });
 
       it('should display the board title', () => {
-        cy.get('[data-test="boardTitle"]').should($el =>
+        cy.get('[data-test="pageTitle"]').should($el =>
           expect($el.text().trim()).to.equal('Test board'),
         );
       });
@@ -48,15 +48,15 @@ describe('Displaying board', () => {
       });
 
       it('should display an error', () => {
-        cy.get('[data-test="boardError"]').should('exist');
+        cy.get('[data-test="pageError"]').should('exist');
       });
 
       it('should not display the content', () => {
-        cy.get('[data-test="boardContent"]').should('not.exist');
+        cy.get('[data-test="pageContent"]').should('not.exist');
       });
 
       it('should display not be loading anymore', () => {
-        cy.get('[data-test="boardError"]').should('exist');
+        cy.get('[data-test="pageError"]').should('exist');
       });
     });
   });

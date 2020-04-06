@@ -1,32 +1,28 @@
 <template>
-  <div class="board">
-    <div v-if="error" class="board__error" data-test="boardError">
-      Error
-    </div>
-    <div v-if="loading" class="board__loading" data-test="boardLoading">
-      Loading...
-    </div>
-    <div v-if="board && !error" class="board__item" data-test="board">
-      <h1 class="board__item__title" data-test="boardTitle">
-        {{ board.name }}
-      </h1>
-      <section class="board__item__resume">
+  <layout-page :loading="loading" :error="error">
+    <template v-slot:title>
+      {{ board.name }}
+    </template>
+    <template v-slot:content>
+      <section class="board" data-test="board">
         <board-total :board="board" />
       </section>
-    </div>
-  </div>
+    </template>
+  </layout-page>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
 import { Board } from '@/@types';
+import LayoutPage from '@/layout/Page.vue';
 import BoardTotal from '@/components/Board/Total.vue';
 import { boardService } from '@/services/board.service';
 
 @Component({
   components: {
     BoardTotal,
+    LayoutPage,
   },
 })
 export default class PageBoard extends Vue {
@@ -50,26 +46,3 @@ export default class PageBoard extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped>
-.board {
-  display: flex;
-  flex-direction: row;
-  flex: 1 1 auto;
-  overflow: hidden;
-  justify-content: stretch;
-  align-items: stretch;
-
-  &__loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1 1 auto;
-  }
-
-  &__item {
-    &__title {
-      @include title;
-    }
-  }
-}
-</style>

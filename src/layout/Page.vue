@@ -18,7 +18,7 @@
       data-test="pageContent"
     >
       <header class="page__content__header">
-        <h1 class="page__content__header__title">
+        <h1 class="page__content__header__title" data-test="pageTitle">
           <slot name="title" />
         </h1>
       </header>
