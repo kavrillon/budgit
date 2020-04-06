@@ -3,7 +3,9 @@
 // Generic
 $black: #000;
 $bondi-blue: #00adb5;
+$blue-lagoon: #008f95;
 $mine-shaft: #333333;
+$robins-egg: #00c9d3;
 $wild-sand: #f5f5f5;
 $white: #fff;
 
@@ -15,3 +17,8 @@ $color-text: $mine-shaft;
 $color-text-opposite: $white;
 
 $color-primary: $bondi-blue;
+$color-primary-bg: radial-gradient(
+  ellipse at top right,
+  $robins-egg,
+  $blue-lagoon 100%
+);

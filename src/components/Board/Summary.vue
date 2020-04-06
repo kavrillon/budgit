@@ -23,7 +23,7 @@ export default class BoardSummary extends Vue {
   align-items: center;
   justify-content: center;
   flex: 1 1 100%;
-  background: $color-primary;
+  background: $color-primary-bg;
   text-decoration: none;
   color: $color-text-opposite;
   padding: $gutter;
