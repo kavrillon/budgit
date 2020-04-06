@@ -12,6 +12,12 @@ describe('Page', () => {
       wrapper = shallowMount(Page);
     });
 
+    it('should have a full header', () => {
+      expect(
+        wrapper.find('[data-test="page"]').classes().includes('page--scrolled'),
+      ).toBe(false);
+    });
+
     it('should not be loading', () => {
       expect(wrapper.find('[data-test="pageLoading"]').exists()).toBe(false);
     });
@@ -22,6 +28,19 @@ describe('Page', () => {
 
     it('should display content', () => {
       expect(wrapper.find('[data-test="pageContent"]').exists()).toBe(true);
+    });
+  });
+
+  describe('on scroll', () => {
+    it('should minimize the header', async () => {
+      wrapper = shallowMount(Page);
+      wrapper.find('[data-test="pageScroller"]').element.scrollTop = 1000;
+      wrapper.find('[data-test="pageScroller"]').trigger('scroll');
+      await wrapper.vm.$nextTick();
+
+      expect(
+        wrapper.find('[data-test="page"]').classes().includes('page--scrolled'),
+      ).toBe(true);
     });
   });
 

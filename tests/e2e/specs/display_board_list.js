@@ -61,4 +61,22 @@ describe('Displaying board list', () => {
       cy.url().should('eql', baseUrl + 'board/0');
     });
   });
+
+  describe('on scroll', () => {
+    it('should minimize the header', () => {
+      cy.viewport(1200, 300); // Small viewport to have scrolling
+      cy.visit('/');
+      cy.get('[data-test="pageHeader"]').then($header => {
+        const height = parseInt($header.css('height').replace('px', ''), 10);
+        cy.get('[data-test="pageScroller"]').scrollTo('bottom');
+        cy.wait(161);
+
+        cy.get('[data-test="pageHeader"]').then($newHeader => {
+          expect(
+            parseInt($newHeader.css('height').replace('px', ''), 10),
+          ).to.be.lessThan(height);
+        });
+      });
+    });
+  });
 });

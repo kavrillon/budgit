@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page" :class="{ 'page--scrolled': scrolled }" data-test="page">
     <section v-if="error" class="page__error" data-test="pageError">
       Error: {{ error }}
     </section>
@@ -17,12 +17,16 @@
       class="page__content"
       data-test="pageContent"
     >
-      <header class="page__content__header">
+      <header class="page__content__header" data-test="pageHeader">
         <h1 class="page__content__header__title" data-test="pageTitle">
           <slot name="title" />
         </h1>
       </header>
-      <main class="page__content__container">
+      <main
+        class="page__content__container"
+        data-test="pageScroller"
+        v-on:scroll.passive="onScroll"
+      >
         <div class="page__content__container__scroller">
           <slot name="content" />
         </div>
@@ -37,6 +41,15 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class LayoutPage extends Vue {
   @Prop({ default: null }) readonly error!: string | null;
   @Prop({ default: false }) readonly loading!: boolean;
+
+  scrolled = false;
+
+  onScroll(e: UIEvent) {
+    const el = e.target as HTMLElement;
+    if (el !== null) {
+      this.scrolled = el.scrollTop > 0;
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -73,9 +86,23 @@ $max-width: 1200px;
       flex: 0 0 auto;
       padding: $gutter-lg;
       width: 100%;
+      transition: all $transition-duration-fast $transition-effect-default;
+      will-change: padding;
+
+      .page--scrolled & {
+        padding: $gutter $gutter-lg;
+      }
 
       &__title {
         @include title;
+
+        transition: font-size $transition-duration-fast
+          $transition-effect-default;
+        will-change: font-size;
+
+        .page--scrolled & {
+          font-size: $font-size-subtitle;
+        }
       }
     }
 
@@ -88,6 +115,14 @@ $max-width: 1200px;
         margin: 0 auto;
         width: 100%;
         padding: 0 $gutter-lg $gutter-lg;
+
+        transition: padding-top $transition-duration-fast
+          $transition-effect-default;
+        will-change: padding-top;
+
+        .page--scrolled & {
+          padding-top: 42px;
+        }
       }
     }
   }
