@@ -1,29 +1,18 @@
 <template>
-  <div class="home">
-    <div v-if="error" class="home__error" data-test="boardsError">
-      Error
-    </div>
-    <div v-if="loading" class="home__loading" data-test="boardsLoading">
-      Loading...
-    </div>
-    <div v-if="!loading && !error" class="home__content">
-      <h1 class="home__content__title">
-        Your boards
-      </h1>
-      <div class="home__content__board">
-        <ul class="home__content__board__list" data-test="boardsList">
-          <li
-            class="home__content__board__list__item"
-            v-for="(item, key) in items"
-            :key="key"
-            data-test="boardsListItem"
-          >
+  <layout-page :loading="loading" :error="error">
+    <template v-slot:title>
+      Your boards
+    </template>
+    <template v-slot:content>
+      <div class="home">
+        <ul class="home__list" data-test="boardsList">
+          <li class="home__list__item" v-for="(item, key) in items" :key="key">
             <board-summary :board="item" />
           </li>
         </ul>
       </div>
-    </div>
-  </div>
+    </template>
+  </layout-page>
 </template>
 
 <script lang="ts">
@@ -31,11 +20,13 @@ import { Vue, Component } from 'vue-property-decorator';
 
 import { Board } from '@/@types';
 import BoardSummary from '@/components/Board/Summary.vue';
+import LayoutPage from '@/layout/Page.vue';
 import { boardService } from '@/services/board.service';
 
 @Component({
   components: {
     BoardSummary,
+    LayoutPage,
   },
 })
 export default class PageHome extends Vue {
@@ -58,65 +49,32 @@ export default class PageHome extends Vue {
 </script>
 <style lang="scss" scoped>
 .home {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  width: 100%;
+  &__list {
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-    overflow: hidden;
-
-    &__title {
-      @include title;
-
-      flex: 0 0 auto;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: $gutter-lg;
-      width: 100%;
+    @media (min-width: $sm) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
     }
 
-    &__board {
-      flex: 1 1 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      overflow-y: auto;
-      width: 100%;
+    &__item {
+      margin-top: $gutter-lg;
 
-      &__list {
-        flex: 1 1 100%;
-        overflow-y: auto;
-        margin: 0 auto;
-        padding: 0 $gutter-lg;
-        list-style: none;
-        max-width: 1200px;
+      &:first-of-type {
+        margin-top: 0;
+      }
 
-        @media (min-width: $sm) {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-        }
+      @media (min-width: $sm) {
+        flex: 0 0 calc(50% - #{$gutter});
 
-        &__item {
-          margin-bottom: $gutter-lg;
-
-          @media (min-width: $sm) {
-            flex: 0 0 calc(50% - #{$gutter});
-          }
+        &:nth-of-type(2) {
+          margin-top: 0;
         }
       }
     }
-  }
-
-  &__loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1 1 auto;
   }
 }
 </style>

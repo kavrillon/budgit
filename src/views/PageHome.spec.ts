@@ -1,4 +1,4 @@
-import { shallowMount, Wrapper } from '@vue/test-utils';
+import { mount, RouterLinkStub, Wrapper } from '@vue/test-utils';
 import axios from 'axios';
 
 import PageHome from './PageHome.vue';
@@ -12,13 +12,13 @@ describe('PageHome', () => {
   describe('on init', () => {
     describe('initial state', () => {
       beforeEach(() => {
-        wrapper = shallowMount(PageHome, {
+        wrapper = mount(PageHome, {
           methods: { init: jest.fn() },
         });
       });
 
       it('should be loading', () => {
-        expect(wrapper.find('[data-test="boardsLoading"]').exists()).toBe(true);
+        expect(wrapper.find('[data-test="pageLoading"]').exists()).toBe(true);
       });
     });
 
@@ -27,21 +27,13 @@ describe('PageHome', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
         );
-        wrapper = shallowMount(PageHome);
+        wrapper = mount(PageHome, {
+          stubs: { RouterLink: RouterLinkStub },
+        });
       });
 
       it('should load boards', () => {
-        expect(wrapper.findAll('[data-test="boardsListItem"]').length).toBe(2);
-      });
-
-      it('should not display an error', () => {
-        expect(wrapper.find('[data-test="boardsError"]').exists()).toBe(false);
-      });
-
-      it('should not be loading', () => {
-        expect(wrapper.find('[data-test="boardsLoading"]').exists()).toBe(
-          false,
-        );
+        expect(wrapper.findAll('[data-test="boardSummary"]').length).toBe(2);
       });
     });
 
@@ -50,22 +42,12 @@ describe('PageHome', () => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.reject('Error'),
         );
-        wrapper = shallowMount(PageHome);
+        wrapper = mount(PageHome);
       });
 
       it('should display an error', async () => {
         await wrapper.vm.$nextTick;
-        expect(wrapper.find('[data-test="boardsError"]').exists()).toBe(true);
-      });
-
-      it('should not display content', async () => {
-        expect(wrapper.find('[data-test="boardsList"]').exists()).toBe(false);
-      });
-
-      it('should not be loading anymore', () => {
-        expect(wrapper.find('[data-test="boardsLoading"]').exists()).toBe(
-          false,
-        );
+        expect(wrapper.find('[data-test="pageError"]').exists()).toBe(true);
       });
     });
   });

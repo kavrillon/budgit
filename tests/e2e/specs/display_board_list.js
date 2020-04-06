@@ -20,11 +20,11 @@ describe('Displaying board list', () => {
       });
 
       it('should not display the error', () => {
-        cy.get('[data-test="boardsError"]').should('not.exist');
+        cy.get('[data-test="pageError"]').should('not.exist');
       });
 
       it('should not be loading anymore', () => {
-        cy.get('[data-test="boardsLoading"]').should('not.exist');
+        cy.get('[data-test="pageLoading"]').should('not.exist');
       });
     });
 
@@ -40,7 +40,7 @@ describe('Displaying board list', () => {
       });
 
       it('should display an error', () => {
-        cy.get('[data-test="boardsError"]').should('exist');
+        cy.get('[data-test="pageError"]').should('exist');
       });
 
       it('should not display content', () => {
@@ -48,7 +48,7 @@ describe('Displaying board list', () => {
       });
 
       it('should not be loading anymore', () => {
-        cy.get('[data-test="boardsLoading"]').should('not.exist');
+        cy.get('[data-test="pageLoading"]').should('not.exist');
       });
     });
   });
