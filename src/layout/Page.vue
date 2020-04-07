@@ -84,13 +84,13 @@ $max-width: 1200px;
       max-width: $max-width;
       margin: 0 auto;
       flex: 0 0 auto;
-      padding: $gutter-lg;
+      padding: var(--gutter-lg);
       width: 100%;
       transition: all $transition-duration-fast $transition-effect-default;
       will-change: padding;
 
       .page--scrolled & {
-        padding: $gutter $gutter-lg;
+        padding: var(--gutter) var(--gutter-lg);
       }
 
       &__title {
@@ -101,7 +101,7 @@ $max-width: 1200px;
         will-change: font-size;
 
         .page--scrolled & {
-          font-size: $font-size-subtitle;
+          font-size: var(--font-size-subtitle);
         }
       }
     }
@@ -114,7 +114,7 @@ $max-width: 1200px;
         max-width: $max-width;
         margin: 0 auto;
         width: 100%;
-        padding: 0 $gutter-lg $gutter-lg;
+        padding: 0 var(--gutter-lg) var(--gutter-lg);
 
         transition: padding-top $transition-duration-fast
           $transition-effect-default;

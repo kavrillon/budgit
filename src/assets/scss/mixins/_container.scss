@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $color-primary;
-  background: $color-primary-bg;
-  padding: $gutter-lg;
-  color: $color-text-opposite;
+  background: var(--color-primary);
+  background: var(--color-primary-gradient);
+  padding: var(--gutter-lg);
+  color: var(--color-text-highlight);
 
   @media (min-width: $sm) {
     height: 250px;

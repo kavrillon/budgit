@@ -3,18 +3,18 @@
 @mixin title {
   margin: 0;
   padding: 0;
-  font-size: $font-size-title;
+  font-size: var(--font-size-title);
   font-weight: 300;
 }
 
 @mixin subtitle {
   margin: 0;
   padding: 0;
-  font-size: $font-size-subtitle;
+  font-size: var(--font-size-subtitle);
   font-weight: 300;
 }
 
 @mixin highlight {
-  font-size: $font-size-highlight;
+  font-size: var(--font-size-highlight);
   font-weight: 300;
 }

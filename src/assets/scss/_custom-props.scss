@@ -1,15 +1,59 @@
 // Custom properties
 
+// Default values
+
 :root {
+  // Spacings
   --gutter: 16px;
+  --gutter-sm: calc(var(--gutter) / 2);
+  --gutter-lg: calc(var(--gutter) * 2);
+  --gutter-xlg: calc(var(--gutter) * 4);
+
+  // Fonts
+  --font-family: 'Montserrat', arial, sans-serif;;
   --font-size-title: 1.8rem;
   --font-size-subtitle: 1.3rem;
-  --font-size-highlight: 3rem;
+  --font-size-highlight: 2.3rem;
 
-  @media (min-width: $sm) {
+  // Colors
+  --color-bg: #fff;
+  --color-bg-alt: #f5f5f5;
+  --color-text: #333;
+  --color-text-opposite: #fff;
+  --color-text-highlight: #fff;
+  --color-primary: #00c9d3;
+  --color-primary-gradient: radial-gradient(
+    ellipse at top right,
+    #00c9d3,
+    #008f95 100%
+  );
+}
+
+// Responsiveness
+
+@media (min-width: $sm) {
+  :root {
     --gutter: 24px;
+
     --font-size-title: 2.4rem;
     --font-size-subtitle: 1.6rem;
     --font-size-highlight: 4rem;
+  }
+}
+
+// Dark mode
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #333;
+    --color-bg-alt: #000;
+    --color-text: #fff;
+    --color-text-opposite: #000;
+    --color-primary: #00c9d3;
+    --color-primary-gradient: radial-gradient(
+      ellipse at top right,
+      #00c9d3,
+      #008f95 100%
+    );
   }
 }

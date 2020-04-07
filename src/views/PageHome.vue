@@ -61,14 +61,14 @@ export default class PageHome extends Vue {
     }
 
     &__item {
-      margin-top: $gutter-lg;
+      margin-top: var(--gutter-lg);
 
       &:first-of-type {
         margin-top: 0;
       }
 
       @media (min-width: $sm) {
-        flex: 0 0 calc(50% - #{$gutter});
+        flex: 0 0 calc(50% - var(--gutter));
 
         &:nth-of-type(2) {
           margin-top: 0;

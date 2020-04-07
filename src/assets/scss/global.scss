@@ -1,4 +1,4 @@
-@import './abstract.scss';
+@import './abstract';
 @import './fonts';
 @import './custom-props';
 
@@ -22,10 +22,10 @@ body {
   flex: 1 1 auto;
   overflow: hidden;
   margin: 0;
-  background-color: $color-bg;
+  background-color: var(--color-bg);
   padding: 0;
-  color: $color-text;
-  font-size: $font-size;
+  color: var(--color-text);
+  font-size: var(--font-size);
   line-height: 1.15;
-  font-family: $font-family;
+  font-family: var(--font-family);
 }
