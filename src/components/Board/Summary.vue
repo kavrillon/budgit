@@ -19,20 +19,19 @@ export default class BoardSummary extends Vue {
 </script>
 <style lang="scss" scoped>
 .board-summary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include tile-highlight;
+
   flex: 1 1 100%;
-  background: $color-primary-bg;
   text-decoration: none;
-  color: $color-text-opposite;
-  padding: $gutter;
-  height: 275px;
 
   &__text {
-    @include title;
+    @include subtitle;
 
     flex: 0 0 auto;
+
+    @media (min-width: $sm) {
+      @include title;
+    }
   }
 }
 </style>

@@ -1,2 +1,13 @@
-@mixin page {
+@mixin tile-highlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-primary;
+  background: $color-primary-bg;
+  padding: $gutter-lg;
+  color: $color-text-opposite;
+
+  @media (min-width: $sm) {
+    height: 250px;
+  }
 }

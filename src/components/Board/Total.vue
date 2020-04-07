@@ -20,9 +20,7 @@ export default class BoardTotal extends Vue {
 </script>
 <style lang="scss" scoped>
 .total {
-  background: $color-primary-bg;
-  padding: $gutter;
-  color: $color-text-opposite;
+  @include tile-highlight;
 
   &__value {
     @include highlight;
