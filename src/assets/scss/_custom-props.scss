@@ -21,11 +21,12 @@
   --color-text: #333;
   --color-text-opposite: #fff;
   --color-text-highlight: #fff;
-  --color-primary: #00c9d3;
+  --color-primary-hue: 183;
+  --color-primary: hsl(var(--color-primary-hue), 100%, 41%);
   --color-primary-gradient: radial-gradient(
     ellipse at top right,
-    #00c9d3,
-    #008f95 100%
+    hsl(var(--color-primary-hue), 100%, 44%),
+    hsl(var(--color-primary-hue), 100%, 34%) 100%
   );
 }
 
@@ -49,11 +50,11 @@
     --color-bg-alt: #000;
     --color-text: #fff;
     --color-text-opposite: #000;
-    --color-primary: #00c9d3;
+    --color-primary: hsl(var(--color-primary-hue), 100%, 37%);
     --color-primary-gradient: radial-gradient(
       ellipse at top right,
-      #00c9d3,
-      #008f95 100%
+      hsl(var(--color-primary-hue), 100%, 40%),
+      hsl(var(--color-primary-hue), 100%, 30%) 100%
     );
   }
 }
