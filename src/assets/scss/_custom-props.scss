@@ -10,7 +10,7 @@
   --gutter-xlg: calc(var(--gutter) * 4);
 
   // Fonts
-  --font-family: 'Montserrat', arial, sans-serif;;
+  --font-family: 'Montserrat', arial, sans-serif;
   --font-size-title: 1.8rem;
   --font-size-subtitle: 1.3rem;
   --font-size-highlight: 2.3rem;
@@ -48,13 +48,14 @@
   :root {
     --color-bg: #333;
     --color-bg-alt: #000;
-    --color-text: #fff;
+    --color-text: #eee;
     --color-text-opposite: #000;
+    --color-text-highlight: #eee;
     --color-primary: hsl(var(--color-primary-hue), 100%, 37%);
     --color-primary-gradient: radial-gradient(
       ellipse at top right,
-      hsl(var(--color-primary-hue), 100%, 40%),
-      hsl(var(--color-primary-hue), 100%, 30%) 100%
+      hsl(var(--color-primary-hue), 100%, 36%),
+      hsl(var(--color-primary-hue), 100%, 26%) 100%
     );
   }
 }
