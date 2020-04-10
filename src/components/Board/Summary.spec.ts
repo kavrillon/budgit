@@ -20,7 +20,10 @@ describe('BoardSummary', () => {
     });
 
     it('should be a link to the board', async () => {
-      expect(wrapper.find(RouterLinkStub).props().to).toBe('/board/0');
+      expect(wrapper.find(RouterLinkStub).props().to).toMatchObject({
+        name: 'board',
+        params: { id: 0 },
+      });
     });
   });
 });

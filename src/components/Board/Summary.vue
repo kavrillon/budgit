@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="`/board/${board.id}`"
+    :to="{ name: 'board', params: { id: board.id } }"
     class="board-summary"
     data-test="boardSummary"
   >

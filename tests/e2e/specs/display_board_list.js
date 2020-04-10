@@ -9,7 +9,7 @@ describe('Displaying board list', () => {
     describe('when data exists', () => {
       beforeEach(() => {
         cy.route({ url: '/api/boards', delay: 100 }).as('getBoards');
-        cy.visit('/');
+        cy.visit('/b');
         cy.wait('@getBoards');
       });
 
@@ -35,7 +35,7 @@ describe('Displaying board list', () => {
           response: {},
           status: 404,
         }).as('getBoards');
-        cy.visit('/');
+        cy.visit('/b');
         cy.wait('@getBoards');
       });
 
@@ -55,17 +55,17 @@ describe('Displaying board list', () => {
 
   describe('on item click', () => {
     it('should redirect to board page', () => {
-      cy.visit('/');
+      cy.visit('/b');
       cy.get('[data-test="boardSummary"]').first().click();
 
-      cy.url().should('eql', baseUrl + 'board/0');
+      cy.url().should('eql', baseUrl + 'b/0');
     });
   });
 
   describe('on scroll', () => {
     it('should minimize the header', () => {
       cy.viewport(1200, 300); // Small viewport to have scrolling
-      cy.visit('/');
+      cy.visit('/b');
       cy.get('[data-test="pageHeader"]').then($header => {
         const height = parseInt($header.css('height').replace('px', ''), 10);
         cy.get('[data-test="pageScroller"]').scrollTo('bottom');

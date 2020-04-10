@@ -1,4 +1,4 @@
-const route = '/board/0';
+const route = '/b/0';
 
 describe('Displaying board', () => {
   describe('on init', () => {
@@ -43,7 +43,7 @@ describe('Displaying board', () => {
           response: {},
           status: 404,
         }).as('getBoards');
-        cy.visit('/board/0');
+        cy.visit(route);
         cy.wait('@getBoards');
       });
 
