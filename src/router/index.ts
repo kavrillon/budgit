@@ -1,20 +1,31 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import PageBoard from '@/views/PageBoard.vue';
-import PageHome from '@/views/PageHome.vue';
+import VueRouter, { Route } from 'vue-router';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    name: 'boards',
     path: '/b',
-    component: PageHome,
-  },
-  {
-    name: 'board',
-    path: '/b/:id',
-    component: PageBoard,
+    component: () => import('@/views/App.vue'),
+    props: (route: Route) => ({ id: route.params.id }),
+    children: [
+      {
+        name: 'boards',
+        path: '',
+        components: {
+          header: () => import('@/components/Board/ListHeader.vue'),
+          content: () => import('@/components/Board/List.vue'),
+        },
+      },
+      {
+        name: 'board',
+        path: ':id',
+        components: {
+          header: () => import('@/components/Board/Header.vue'),
+          content: () => import('@/components/Board/Content.vue'),
+        },
+      },
+    ],
   },
 ];
 

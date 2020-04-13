@@ -29,3 +29,35 @@ body {
   line-height: 1.15;
   font-family: var(--font-family);
 }
+
+.opacity-enter-active,
+.opacity-leave-active {
+  transition: opacity 640ms;
+}
+.opacity-enter,
+.opacity-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform $transition-duration-slow,
+    opacity $transition-duration-slow;
+}
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(calc(var(--gutter) * -1));
+  opacity: 0;
+}
+
+.content-enter-active,
+.content-leave-active {
+  transition: transform $transition-duration-slow,
+    opacity $transition-duration-slow;
+  transition-delay: 100ms;
+}
+.content-enter,
+.content-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}

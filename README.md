@@ -39,3 +39,10 @@ yarn lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Commits
+
+- store
+- new template (app)
+- lazy routes
+- transitions
