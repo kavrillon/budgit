@@ -1,5 +1,5 @@
 <template>
-  <layout-page :loading="initialized === false" :error="error">
+  <layout-page :loading="loading" :error="error">
     <template v-slot:title>
       <span v-if="board">{{ board.name }}</span>
     </template>
@@ -13,8 +13,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Action, Getter } from 'vuex-class';
-
+import { Action, Getter, State } from 'vuex-class';
 import { Board } from '@/@types';
 import LayoutPage from '@/layout/Page.vue';
 import BoardTotal from '@/components/Board/Total.vue';
@@ -31,11 +30,10 @@ const namespace = 'board';
 export default class PageBoard extends Vue {
   @Action(ACTION_BOARD_FETCH_ITEM, { namespace }) fetchBoard!: Function;
   @Getter('current', { namespace }) board?: Board | null;
-
-  initialized = false;
+  @State('loading') loading!: boolean;
 
   get error(): string | null {
-    return this.initialized === true && this.board === null
+    return this.loading === false && this.board === null
       ? 'No board matching the request'
       : null;
   }
@@ -47,7 +45,6 @@ export default class PageBoard extends Vue {
   async init() {
     const id = parseInt(this.$route.params.id, 10);
     await this.fetchBoard(id);
-    this.initialized = true;
   }
 }
 </script>

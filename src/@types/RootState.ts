@@ -1,1 +1,3 @@
-export type RootState = {};
+export type RootState = {
+  loading: boolean;
+};

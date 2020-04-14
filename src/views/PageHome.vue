@@ -1,5 +1,5 @@
 <template>
-  <layout-page :loading="initialized === false" :error="error">
+  <layout-page :loading="loading" :error="error">
     <template v-slot:title>
       Your boards
     </template>
@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Action, Getter } from 'vuex-class';
+import { Action, Getter, State } from 'vuex-class';
 import { Board } from '@/@types';
 import BoardSummary from '@/components/Board/Summary.vue';
 import LayoutPage from '@/layout/Page.vue';
@@ -34,11 +34,10 @@ const namespace = 'board';
 export default class PageHome extends Vue {
   @Action(ACTION_BOARD_FETCH_LIST, { namespace }) fetchBoards!: Function;
   @Getter('list', { namespace }) items!: Board[];
-
-  initialized = false;
+  @State('loading') loading!: boolean;
 
   get error(): string | null {
-    return this.initialized === true && this.items.length === 0
+    return this.loading === false && this.items.length === 0
       ? 'No board'
       : null;
   }
@@ -49,7 +48,6 @@ export default class PageHome extends Vue {
 
   async init() {
     await this.fetchBoards();
-    this.initialized = true;
   }
 }
 </script>

@@ -5,136 +5,106 @@ import {
   createLocalVue,
   shallowMount,
 } from '@vue/test-utils';
-import Vuex, { ActionTree, StoreOptions, Store } from 'vuex';
+import Vuex, { StoreOptions, Store } from 'vuex';
 
 import PageHome from './PageHome.vue';
 import { ACTION_BOARD_FETCH_LIST } from '@/store/board/actions';
 
 import mockBoards from '../../public/data/boards.json';
-import { BoardState, RootState } from '@/@types';
+import { RootState } from '@/@types';
+import store from '@/store';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe('PageHome', () => {
-  let store: Store<RootState>;
+  let mockStore: Store<RootState>;
   let storeOptions: StoreOptions<RootState>;
-  let actions: ActionTree<BoardState, RootState>;
   let wrapper: Wrapper<Vue>;
 
   describe('initial state', () => {
-    beforeEach(() => {
+    it('should be loading', () => {
       wrapper = mount(PageHome, {
         methods: { init: jest.fn() },
+        localVue,
+        store,
       });
-    });
 
-    it('should be loading', () => {
       expect(wrapper.find('[data-test="pageLoading"]').exists()).toBe(true);
     });
   });
 
   describe('on init', () => {
-    beforeAll(() => {
-      actions = {
-        [ACTION_BOARD_FETCH_LIST]: jest.fn(),
-      };
+    it('should call the store action', async () => {
+      const disp = store.dispatch;
+      store.dispatch = jest.fn();
 
-      storeOptions = {
-        modules: {
-          board: {
-            namespaced: true,
-            actions,
-            getters: {
-              list: () => [],
-            },
-          },
-        },
-      };
-
-      store = new Vuex.Store<RootState>(storeOptions);
-    });
-
-    beforeEach(() => {
       wrapper = shallowMount(PageHome, {
         localVue,
         store,
       });
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        'board/fetchBoardList',
+        undefined,
+      );
+      store.dispatch = disp;
     });
 
-    it('should call the store action', async () => {
-      expect(actions[ACTION_BOARD_FETCH_LIST]).toHaveBeenCalledTimes(1);
-    });
-
-    it('should not be loading anymore', () => {
-      expect(wrapper.find('[data-test="pageLoading"]').exists()).toBe(false);
-    });
-  });
-
-  describe('when no data', () => {
-    beforeAll(() => {
-      actions = {
-        [ACTION_BOARD_FETCH_LIST]: jest.fn(),
-      };
-
-      storeOptions = {
-        modules: {
-          board: {
-            namespaced: true,
-            actions,
-            getters: {
-              list: () => [],
+    describe('when no data', () => {
+      it('should display an error', () => {
+        storeOptions = {
+          state: {
+            loading: false,
+          },
+          modules: {
+            board: {
+              namespaced: true,
+              actions: {
+                [ACTION_BOARD_FETCH_LIST]: jest.fn(),
+              },
+              getters: {
+                list: () => [],
+              },
             },
           },
-        },
-      };
+        };
 
-      store = new Vuex.Store<RootState>(storeOptions);
-    });
-
-    beforeEach(() => {
-      wrapper = mount(PageHome, {
-        localVue,
-        store,
+        mockStore = new Vuex.Store<RootState>(storeOptions);
+        wrapper = mount(PageHome, {
+          localVue,
+          store: mockStore,
+        });
+        expect(wrapper.find('[data-test="pageError"]').exists()).toBe(true);
       });
     });
 
-    it('should display an error', () => {
-      expect(wrapper.find('[data-test="pageError"]').exists()).toBe(true);
-    });
-  });
-
-  describe('when data exists', () => {
-    beforeAll(() => {
-      actions = {
-        [ACTION_BOARD_FETCH_LIST]: jest.fn(),
-      };
-
-      storeOptions = {
-        modules: {
-          board: {
-            namespaced: true,
-            actions,
-            getters: {
-              list: () => [...mockBoards],
+    describe('when data exists', () => {
+      it('should load boards', () => {
+        storeOptions = {
+          modules: {
+            board: {
+              namespaced: true,
+              actions: {
+                [ACTION_BOARD_FETCH_LIST]: jest.fn(),
+              },
+              getters: {
+                list: () => [...mockBoards],
+              },
             },
           },
-        },
-      };
+        };
 
-      store = new Vuex.Store<RootState>(storeOptions);
-    });
+        mockStore = new Vuex.Store<RootState>(storeOptions);
 
-    beforeEach(() => {
-      wrapper = mount(PageHome, {
-        localVue,
-        store,
-        stubs: { RouterLink: RouterLinkStub },
+        wrapper = mount(PageHome, {
+          localVue,
+          store: mockStore,
+          stubs: { RouterLink: RouterLinkStub },
+        });
+
+        expect(wrapper.findAll('[data-test="boardSummary"]').length).toBe(2);
       });
-    });
-
-    it('should load boards', () => {
-      expect(wrapper.findAll('[data-test="boardSummary"]').length).toBe(2);
     });
   });
 });
