@@ -1,5 +1,5 @@
 <template>
-  <layout-page :loading="loading" :error="error">
+  <layout-page :loading="initialized === false" :error="error">
     <template v-slot:title>
       Your boards
     </template>
@@ -17,11 +17,13 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-
+import { Action, Getter } from 'vuex-class';
 import { Board } from '@/@types';
 import BoardSummary from '@/components/Board/Summary.vue';
 import LayoutPage from '@/layout/Page.vue';
-import { boardService } from '@/services/board.service';
+import { ACTION_BOARD_FETCH_LIST } from '@/store/board/actions';
+
+const namespace = 'board';
 
 @Component({
   components: {
@@ -30,20 +32,24 @@ import { boardService } from '@/services/board.service';
   },
 })
 export default class PageHome extends Vue {
-  error: string | null = null;
-  items: Board[] | null = null;
-  loading = true;
+  @Action(ACTION_BOARD_FETCH_LIST, { namespace }) fetchBoards!: Function;
+  @Getter('list', { namespace }) items!: Board[];
 
-  created() {
+  initialized = false;
+
+  get error(): string | null {
+    return this.initialized === true && this.items.length === 0
+      ? 'No board'
+      : null;
+  }
+
+  mounted() {
     this.init();
   }
 
   async init() {
-    this.items = await boardService.getBoards();
-    if (this.items === null) {
-      this.error = 'No board';
-    }
-    this.loading = false;
+    await this.fetchBoards();
+    this.initialized = true;
   }
 }
 </script>
