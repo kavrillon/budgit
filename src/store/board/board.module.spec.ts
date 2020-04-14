@@ -1,11 +1,60 @@
 import { boardService } from '@/services/board.service';
-import { actions, ACTION_BOARD_FETCH_LIST } from './actions';
-import { MUTATION_BOARD_SET_LIST } from './mutations';
+import {
+  actions,
+  ACTION_BOARD_FETCH_ITEM,
+  ACTION_BOARD_FETCH_LIST,
+} from './actions';
+import {
+  MUTATION_BOARD_SET_LIST,
+  MUTATION_BOARD_SET_CURRENT,
+} from './mutations';
 import mockBoards from '../../../public/data/boards.json';
 
 jest.mock('@/services/board.service');
 
 describe('Store Module Board', () => {
+  describe('ACTION_BOARD_FETCH_ITEM', () => {
+    describe('when endpoint return data', () => {
+      beforeEach(() => {
+        (boardService.getBoard as jest.Mock).mockImplementationOnce(() =>
+          Promise.resolve(mockBoards[0]),
+        );
+      });
+
+      it('should commit the board', async () => {
+        const commitFunction = jest.fn();
+        const context = { commit: commitFunction };
+        const action = actions[ACTION_BOARD_FETCH_ITEM] as Function;
+        await action(context);
+
+        expect(commitFunction.mock.calls[0][0]).toBe(
+          MUTATION_BOARD_SET_CURRENT,
+        );
+        expect(commitFunction.mock.calls[0][1]).toBe(mockBoards[0]);
+      });
+    });
+
+    describe('when endpoint return no data', () => {
+      beforeEach(() => {
+        (boardService.getBoard as jest.Mock).mockImplementationOnce(() =>
+          Promise.resolve(null),
+        );
+      });
+
+      it('should commit a null object', async () => {
+        const commitFunction = jest.fn();
+        const context = { commit: commitFunction };
+        const action = actions[ACTION_BOARD_FETCH_ITEM] as Function;
+        await action(context);
+
+        expect(commitFunction.mock.calls[0][0]).toBe(
+          MUTATION_BOARD_SET_CURRENT,
+        );
+        expect(commitFunction.mock.calls[0][1]).toBeNull();
+      });
+    });
+  });
+
   describe('ACTION_BOARD_FETCH_LIST', () => {
     describe('when endpoint return data', () => {
       beforeEach(() => {

@@ -1,10 +1,10 @@
 <template>
-  <layout-page :loading="loading" :error="error">
+  <layout-page :loading="initialized === false" :error="error">
     <template v-slot:title>
-      {{ board.name }}
+      <span v-if="board">{{ board.name }}</span>
     </template>
     <template v-slot:content>
-      <section class="board" data-test="board">
+      <section v-if="board" class="board" data-test="board">
         <board-total :board="board" />
       </section>
     </template>
@@ -13,11 +13,14 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { Action, Getter } from 'vuex-class';
 
 import { Board } from '@/@types';
 import LayoutPage from '@/layout/Page.vue';
 import BoardTotal from '@/components/Board/Total.vue';
-import { boardService } from '@/services/board.service';
+import { ACTION_BOARD_FETCH_ITEM } from '@/store/board/actions';
+
+const namespace = 'board';
 
 @Component({
   components: {
@@ -26,23 +29,25 @@ import { boardService } from '@/services/board.service';
   },
 })
 export default class PageBoard extends Vue {
-  board: Board | null = null;
-  error: string | null = null;
-  loading = true;
+  @Action(ACTION_BOARD_FETCH_ITEM, { namespace }) fetchBoard!: Function;
+  @Getter('current', { namespace }) board?: Board | null;
 
-  created() {
+  initialized = false;
+
+  get error(): string | null {
+    return this.initialized === true && this.board === null
+      ? 'No board matching the request'
+      : null;
+  }
+
+  mounted() {
     this.init();
   }
 
   async init() {
-    const id = parseInt(this.$route.params.id);
-    this.board = await boardService.getBoard(id);
-
-    if (this.board === null) {
-      this.error = 'No board matching the request';
-    }
-
-    this.loading = false;
+    const id = parseInt(this.$route.params.id, 10);
+    await this.fetchBoard(id);
+    this.initialized = true;
   }
 }
 </script>
