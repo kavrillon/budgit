@@ -2,8 +2,8 @@ import { mount, Wrapper, shallowMount, createLocalVue } from '@vue/test-utils';
 
 import PageBoard from './PageBoard.vue';
 import mockBoards from '../../public/data/boards.json';
-import Vuex, { Store, StoreOptions, ActionTree } from 'vuex';
-import { RootState, BoardState } from '@/@types';
+import Vuex, { Store, StoreOptions } from 'vuex';
+import { RootState } from '@/@types';
 import { ACTION_BOARD_FETCH_ITEM } from '@/store/board/actions';
 import store from '@/store';
 
@@ -31,9 +31,7 @@ describe('PageBoard', () => {
 
       expect(wrapper.find('[data-test="pageLoading"]').exists()).toBe(true);
     });
-  });
 
-  describe('on init', () => {
     it('should call the store action', async () => {
       const disp = store.dispatch;
       store.dispatch = jest.fn();
@@ -49,76 +47,73 @@ describe('PageBoard', () => {
       expect(store.dispatch).toHaveBeenCalledWith('board/fetchBoardItem', 0);
       store.dispatch = disp;
     });
+  });
 
-    describe('when no data', () => {
-      it('should display an error', () => {
-        storeOptions = {
-          state: {
-            loading: false,
-          },
-          modules: {
-            board: {
-              namespaced: true,
-              actions: {
-                [ACTION_BOARD_FETCH_ITEM]: jest.fn(),
-              },
-              getters: {
-                current: () => null,
-              },
+  describe('when data exists', () => {
+    beforeAll(() => {
+      storeOptions = {
+        modules: {
+          board: {
+            namespaced: true,
+            actions: {
+              [ACTION_BOARD_FETCH_ITEM]: jest.fn(),
+            },
+            getters: {
+              current: () => mockBoards[0],
             },
           },
-        };
+        },
+      };
 
-        mockStore = new Vuex.Store<RootState>(storeOptions);
+      mockStore = new Vuex.Store<RootState>(storeOptions);
 
-        wrapper = mount(PageBoard, {
-          localVue,
-          store: mockStore,
-          mocks: {
-            $route,
-          },
-        });
-
-        expect(wrapper.find('[data-test="pageError"]').exists()).toBe(true);
+      wrapper = mount(PageBoard, {
+        localVue,
+        store: mockStore,
+        mocks: {
+          $route,
+        },
       });
     });
 
-    describe('when data exists', () => {
-      beforeAll(() => {
-        storeOptions = {
-          modules: {
-            board: {
-              namespaced: true,
-              actions: {
-                [ACTION_BOARD_FETCH_ITEM]: jest.fn(),
-              },
-              getters: {
-                current: () => mockBoards[0],
-              },
+    it('should load the requested board', () => {
+      expect(wrapper.find('[data-test="board"]').exists()).toBe(true);
+    });
+
+    it('should display the board title', () => {
+      expect(wrapper.find('[data-test="pageTitle"]').text()).toBe('Test board');
+    });
+  });
+
+  describe('on error', () => {
+    it('should display the error', () => {
+      storeOptions = {
+        state: {
+          error: 'any error',
+          loading: false,
+        },
+        modules: {
+          board: {
+            namespaced: true,
+            actions: {
+              [ACTION_BOARD_FETCH_ITEM]: jest.fn(),
+            },
+            getters: {
+              list: () => [],
             },
           },
-        };
+        },
+      };
 
-        mockStore = new Vuex.Store<RootState>(storeOptions);
-
-        wrapper = mount(PageBoard, {
-          localVue,
-          store: mockStore,
-          mocks: {
-            $route,
-          },
-        });
+      mockStore = new Vuex.Store<RootState>(storeOptions);
+      wrapper = mount(PageBoard, {
+        localVue,
+        store: mockStore,
+        mocks: {
+          $route,
+        },
       });
-
-      it('should load the requested board', () => {
-        expect(wrapper.find('[data-test="board"]').exists()).toBe(true);
-      });
-
-      it('should display the board title', () => {
-        expect(wrapper.find('[data-test="pageTitle"]').text()).toBe(
-          'Test board',
-        );
-      });
+      expect(wrapper.find('[data-test="pageError"]').text()).toBe('any error');
     });
   });
 });

@@ -32,9 +32,7 @@ describe('PageHome', () => {
 
       expect(wrapper.find('[data-test="pageLoading"]').exists()).toBe(true);
     });
-  });
 
-  describe('on init', () => {
     it('should call the store action', async () => {
       const disp = store.dispatch;
       store.dispatch = jest.fn();
@@ -50,61 +48,62 @@ describe('PageHome', () => {
       );
       store.dispatch = disp;
     });
+  });
 
-    describe('when no data', () => {
-      it('should display an error', () => {
-        storeOptions = {
-          state: {
-            loading: false,
-          },
-          modules: {
-            board: {
-              namespaced: true,
-              actions: {
-                [ACTION_BOARD_FETCH_LIST]: jest.fn(),
-              },
-              getters: {
-                list: () => [],
-              },
+  describe('when data exists', () => {
+    it('should load boards', () => {
+      storeOptions = {
+        modules: {
+          board: {
+            namespaced: true,
+            actions: {
+              [ACTION_BOARD_FETCH_LIST]: jest.fn(),
+            },
+            getters: {
+              list: () => [...mockBoards],
             },
           },
-        };
+        },
+      };
 
-        mockStore = new Vuex.Store<RootState>(storeOptions);
-        wrapper = mount(PageHome, {
-          localVue,
-          store: mockStore,
-        });
-        expect(wrapper.find('[data-test="pageError"]').exists()).toBe(true);
+      mockStore = new Vuex.Store<RootState>(storeOptions);
+
+      wrapper = mount(PageHome, {
+        localVue,
+        store: mockStore,
+        stubs: { RouterLink: RouterLinkStub },
       });
+
+      expect(wrapper.findAll('[data-test="boardSummary"]').length).toBe(2);
     });
+  });
 
-    describe('when data exists', () => {
-      it('should load boards', () => {
-        storeOptions = {
-          modules: {
-            board: {
-              namespaced: true,
-              actions: {
-                [ACTION_BOARD_FETCH_LIST]: jest.fn(),
-              },
-              getters: {
-                list: () => [...mockBoards],
-              },
+  describe('on error', () => {
+    it('should display the error', () => {
+      storeOptions = {
+        state: {
+          error: 'any error',
+          loading: false,
+        },
+        modules: {
+          board: {
+            namespaced: true,
+            actions: {
+              [ACTION_BOARD_FETCH_LIST]: jest.fn(),
+            },
+            getters: {
+              list: () => [],
             },
           },
-        };
+        },
+      };
 
-        mockStore = new Vuex.Store<RootState>(storeOptions);
-
-        wrapper = mount(PageHome, {
-          localVue,
-          store: mockStore,
-          stubs: { RouterLink: RouterLinkStub },
-        });
-
-        expect(wrapper.findAll('[data-test="boardSummary"]').length).toBe(2);
+      mockStore = new Vuex.Store<RootState>(storeOptions);
+      wrapper = mount(PageHome, {
+        localVue,
+        store: mockStore,
       });
+      expect(wrapper.find('[data-test="pageError"]').text()).toBe('any error');
     });
   });
 });

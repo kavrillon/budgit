@@ -35,12 +35,7 @@ export default class PageHome extends Vue {
   @Action(ACTION_BOARD_FETCH_LIST, { namespace }) fetchBoards!: Function;
   @Getter('list', { namespace }) items!: Board[];
   @State('loading') loading!: boolean;
-
-  get error(): string | null {
-    return this.loading === false && this.items.length === 0
-      ? 'No board'
-      : null;
-  }
+  @State('error') error?: string | null;
 
   mounted() {
     this.init();

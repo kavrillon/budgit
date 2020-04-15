@@ -1,7 +1,7 @@
 <template>
   <div class="page" :class="{ 'page--scrolled': scrolled }" data-test="page">
     <section v-if="error" class="page__error" data-test="pageError">
-      Error: {{ error }}
+      {{ error }}
     </section>
 
     <section
