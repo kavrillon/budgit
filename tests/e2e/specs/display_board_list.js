@@ -13,18 +13,22 @@ describe('Displaying board list', () => {
         cy.wait('@getBoards');
       });
 
+      it('should load page title', () => {
+        cy.get('[data-test="pageTitle"]').should($el =>
+          expect($el.text().trim()).to.equal('Your boards (2)'),
+        );
+      });
+
       it('should load boards', () => {
-        cy.get('[data-test="boardsList"]')
-          .find('[data-test="boardSummary"]')
-          .should('have.length', 2);
+        cy.get('[data-test="boardSummary"]').should('have.length', 2);
       });
 
       it('should not display the error', () => {
-        cy.get('[data-test="pageError"]').should('not.exist');
+        cy.get('[data-test="pageError"]').should('not.be.visible');
       });
 
       it('should not be loading anymore', () => {
-        cy.get('[data-test="pageLoading"]').should('not.exist');
+        cy.get('[data-test="pageLoading"]').should('not.be.visible');
       });
     });
 
@@ -40,15 +44,15 @@ describe('Displaying board list', () => {
       });
 
       it('should display an error', () => {
-        cy.get('[data-test="pageError"]').should('exist');
+        cy.get('[data-test="pageError"]').should('be.visible');
       });
 
       it('should not display content', () => {
-        cy.get('[data-test="boardsList"]').should('not.exist');
+        cy.get('[data-test="boardsList"]').should('not.be.visible');
       });
 
       it('should not be loading anymore', () => {
-        cy.get('[data-test="pageLoading"]').should('not.exist');
+        cy.get('[data-test="pageLoading"]').should('not.be.visible');
       });
     });
   });

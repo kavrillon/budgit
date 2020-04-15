@@ -1,48 +1,51 @@
 <template>
-  <div class="page" :class="{ 'page--scrolled': scrolled }" data-test="page">
-    <section v-if="error" class="page__error" data-test="pageError">
+  <div class="app" :class="{ 'app--scrolled': scrolled }">
+    <section v-show="error" class="app__error" data-test="pageError">
       {{ error }}
     </section>
 
-    <section
-      v-if="!error && loading"
-      class="page__loading"
-      data-test="pageLoading"
-    >
+    <section v-show="displayLoader" class="app__loader" data-test="pageLoader">
       Loading...
     </section>
 
     <section
-      v-if="!error && !loading"
-      class="page__content"
+      v-show="displayContent"
+      class="app__content"
       data-test="pageContent"
     >
-      <header class="page__content__header" data-test="pageHeader">
-        <h1 class="page__content__header__title" data-test="pageTitle">
-          <slot name="title" />
-        </h1>
+      <header class="app__content__header" data-test="pageHeader">
+        <router-view name="header" />
       </header>
       <main
-        class="page__content__container"
-        data-test="pageScroller"
+        class="app__content__main"
         v-on:scroll.passive="onScroll"
+        data-test="pageScroller"
       >
-        <div class="page__content__container__scroller">
-          <slot name="content" />
+        <div class="app__content__main__scroller">
+          <router-view name="content" />
         </div>
       </main>
     </section>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 
 @Component
-export default class LayoutPage extends Vue {
-  @Prop({ default: null }) readonly error!: string | null;
-  @Prop({ default: false }) readonly loading!: boolean;
+export default class ViewApp extends Vue {
+  @State('error') error?: string | null;
+  @State('loading') loading!: boolean;
 
   scrolled = false;
+
+  get displayContent() {
+    return this.loading === false && this.error === null;
+  }
+
+  get displayLoader() {
+    return this.loading && this.error === null;
+  }
 
   onScroll(e: UIEvent) {
     const el = e.target as HTMLElement;
@@ -55,7 +58,7 @@ export default class LayoutPage extends Vue {
 <style lang="scss" scoped>
 $max-width: 1200px;
 
-.page {
+.app {
   display: flex;
   flex: 1 1 auto;
 
@@ -67,7 +70,7 @@ $max-width: 1200px;
     justify-content: center;
   }
 
-  &__loading {
+  &__loader {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
@@ -89,38 +92,34 @@ $max-width: 1200px;
       transition: all $transition-duration-fast $transition-effect-default;
       will-change: padding;
 
-      .page--scrolled & {
+      .app--scrolled & {
         padding: var(--gutter) var(--gutter-lg);
       }
-
       &__title {
         @include title;
-
         transition: font-size $transition-duration-fast
           $transition-effect-default;
         will-change: font-size;
 
-        .page--scrolled & {
+        .app--scrolled & {
           font-size: var(--font-size-subtitle);
         }
       }
     }
 
-    &__container {
+    &__main {
       flex: 1 1 auto;
       overflow-y: auto;
-
       &__scroller {
         max-width: $max-width;
         margin: 0 auto;
         width: 100%;
         padding: 0 var(--gutter-lg) var(--gutter-lg);
-
         transition: padding-top $transition-duration-fast
           $transition-effect-default;
         will-change: padding-top;
 
-        .page--scrolled & {
+        .app--scrolled & {
           padding-top: 42px;
         }
       }

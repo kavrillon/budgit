@@ -1,20 +1,43 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import PageBoard from '@/views/PageBoard.vue';
-import PageHome from '@/views/PageHome.vue';
+import VueRouter, { Route } from 'vue-router';
+import ViewApp from '@/views/App.vue';
+import BoardDetailed from '@/containers/Board/Detailed.vue';
+import BoardHeader from '@/containers/Board/Header.vue';
+import BoardHeaderList from '@/containers/Board/HeaderList.vue';
+import BoardList from '@/containers/Board/List.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    name: 'boards',
     path: '/b',
-    component: PageHome,
-  },
-  {
-    name: 'board',
-    path: '/b/:id',
-    component: PageBoard,
+    component: ViewApp,
+    children: [
+      {
+        path: '',
+        name: 'boards',
+        components: {
+          header: BoardHeaderList,
+          content: BoardList,
+        },
+      },
+      {
+        path: ':id',
+        name: 'board',
+        components: {
+          header: BoardHeader,
+          content: BoardDetailed,
+        },
+        props: {
+          header: (route: Route) => ({
+            boardId: parseInt(route.params.id, 10),
+          }),
+          content: (route: Route) => ({
+            boardId: parseInt(route.params.id, 10),
+          }),
+        },
+      },
+    ],
   },
 ];
 
