@@ -9,7 +9,7 @@ describe('BoardService', () => {
   describe('getBoards', () => {
     let result: Board[] | null = null;
 
-    describe('when data exists', () => {
+    describe('when api call is successful', () => {
       beforeEach(() => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
@@ -22,16 +22,17 @@ describe('BoardService', () => {
       });
     });
 
-    describe('when no data', () => {
+    describe('when api call is broken', () => {
       beforeEach(() => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.reject('any error'),
         );
       });
 
-      it('should return null', async () => {
-        result = await boardService.getBoards();
-        await expect(result).toBeNull();
+      it('should throw an error', async () => {
+        await expect(boardService.getBoards()).rejects.toThrow(
+          new Error('Error while requesting boards'),
+        );
       });
     });
   });
@@ -39,7 +40,7 @@ describe('BoardService', () => {
   describe('getBoard', () => {
     let result: Board | null = null;
 
-    describe('when data exists', () => {
+    describe('when api call is successful', () => {
       beforeEach(() => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.resolve({ data: mockBoards }),
@@ -51,22 +52,24 @@ describe('BoardService', () => {
         expect(result).toBe(mockBoards[0]);
       });
 
-      it('should return null if given id does not exist', async () => {
-        result = await boardService.getBoard(-1);
-        expect(result).toBeNull();
+      it('should throw an error if given id does not exist', async () => {
+        await expect(boardService.getBoard(-1)).rejects.toThrow(
+          new Error('Requested board does not exist'),
+        );
       });
     });
 
-    describe('when no data', () => {
+    describe('when api call is broken', () => {
       beforeEach(() => {
         (axios.get as jest.Mock).mockImplementationOnce(() =>
           Promise.reject('any error'),
         );
       });
 
-      it('should return null', async () => {
-        result = await boardService.getBoard(-1);
-        expect(result).toBeNull();
+      it('should throw an error', async () => {
+        await expect(boardService.getBoard(-1)).rejects.toThrow(
+          new Error('Error while requesting board'),
+        );
       });
     });
   });

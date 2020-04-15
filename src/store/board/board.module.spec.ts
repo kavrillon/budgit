@@ -46,10 +46,10 @@ describe('Store Module Board', () => {
       });
     });
 
-    describe('when service return no data', () => {
+    describe('when service return an error', () => {
       beforeEach(async () => {
         (boardService.getBoard as jest.Mock).mockImplementationOnce(() =>
-          Promise.resolve(null),
+          Promise.reject(new Error('any error')),
         );
         commitFunction = jest.fn();
         const context = { commit: commitFunction };
@@ -69,9 +69,9 @@ describe('Store Module Board', () => {
         expect(commitFunction.mock.calls[1][1]).toBeNull();
       });
 
-      it('should commit an error', () => {
+      it('should commit the error', () => {
         expect(commitFunction.mock.calls[2][0]).toBe(MUTATION_SET_ERROR);
-        expect(commitFunction.mock.calls[2][1]).toBe('No data');
+        expect(commitFunction.mock.calls[2][1]).toBe('any error');
       });
 
       it('should stop the loading', () => {
@@ -125,14 +125,14 @@ describe('Store Module Board', () => {
         expect(commitFunction.mock.calls[0][1]).toBeTruthy();
       });
 
-      it('should commit empty array', () => {
-        expect(commitFunction.mock.calls[1][0]).toBe(MUTATION_BOARD_SET_LIST);
-        expect(commitFunction.mock.calls[1][1]).toStrictEqual([]);
+      it('should commit an error', () => {
+        expect(commitFunction.mock.calls[1][0]).toBe(MUTATION_SET_ERROR);
+        expect(commitFunction.mock.calls[1][1]).toBe('No data');
       });
 
-      it('should commit an error', () => {
-        expect(commitFunction.mock.calls[2][0]).toBe(MUTATION_SET_ERROR);
-        expect(commitFunction.mock.calls[2][1]).toBe('No data');
+      it('should commit empty array', () => {
+        expect(commitFunction.mock.calls[2][0]).toBe(MUTATION_BOARD_SET_LIST);
+        expect(commitFunction.mock.calls[2][1]).toStrictEqual([]);
       });
 
       it('should stop the loading', () => {
@@ -141,10 +141,10 @@ describe('Store Module Board', () => {
       });
     });
 
-    describe('when service is broken', () => {
+    describe('when service return an error', () => {
       beforeEach(async () => {
         (boardService.getBoards as jest.Mock).mockImplementationOnce(() =>
-          Promise.resolve(null),
+          Promise.reject(),
         );
         commitFunction = jest.fn();
         const context = { commit: commitFunction };
@@ -157,16 +157,16 @@ describe('Store Module Board', () => {
         expect(commitFunction.mock.calls[0][1]).toBeTruthy();
       });
 
-      it('should commit empty array', () => {
-        expect(commitFunction.mock.calls[1][0]).toBe(MUTATION_BOARD_SET_LIST);
-        expect(commitFunction.mock.calls[1][1]).toStrictEqual([]);
-      });
-
       it('should commit an error', () => {
-        expect(commitFunction.mock.calls[2][0]).toBe(MUTATION_SET_ERROR);
-        expect(commitFunction.mock.calls[2][1]).toBe(
+        expect(commitFunction.mock.calls[1][0]).toBe(MUTATION_SET_ERROR);
+        expect(commitFunction.mock.calls[1][1]).toBe(
           'Error while loading data',
         );
+      });
+
+      it('should commit empty array', () => {
+        expect(commitFunction.mock.calls[2][0]).toBe(MUTATION_BOARD_SET_LIST);
+        expect(commitFunction.mock.calls[2][1]).toStrictEqual([]);
       });
 
       it('should stop the loading', () => {

@@ -14,26 +14,35 @@ export const actions: ActionTree<BoardState, RootState> = {
   async [ACTION_BOARD_FETCH_ITEM]({ commit }, id: number): Promise<void> {
     commit(MUTATION_SET_LOADING, true, { root: true });
 
-    const result: Board | null = await boardService.getBoard(id);
-
-    commit(MUTATION_BOARD_SET_CURRENT, result);
-    if (result === null) {
-      commit(MUTATION_SET_ERROR, 'No data', { root: true });
+    try {
+      const result: Board = await boardService.getBoard(id);
+      commit(MUTATION_BOARD_SET_CURRENT, result);
+    } catch (e) {
+      commit(MUTATION_BOARD_SET_CURRENT, null);
+      commit(MUTATION_SET_ERROR, e.message, {
+        root: true,
+      });
     }
+
     commit(MUTATION_SET_LOADING, false, { root: true });
   },
 
   async [ACTION_BOARD_FETCH_LIST]({ commit }): Promise<void> {
     commit(MUTATION_SET_LOADING, true, { root: true });
 
-    const results: Board[] | null = await boardService.getBoards();
-    commit(MUTATION_BOARD_SET_LIST, results || []);
+    let results: Board[] = [];
+    try {
+      results = await boardService.getBoards();
 
-    if (results === null) {
-      commit(MUTATION_SET_ERROR, 'Error while loading data', { root: true });
-    } else if (results.length === 0) {
-      commit(MUTATION_SET_ERROR, 'No data', { root: true });
+      if (results.length === 0) {
+        commit(MUTATION_SET_ERROR, 'No data', { root: true });
+      }
+    } catch (e) {
+      commit(MUTATION_SET_ERROR, 'Error while loading data', {
+        root: true,
+      });
     }
+    commit(MUTATION_BOARD_SET_LIST, results);
 
     commit(MUTATION_SET_LOADING, false, { root: true });
   },

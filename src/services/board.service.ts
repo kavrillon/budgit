@@ -3,25 +3,29 @@ import axios from 'axios';
 import { Board } from '@/@types';
 
 class BoardService {
-  async getBoards(): Promise<Board[] | null> {
+  async getBoards(): Promise<Board[]> {
     try {
       const result = await axios.get<Board[]>('/api/boards');
       return result.data;
     } catch (e) {
-      return null;
+      throw new Error('Error while requesting boards');
     }
   }
 
-  async getBoard(id: number): Promise<Board | null> {
+  async getBoard(id: number): Promise<Board> {
+    let results: Board[] = [];
     try {
-      const results = await this.getBoards();
-      if (results !== null) {
-        return results.find(i => i.id === id) || null;
-      }
+      results = await this.getBoards();
     } catch (e) {
-      return null;
+      throw new Error('Error while requesting board');
     }
-    return null;
+
+    const board = results.find(i => i.id === id);
+    if (typeof board !== 'undefined') {
+      return board;
+    } else {
+      throw new Error('Requested board does not exist');
+    }
   }
 }
 
