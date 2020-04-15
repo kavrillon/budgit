@@ -6,6 +6,7 @@ module.exports = {
     resolve: {
       alias: {
         '@libs': path.resolve(__dirname, 'libs/'),
+        '@tests': path.resolve(__dirname, 'tests/'),
       },
     },
   },
