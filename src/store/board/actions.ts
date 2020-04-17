@@ -4,6 +4,8 @@ import { boardService } from '@/services/board.service';
 import {
   MUTATION_BOARD_SET_CURRENT,
   MUTATION_BOARD_SET_LIST,
+  MUTATION_BOARD_LOADING_LIST,
+  MUTATION_BOARD_LOADING_CURRENT,
 } from './mutations';
 import { MUTATION_SET_ERROR, MUTATION_SET_LOADING } from '../mutations';
 
@@ -15,8 +17,12 @@ export const actions: ActionTree<BoardState, RootState> = {
     { commit, state },
     id: number,
   ): Promise<void> {
-    if (state.current === null || state.current.id !== id) {
+    if (
+      state.loadingCurrent === false &&
+      (state.current === null || state.current.id !== id)
+    ) {
       commit(MUTATION_SET_LOADING, true, { root: true });
+      commit(MUTATION_BOARD_LOADING_CURRENT, true);
 
       try {
         const result: Board = await boardService.getBoard(id);
@@ -28,13 +34,15 @@ export const actions: ActionTree<BoardState, RootState> = {
         });
       }
 
+      commit(MUTATION_BOARD_LOADING_CURRENT, false);
       commit(MUTATION_SET_LOADING, false, { root: true });
     }
   },
 
   async [ACTION_BOARD_FETCH_LIST]({ commit, state }): Promise<void> {
-    if (state.list.length === 0) {
+    if (state.loadingList === false && state.list.length === 0) {
       commit(MUTATION_SET_LOADING, true, { root: true });
+      commit(MUTATION_BOARD_LOADING_LIST, true);
 
       let results: Board[] = [];
       try {
@@ -50,6 +58,7 @@ export const actions: ActionTree<BoardState, RootState> = {
       }
       commit(MUTATION_BOARD_SET_LIST, results);
 
+      commit(MUTATION_BOARD_LOADING_LIST, false);
       commit(MUTATION_SET_LOADING, false, { root: true });
     }
   },

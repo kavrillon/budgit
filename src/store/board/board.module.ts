@@ -7,6 +7,8 @@ import { mutations } from './mutations';
 export const initialState: BoardState = {
   current: null,
   list: [],
+  loadingCurrent: false,
+  loadingList: false,
 };
 
 const namespaced = true;
