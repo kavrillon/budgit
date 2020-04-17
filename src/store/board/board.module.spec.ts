@@ -8,6 +8,7 @@ import {
   MUTATION_BOARD_SET_LIST,
   MUTATION_BOARD_SET_CURRENT,
 } from './mutations';
+import { initialState } from './board.module';
 import mockBoards from '../../../public/data/boards.json';
 import { MUTATION_SET_ERROR, MUTATION_SET_LOADING } from '../mutations';
 
@@ -23,9 +24,9 @@ describe('Store Module Board', () => {
           Promise.resolve(mockBoards[0]),
         );
         commitFunction = jest.fn();
-        const context = { commit: commitFunction };
+        const context = { commit: commitFunction, state: { ...initialState } };
         const action = actions[ACTION_BOARD_FETCH_ITEM] as Function;
-        await action(context);
+        await action(context, 0);
       });
 
       it('should make the app loading', () => {
@@ -52,9 +53,9 @@ describe('Store Module Board', () => {
           Promise.reject(new Error('any error')),
         );
         commitFunction = jest.fn();
-        const context = { commit: commitFunction };
+        const context = { commit: commitFunction, state: { ...initialState } };
         const action = actions[ACTION_BOARD_FETCH_ITEM] as Function;
-        await action(context);
+        await action(context, 0);
       });
 
       it('should make the app loading', () => {
@@ -79,6 +80,48 @@ describe('Store Module Board', () => {
         expect(commitFunction.mock.calls[3][1]).toBeFalsy();
       });
     });
+
+    describe('when the same object is already in state', () => {
+      beforeEach(async () => {
+        boardService.getBoard = jest.fn();
+        commitFunction = jest.fn();
+        const context = {
+          commit: commitFunction,
+          state: { current: mockBoards[0] },
+        };
+        const action = actions[ACTION_BOARD_FETCH_ITEM] as Function;
+        await action(context, 0);
+      });
+
+      it('should not call the service', () => {
+        expect(boardService.getBoard).toHaveBeenCalledTimes(0);
+      });
+
+      it('should not call any mutation', () => {
+        expect(commitFunction.mock.calls.length).toBe(0);
+      });
+    });
+
+    describe('when the a different object is already in state', () => {
+      beforeEach(async () => {
+        boardService.getBoard = jest.fn();
+        commitFunction = jest.fn();
+        const context = {
+          commit: commitFunction,
+          state: { current: mockBoards[0] },
+        };
+        const action = actions[ACTION_BOARD_FETCH_ITEM] as Function;
+        await action(context, 1);
+      });
+
+      it('should call the service', () => {
+        expect(boardService.getBoard).toHaveBeenCalled();
+      });
+
+      it('should call mutations', () => {
+        expect(commitFunction.mock.calls.length).toBeGreaterThan(0);
+      });
+    });
   });
 
   describe('ACTION_BOARD_FETCH_LIST', () => {
@@ -88,7 +131,7 @@ describe('Store Module Board', () => {
           Promise.resolve(mockBoards),
         );
         commitFunction = jest.fn();
-        const context = { commit: commitFunction };
+        const context = { commit: commitFunction, state: { ...initialState } };
         const action = actions[ACTION_BOARD_FETCH_LIST] as Function;
         await action(context);
       });
@@ -115,7 +158,7 @@ describe('Store Module Board', () => {
           Promise.resolve([]),
         );
         commitFunction = jest.fn();
-        const context = { commit: commitFunction };
+        const context = { commit: commitFunction, state: { ...initialState } };
         const action = actions[ACTION_BOARD_FETCH_LIST] as Function;
         await action(context);
       });
@@ -147,7 +190,7 @@ describe('Store Module Board', () => {
           Promise.reject(),
         );
         commitFunction = jest.fn();
-        const context = { commit: commitFunction };
+        const context = { commit: commitFunction, state: { ...initialState } };
         const action = actions[ACTION_BOARD_FETCH_LIST] as Function;
         await action(context);
       });
@@ -172,6 +215,24 @@ describe('Store Module Board', () => {
       it('should stop the loading', () => {
         expect(commitFunction.mock.calls[3][0]).toBe(MUTATION_SET_LOADING);
         expect(commitFunction.mock.calls[3][1]).toBeFalsy();
+      });
+    });
+
+    describe('when a list is already loaded', () => {
+      beforeEach(async () => {
+        boardService.getBoards = jest.fn();
+        commitFunction = jest.fn();
+        const context = { commit: commitFunction, state: { list: mockBoards } };
+        const action = actions[ACTION_BOARD_FETCH_LIST] as Function;
+        await action(context);
+      });
+
+      it('should not call the service', () => {
+        expect(boardService.getBoards).toHaveBeenCalledTimes(0);
+      });
+
+      it('should not call any mutation', () => {
+        expect(commitFunction.mock.calls.length).toBe(0);
       });
     });
   });

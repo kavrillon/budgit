@@ -4,15 +4,16 @@ import { actions } from './actions';
 import { getters } from './getters';
 import { mutations } from './mutations';
 
-const state: BoardState = {
+export const initialState: BoardState = {
   current: null,
   list: [],
 };
+
 const namespaced = true;
 
 export const board: Module<BoardState, RootState> = {
   namespaced,
-  state,
+  state: { ...initialState },
   getters,
   actions,
   mutations,

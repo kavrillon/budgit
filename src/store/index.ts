@@ -6,13 +6,13 @@ import { mutations } from './mutations';
 
 Vue.use(Vuex);
 
-const state: RootState = {
+export const initialState: RootState = {
   error: null,
   loading: true,
 };
 
 const store: StoreOptions<RootState> = {
-  state,
+  state: { ...initialState },
   mutations,
   modules: {
     board,
