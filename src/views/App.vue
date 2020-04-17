@@ -5,7 +5,7 @@
     </section>
 
     <section v-show="displayLoader" class="app__loader" data-test="pageLoader">
-      Loading...
+      <heart-beat color="#00b3bd" />
     </section>
 
     <section
@@ -31,8 +31,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
+import HeartBeat from '@libs/components/Loader/HeartBeat.vue';
 
-@Component
+@Component({ components: { HeartBeat } })
 export default class ViewApp extends Vue {
   @State('error') error?: string | null;
   @State('loading') loading!: boolean;
@@ -44,7 +45,7 @@ export default class ViewApp extends Vue {
   }
 
   get displayLoader() {
-    return this.loading && this.error === null;
+    return this.loading === true && this.error === null;
   }
 
   onScroll(e: UIEvent) {
@@ -71,6 +72,12 @@ $max-width: 1200px;
   }
 
   &__loader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
