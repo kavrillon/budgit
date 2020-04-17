@@ -1,8 +1,6 @@
-export type SlideTransition = {
-  active: boolean;
-  delay: number | null;
-  duration: number | null;
-  interval: number | null;
+import { Transition } from './Transition';
+
+export type SlideTransition = Transition & {
   inverse: boolean | null;
   vertical: boolean | null;
 };

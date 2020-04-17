@@ -4,9 +4,18 @@
       {{ error }}
     </section>
 
-    <section v-show="displayLoader" class="app__loader" data-test="pageLoader">
-      <heart-beat color="#00b3bd" />
-    </section>
+    <transition-opacity
+      :enter="{ active: true, delay: 750 }"
+      :leave="{ active: true }"
+    >
+      <section
+        v-show="displayLoader"
+        class="app__loader"
+        data-test="pageLoader"
+      >
+        <heart-beat color="#00b3bd" />
+      </section>
+    </transition-opacity>
 
     <section
       v-show="displayContent"
@@ -38,9 +47,10 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 import HeartBeat from '@libs/components/Loader/HeartBeat.vue';
+import TransitionOpacity from '@libs/components/Transition/Opacity.vue';
 import TransitionSlide from '@libs/components/Transition/Slide.vue';
 
-@Component({ components: { HeartBeat, TransitionSlide } })
+@Component({ components: { HeartBeat, TransitionOpacity, TransitionSlide } })
 export default class ViewApp extends Vue {
   @State('error') error?: string | null;
   @State('loading') loading!: boolean;
