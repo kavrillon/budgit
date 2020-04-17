@@ -14,7 +14,9 @@
       data-test="pageContent"
     >
       <header class="app__content__header" data-test="pageHeader">
-        <router-view name="header" />
+        <transition-slide :leave="{ active: true }">
+          <router-view name="header" />
+        </transition-slide>
       </header>
       <main
         class="app__content__main"
@@ -22,7 +24,11 @@
         data-test="pageScroller"
       >
         <div class="app__content__main__scroller">
-          <router-view name="content" />
+          <transition-slide
+            :leave="{ active: true, vertical: true, inverse: false }"
+          >
+            <router-view name="content" />
+          </transition-slide>
         </div>
       </main>
     </section>
@@ -32,8 +38,9 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 import HeartBeat from '@libs/components/Loader/HeartBeat.vue';
+import TransitionSlide from '@libs/components/Transition/Slide.vue';
 
-@Component({ components: { HeartBeat } })
+@Component({ components: { HeartBeat, TransitionSlide } })
 export default class ViewApp extends Vue {
   @State('error') error?: string | null;
   @State('loading') loading!: boolean;

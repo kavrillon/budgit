@@ -1,26 +1,30 @@
 <template>
-  <div class="boardheader">
-    <h1 v-if="board" class="boardheader__title" data-test="pageTitle">
-      {{ board.name }}
-    </h1>
+  <div v-if="loading === false && board !== null" class="boardheader">
+    <transition-slide :enter="{ active: true, delay: 50 }">
+      <h1 class="boardheader__title" data-test="pageTitle">
+        {{ board.name }}
+      </h1>
+    </transition-slide>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Action, Getter } from 'vuex-class';
+import { Action, Getter, State } from 'vuex-class';
+import TransitionSlide from '@libs/components/Transition/Slide.vue';
 import { Board } from '@/@types';
 import { ACTION_BOARD_FETCH_ITEM } from '@/store/board/actions';
 
 const namespace = 'board';
 
-@Component
+@Component({ components: { TransitionSlide } })
 export default class BoardHeader extends Vue {
   @Action(ACTION_BOARD_FETCH_ITEM, { namespace }) fetchBoard!: Function;
   @Getter('current', { namespace }) board?: Board | null;
   @Prop({ default: -1 }) readonly boardId!: number;
+  @State('loading') loading!: boolean;
 
-  async mounted() {
-    await this.fetchBoard(this.boardId);
+  mounted() {
+    this.fetchBoard(this.boardId);
   }
 }
 </script>

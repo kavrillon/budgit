@@ -1,22 +1,26 @@
 <template>
-  <div class="headerlist">
-    <h1 class="headerlist__title" data-test="pageTitle">
-      Your boards ({{ items.length }})
-    </h1>
+  <div v-if="loading === false && boards.length > 0" class="headerlist">
+    <transition-slide :enter="{ active: true, delay: 50 }">
+      <h1 class="headerlist__title" data-test="pageTitle">
+        Your boards ({{ boards.length }})
+      </h1>
+    </transition-slide>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Action, Getter } from 'vuex-class';
+import { Action, Getter, State } from 'vuex-class';
+import TransitionSlide from '@libs/components/Transition/Slide.vue';
 import { Board } from '@/@types';
 import { ACTION_BOARD_FETCH_LIST } from '@/store/board/actions';
 
 const namespace = 'board';
 
-@Component
+@Component({ components: { TransitionSlide } })
 export default class BoardHeaderList extends Vue {
   @Action(ACTION_BOARD_FETCH_LIST, { namespace }) fetchBoards!: Function;
-  @Getter('list', { namespace }) items!: Board[];
+  @Getter('list', { namespace }) boards!: Board[];
+  @State('loading') loading!: boolean;
 
   async mounted() {
     await this.fetchBoards();

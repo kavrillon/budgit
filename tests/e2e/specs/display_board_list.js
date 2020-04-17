@@ -70,6 +70,7 @@ describe('Displaying board list', () => {
     it('should minimize the header', () => {
       cy.viewport(1200, 300); // Small viewport to have scrolling
       cy.visit('/b');
+      cy.wait(1000); // Wait the end of loading
       cy.get('[data-test="pageHeader"]').then($header => {
         const height = parseInt($header.css('height').replace('px', ''), 10);
         cy.get('[data-test="pageScroller"]').scrollTo('bottom');

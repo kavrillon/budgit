@@ -1,30 +1,36 @@
 <template>
-  <div class="list">
-    <ul class="list__content">
+  <div v-if="loading === false && boards.length > 0" class="list">
+    <transition-slide
+      :enter="{ active: true, delay: 250, inverse: true }"
+      :group="{ active: true, tag: 'ul', tagClass: 'list__content' }"
+    >
       <li
         class="list__content__item"
         data-test="boardListItem"
-        v-for="(item, key) in items"
-        :key="key"
+        v-for="(item, index) in boards"
+        :key="item.id"
+        :data-index="index"
       >
         <board-summary :board="item" />
       </li>
-    </ul>
+    </transition-slide>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { Action, Getter } from 'vuex-class';
+import { Action, Getter, State } from 'vuex-class';
+import TransitionSlide from '@libs/components/Transition/Slide.vue';
 import { Board } from '@/@types';
 import BoardSummary from '@/components/Board/Summary.vue';
 import { ACTION_BOARD_FETCH_LIST } from '@/store/board/actions';
 
 const namespace = 'board';
 
-@Component({ components: { BoardSummary } })
+@Component({ components: { BoardSummary, TransitionSlide } })
 export default class BoardList extends Vue {
   @Action(ACTION_BOARD_FETCH_LIST, { namespace }) fetchBoards!: Function;
-  @Getter('list', { namespace }) items!: Board[];
+  @Getter('list', { namespace }) boards!: Board[];
+  @State('loading') loading!: boolean;
 
   async mounted() {
     await this.fetchBoards();
@@ -46,7 +52,6 @@ export default class BoardList extends Vue {
 
     &__item {
       margin-top: var(--gutter-lg);
-      transition-delay: 1s;
 
       &:first-of-type {
         margin-top: 0;
