@@ -1,7 +1,7 @@
 <template>
   <div v-if="loading === false && boards.length > 0" class="list">
     <transition-slide
-      :enter="{ active: true, delay: 250, inverse: true }"
+      :enter="{ active: true, delay: 300, inverse: true, vertical: true }"
       :group="{ active: true, tag: 'ul', tagClass: 'list__content' }"
     >
       <li

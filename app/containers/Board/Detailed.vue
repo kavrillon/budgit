@@ -4,7 +4,9 @@
     class="boarddetailed"
     data-test="boardDetailed"
   >
-    <transition-slide :enter="{ active: true, delay: 250, inverse: true }">
+    <transition-slide
+      :enter="{ active: true, delay: 300, inverse: true, vertical: true }"
+    >
       <board-total :board="board" :key="boardId" />
     </transition-slide>
   </section>

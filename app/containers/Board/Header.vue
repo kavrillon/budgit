@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading === false && board !== null" class="boardheader">
-    <transition-slide :enter="{ active: true, delay: 50 }">
+    <transition-slide :enter="{ active: true, delay: 50, inverse: true }">
       <h1 class="boardheader__title" data-test="pageTitle">
         {{ board.name }}
       </h1>
