@@ -2,7 +2,7 @@ import { createLocalVue, Wrapper, shallowMount } from '@vue/test-utils';
 import Vuex, { Store } from 'vuex';
 import store from '@app/store';
 import App from './App.vue';
-import { RootState } from '@app/@types';
+import { RootState } from '@app/store/@types';
 import VueRouter from 'vue-router';
 import { mockRootStoreWithState } from '@tests/utils/store.utils';
 

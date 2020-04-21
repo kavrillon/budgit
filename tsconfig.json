@@ -16,7 +16,8 @@
     "paths": {
       "@app/*": ["app/*"],
       "@libs/*": ["libs/*"],
-      "@tests/*": ["tests/*"]
+      "@tests/*": ["tests/*"],
+      "@types/*": ["@types/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
@@ -28,7 +29,9 @@
     "libs/**/*.tsx",
     "libs/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "@types/**/*.ts",
+    "@types/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }

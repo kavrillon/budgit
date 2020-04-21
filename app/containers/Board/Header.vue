@@ -11,7 +11,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Action, Getter, State } from 'vuex-class';
 import TransitionSlide from '@libs/components/Transition/Slide.vue';
-import { Board } from '@app/@types';
+import { Board } from '@types';
 import { ACTION_BOARD_FETCH_ITEM } from '@app/store/board/actions';
 
 const namespace = 'board';

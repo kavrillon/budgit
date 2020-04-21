@@ -1,7 +1,7 @@
 import Vuex, { Store } from 'vuex';
 import { createLocalVue, Wrapper, shallowMount } from '@vue/test-utils';
-import { RootState } from '@app/@types';
 import store from '@app/store';
+import { RootState } from '@app/store/@types';
 import { mockBoardStoreWithData } from '@tests/utils/store.utils';
 import BoardDetailed from './Detailed.vue';
 import mockBoards from '../../../public/data/boards.json';

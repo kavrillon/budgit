@@ -1,5 +1,6 @@
 import Vuex, { Store, StoreOptions } from 'vuex';
-import { RootState, Board } from '@app/@types';
+import { Board } from '@types';
+import { RootState } from '@app/store/@types';
 import {
   ACTION_BOARD_FETCH_LIST,
   ACTION_BOARD_FETCH_ITEM,

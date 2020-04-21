@@ -5,8 +5,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-
-import { Board } from '@app/@types';
+import { Board } from '@types';
 import { formatAmount } from '@libs/numbers';
 
 @Component

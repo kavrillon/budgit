@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { BoardState, RootState } from '@app/@types';
+import { BoardState, RootState } from '@app/store/@types';
 import { actions } from './actions';
 import { getters } from './getters';
 import { mutations } from './mutations';

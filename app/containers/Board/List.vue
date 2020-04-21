@@ -20,7 +20,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { Action, Getter, State } from 'vuex-class';
 import TransitionSlide from '@libs/components/Transition/Slide.vue';
-import { Board } from '@app/@types';
+import { Board } from '@types';
 import BoardSummary from '@app/components/Board/Summary.vue';
 import { ACTION_BOARD_FETCH_LIST } from '@app/store/board/actions';
 

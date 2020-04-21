@@ -1,4 +1,4 @@
-import { Board } from './Board';
+import { Board } from '@types';
 
 export type BoardState = {
   current: Board | null;

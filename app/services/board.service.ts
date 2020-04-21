@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Board } from '@app/@types';
+import { Board } from '@types';
 
 class BoardService {
   async getBoards(): Promise<Board[]> {

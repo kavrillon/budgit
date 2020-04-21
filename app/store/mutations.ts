@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex';
-import { RootState } from '@app/@types';
+import { RootState } from '@app/store/@types';
 
 export const MUTATION_SET_ERROR = 'setError';
 export const MUTATION_SET_LOADING = 'setLoading';

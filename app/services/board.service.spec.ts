@@ -1,4 +1,4 @@
-import { Board } from '@app/@types';
+import { Board } from '@types';
 import axios from 'axios';
 import mockBoards from '../../public/data/boards.json';
 import { boardService } from './board.service';

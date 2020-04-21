@@ -1,5 +1,6 @@
 import { ActionTree } from 'vuex';
-import { BoardState, RootState, Board } from '@app/@types';
+import { Board } from '@types';
+import { BoardState, RootState } from '@app/store/@types';
 import { boardService } from '@app/services/board.service';
 import {
   MUTATION_BOARD_SET_CURRENT,

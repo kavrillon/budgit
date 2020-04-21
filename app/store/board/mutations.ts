@@ -1,5 +1,6 @@
 import { MutationTree } from 'vuex';
-import { BoardState, Board } from '@app/@types';
+import { Board } from '@types';
+import { BoardState } from '@app/store/@types';
 
 export const MUTATION_BOARD_LOADING_CURRENT = 'setLoadingCurrent';
 export const MUTATION_BOARD_LOADING_LIST = 'setLoadingList';

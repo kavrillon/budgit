@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
-import { RootState } from '@app/@types';
+import { RootState } from '@app/store/@types';
 import { board } from './board/board.module';
 import { mutations } from './mutations';
 
