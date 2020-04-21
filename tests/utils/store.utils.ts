@@ -1,9 +1,9 @@
 import Vuex, { Store, StoreOptions } from 'vuex';
-import { RootState, Board } from '@/@types';
+import { RootState, Board } from '@app/@types';
 import {
   ACTION_BOARD_FETCH_LIST,
   ACTION_BOARD_FETCH_ITEM,
-} from '@/store/board/actions';
+} from '@app/store/board/actions';
 
 export const mockRootStoreWithState = (state: RootState): Store<RootState> => {
   const storeOptions: StoreOptions<RootState> = {

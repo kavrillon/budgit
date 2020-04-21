@@ -2,9 +2,14 @@
 const path = require('path');
 
 module.exports = {
+  chainWebpack: config => {
+    config.entry('app').clear().add('./app/main.ts').end();
+    config.resolve.alias.set('@app', path.join(__dirname, './app'));
+  },
   configureWebpack: {
     resolve: {
       alias: {
+        '@app': path.resolve(__dirname, 'app/'),
         '@libs': path.resolve(__dirname, 'libs/'),
         '@tests': path.resolve(__dirname, 'tests/'),
       },
@@ -13,7 +18,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        prependData: `@import "@/assets/scss/abstract.scss";`,
+        prependData: `@import "@app/assets/scss/abstract.scss";`,
       },
     },
   },

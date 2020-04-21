@@ -9,7 +9,7 @@
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:e2e:watch": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint app libs tests"
   },
   "dependencies": {
     "axios": "^0.19.2",

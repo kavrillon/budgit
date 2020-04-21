@@ -14,19 +14,19 @@
     "baseUrl": ".",
     "types": ["webpack-env", "jest"],
     "paths": {
-      "@/*": ["src/*"],
+      "@app/*": ["app/*"],
       "@libs/*": ["libs/*"],
       "@tests/*": ["tests/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "app/**/*.vue",
     "libs/**/*.ts",
     "libs/**/*.tsx",
     "libs/**/*.vue",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
