@@ -5,11 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "data:import": "ts-node --project ./importer/tsconfig.json ./importer/index.ts",
     "test:unit": "vue-cli-service test:unit --coverage",
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "test:e2e:watch": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint app libs tests"
+    "lint": "vue-cli-service lint app importer libs tests"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -44,6 +45,7 @@
     "node-sass": "^4.12.0",
     "prettier": "^2.0.2",
     "sass-loader": "^8.0.2",
+    "ts-node": "^8.9.0",
     "typescript": "~3.8.3",
     "vue-template-compiler": "^2.6.11"
   }

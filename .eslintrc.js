@@ -22,6 +22,7 @@ module.exports = {
       files: [
         '**/__tests__/*.{j,t}s?(x)',
         '**/app/**/*.spec.{j,t}s?(x)',
+        '**/importer/**/*.spec.{j,t}s?(x)',
         '**/libs/**/*.spec.{j,t}s?(x)',
         '**/tests/unit/**/*.spec.{j,t}s?(x)',
       ],
