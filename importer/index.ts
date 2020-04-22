@@ -1,5 +1,3 @@
-const launchImporter = (): void => {
-  console.log('# Lauching importer...');
-};
+import { importFiles } from './import';
 
-launchImporter();
+importFiles(`${process.env.BUDGIT_SOURCE_PATH}`, './public/data/');
