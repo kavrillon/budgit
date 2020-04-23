@@ -1,0 +1,7 @@
+Code de la banque : BQ_1;Code de l'agence : AG_1;Date de d�but de t�l�chargement : 01/02/2020;Date de fin de t�l�chargement : 12/02/2020;
+Num�ro de compte : ACC_1;Nom du compte : ACC_NAME_1;Devise : EUR;
+
+Solde en fin de p�riode;;;;1234,12
+Date;Num�ro d'op�ration;Libell�;D�bit;Cr�dit;D�tail;
+02/02/20;REF_ACC_1_OP_1;NAME_ACC_1_OP_1;-65,13;;INFO_ACC_1_OP_1;
+07/02/20;REF_ACC_1_OP_2;NAME_ACC_1_OP_2;-207,00;;INFO_ACC_1_OP_2;
