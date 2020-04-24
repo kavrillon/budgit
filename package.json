@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "data:seeds": "BUDGIT_SOURCE_PATH=./importer/connector/csv/bpce/__fixtures__/success/ ts-node --project ./importer/tsconfig.json ./importer/index.ts",
     "data:import": "ts-node --project ./importer/tsconfig.json ./importer/index.ts",
     "test:unit": "vue-cli-service test:unit --coverage",
     "test:unit:file": "vue-cli-service test:unit",

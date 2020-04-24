@@ -4,7 +4,7 @@ import { Account } from '@types';
 import { parseBpceCsv } from '.';
 
 const csvFileContent = fs.readFileSync(
-  './importer/connector/csv/bpce/__fixtures__/file1.csv',
+  './importer/connector/csv/bpce/__fixtures__/success/file1.csv',
   'utf8',
 );
 
@@ -16,7 +16,7 @@ describe('importer/connector/csv/bpce', () => {
       describe('when the date is not valid', () => {
         it('should throw an error', () => {
           const errorContent = fs.readFileSync(
-            './importer/connector/csv/bpce/__fixtures__/error_date.csv',
+            './importer/connector/csv/bpce/__fixtures__/error/error_date.csv',
             'utf8',
           );
           expect(() => parseBpceCsv(errorContent)).toThrowError('Invalid date');
@@ -26,7 +26,7 @@ describe('importer/connector/csv/bpce', () => {
       describe('when there is no info', () => {
         it('should throw an error', () => {
           const errorContent = fs.readFileSync(
-            './importer/connector/csv/bpce/__fixtures__/error_empty.csv',
+            './importer/connector/csv/bpce/__fixtures__/error/error_empty.csv',
             'utf8',
           );
           expect(() => parseBpceCsv(errorContent)).toThrowError(
@@ -38,7 +38,7 @@ describe('importer/connector/csv/bpce', () => {
       describe('when the id is empty', () => {
         it('should throw an error', () => {
           const errorContent = fs.readFileSync(
-            './importer/connector/csv/bpce/__fixtures__/error_noid.csv',
+            './importer/connector/csv/bpce/__fixtures__/error/error_noid.csv',
             'utf8',
           );
           expect(() => parseBpceCsv(errorContent)).toThrowError(
@@ -50,7 +50,7 @@ describe('importer/connector/csv/bpce', () => {
       describe('when the total is empty', () => {
         it('should throw an error', () => {
           const errorContent = fs.readFileSync(
-            './importer/connector/csv/bpce/__fixtures__/error_nototal.csv',
+            './importer/connector/csv/bpce/__fixtures__/error/error_nototal.csv',
             'utf8',
           );
           expect(() => parseBpceCsv(errorContent)).toThrowError(
@@ -70,7 +70,7 @@ describe('importer/connector/csv/bpce', () => {
       });
 
       it('should return the account total', () => {
-        expect(result.total).toBe(1234.12);
+        expect(result.total).toBe(1134.12);
       });
 
       it('should return the account last update date', () => {
