@@ -1,25 +1,47 @@
 // eslint-disable-next-line
 const fs = require('fs');
 import { importFiles } from './import';
+import mockBoards from './__fixtures__/boards';
 
-declare var global: any;
+// eslint-disable-next-line
+declare let global: any;
 
 const SOURCE_FOLDER = '/any/source/path';
 const DESTINATION_FOLDER = '/any/destination/path';
 const MOCK_FILE_NAMES = ['file1.csv', 'file2.csv', 'file3.csv', 'anything.any'];
 
-jest.mock('fs');
+const MOCK_FILE_CONTENT_1 = fs.readFileSync(
+  './importer/connector/csv/bpce/__fixtures__/success/file1.csv',
+  'utf8',
+);
+
+const MOCK_FILE_CONTENT_2 = fs.readFileSync(
+  './importer/connector/csv/bpce/__fixtures__/success/file2.csv',
+  'utf8',
+);
+
+const MOCK_FILE_CONTENT_3 = fs.readFileSync(
+  './importer/connector/csv/bpce/__fixtures__/success/file3.csv',
+  'utf8',
+);
 
 describe('importFiles', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     global.console = { log: jest.fn() };
+  });
 
-    fs.readdirSync = jest.fn().mockImplementationOnce(() => {
-      return MOCK_FILE_NAMES;
-    });
+  beforeEach(() => {
+    jest.spyOn(fs, 'readdirSync').mockReturnValue(MOCK_FILE_NAMES);
+    jest
+      .spyOn(fs, 'readFileSync')
+      .mockReturnValueOnce(MOCK_FILE_CONTENT_1)
+      .mockReturnValueOnce(MOCK_FILE_CONTENT_2)
+      .mockReturnValueOnce(MOCK_FILE_CONTENT_3);
+    jest.spyOn(fs, 'writeFileSync').mockReturnValue({});
+  });
 
-    fs.readFileSync = jest.fn();
-    fs.writeFileSync = jest.fn();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should not read non-csv files', () => {
@@ -32,14 +54,25 @@ describe('importFiles', () => {
 
   it('should read all csv files from the given folder', () => {
     importFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
-    expect(fs.readFileSync).toHaveBeenCalledTimes(3);
+    expect(fs.readFileSync).toHaveBeenCalledWith(
+      '/any/source/path/file1.csv',
+      'utf8',
+    );
+    expect(fs.readFileSync).toHaveBeenCalledWith(
+      '/any/source/path/file2.csv',
+      'utf8',
+    );
+    expect(fs.readFileSync).toHaveBeenCalledWith(
+      '/any/source/path/file3.csv',
+      'utf8',
+    );
   });
 
   it('should generate the boards json file in the destination folder', () => {
     importFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       '/any/destination/path/boards.json',
-      '',
+      JSON.stringify(mockBoards),
     );
   });
 });

@@ -3,10 +3,10 @@ import { aggregateAccounts } from './account.service';
 
 const TODAY = new Date();
 
-let A_MONTH_AGO = new Date();
+const A_MONTH_AGO = new Date();
 A_MONTH_AGO.setMonth(A_MONTH_AGO.getMonth() - 1);
 
-let TWO_MONTH_AGO = new Date();
+const TWO_MONTH_AGO = new Date();
 TWO_MONTH_AGO.setMonth(TWO_MONTH_AGO.getMonth() - 2);
 
 const MOCK_UNGROUPED_ACCOUNTS: Account[] = [

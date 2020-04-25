@@ -2,7 +2,7 @@ import { Account } from '@types';
 
 const TODAY = new Date();
 
-let A_MONTH_AGO = new Date();
+const A_MONTH_AGO = new Date();
 A_MONTH_AGO.setMonth(A_MONTH_AGO.getMonth() - 1);
 
 export const MOCK_ACCOUNT_1: Account = {

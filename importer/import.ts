@@ -1,6 +1,12 @@
 // eslint-disable-next-line
 const fs = require('fs');
 
+import { Account } from '@types';
+import { parseBpceCsv } from './connector';
+import { aggregateAccounts } from './service/account.service';
+import { generateBoards } from './service/board.service';
+import mockBoardsConfiguration from './__fixtures__/boardsConfiguration';
+
 export const importFiles = (
   sourceFolder: string,
   destinationFolder: string,
@@ -14,9 +20,22 @@ export const importFiles = (
 
   console.log('files:', filesNames.length);
 
+  const parsedCsvAccounts: Account[] = [];
   filesNames.forEach(filename => {
-    fs.readFileSync(`${sourceFolder}/${filename}`, 'utf8');
+    const content = fs.readFileSync(`${sourceFolder}/${filename}`, 'utf8');
+    parsedCsvAccounts.push(parseBpceCsv(content));
+  });
+  console.log('parsed files', parsedCsvAccounts.length);
+
+  const aggregatedAccounts = aggregateAccounts(parsedCsvAccounts);
+  aggregatedAccounts.forEach((account: Account) => {
+    console.log(
+      `imported account: ${
+        account.id
+      }, date: ${account.lastUpdate.toLocaleString()}`,
+    );
   });
 
-  fs.writeFileSync(`${destinationFolder}/boards.json`, '');
+  const boards = generateBoards(mockBoardsConfiguration, aggregatedAccounts);
+  fs.writeFileSync(`${destinationFolder}/boards.json`, JSON.stringify(boards));
 };
