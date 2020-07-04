@@ -1,3 +1,3 @@
-import { importFiles } from './import';
+import { importFromFiles } from './import';
 
-importFiles(`${process.env.BUDGIT_SOURCE_PATH}`, './public/data/');
+importFromFiles(`${process.env.BUDGIT_SOURCE_PATH}`, './public/data/');

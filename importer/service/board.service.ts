@@ -1,6 +1,6 @@
 import { Account, Board, BoardConfiguration } from '@types';
 
-export const generateBoards = (
+export const generateBoardsFromConf = (
   configuration: BoardConfiguration[],
   accounts: Account[],
 ): Board[] => {

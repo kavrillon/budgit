@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 const fs = require('fs');
-import { importFiles } from './import';
+import { importFromFiles } from './import';
 import mockBoards from './__fixtures__/boards';
 
 // eslint-disable-next-line
@@ -45,7 +45,7 @@ describe('importFiles', () => {
   });
 
   it('should not read non-csv files', () => {
-    importFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
+    importFromFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
     expect(fs.readFileSync).not.toHaveBeenCalledWith(
       '/any/source/path/anything.any',
       'utf8',
@@ -53,7 +53,7 @@ describe('importFiles', () => {
   });
 
   it('should read all csv files from the given folder', () => {
-    importFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
+    importFromFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
     expect(fs.readFileSync).toHaveBeenCalledWith(
       '/any/source/path/file1.csv',
       'utf8',
@@ -69,7 +69,7 @@ describe('importFiles', () => {
   });
 
   it('should generate the boards json file in the destination folder', () => {
-    importFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
+    importFromFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       '/any/destination/path/boards.json',
       JSON.stringify(mockBoards),

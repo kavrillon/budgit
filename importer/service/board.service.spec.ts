@@ -1,14 +1,14 @@
 import { Board } from '@types';
-import { generateBoards } from './board.service';
+import { generateBoardsFromConf } from './board.service';
 import boardsConfiguration from '../__fixtures__/boardsConfiguration';
 import accounts from '../__fixtures__/accounts';
 
 describe('board.service', () => {
-  describe('generateBoards', () => {
+  describe('generateBoardsFromConf', () => {
     let result: Board[];
 
     beforeEach(() => {
-      result = generateBoards(boardsConfiguration, accounts);
+      result = generateBoardsFromConf(boardsConfiguration, accounts);
     });
 
     it('should return one board per board conf', () => {

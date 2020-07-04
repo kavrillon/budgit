@@ -4,10 +4,10 @@ const fs = require('fs');
 import { Account } from '@types';
 import { parseBpceCsv } from './connector';
 import { aggregateAccounts } from './service/account.service';
-import { generateBoards } from './service/board.service';
+import { generateBoardsFromConf } from './service/board.service';
 import mockBoardsConfiguration from './__fixtures__/boardsConfiguration';
 
-export const importFiles = (
+export const importFromFiles = (
   sourceFolder: string,
   destinationFolder: string,
 ): void => {
@@ -36,6 +36,9 @@ export const importFiles = (
     );
   });
 
-  const boards = generateBoards(mockBoardsConfiguration, aggregatedAccounts);
+  const boards = generateBoardsFromConf(
+    mockBoardsConfiguration,
+    aggregatedAccounts,
+  );
   fs.writeFileSync(`${destinationFolder}/boards.json`, JSON.stringify(boards));
 };
