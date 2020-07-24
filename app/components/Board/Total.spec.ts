@@ -2,7 +2,7 @@ import { shallowMount, Wrapper } from '@vue/test-utils';
 
 import BoardTotal from './Total.vue';
 
-import mockBoards from '../../../public/data/boards.json';
+import mockBoards from '../../../public/api/boards.json';
 
 describe('Board/Total', () => {
   let wrapper: Wrapper<Vue>;

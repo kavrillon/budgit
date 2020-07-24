@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "baseUrl": "..",
+    "baseUrl": "../",
     "paths": {
       "@importer/*": ["importer/*"],
       "@libs/*": ["libs/*"],
@@ -23,6 +23,8 @@
     "importer/**/*.tsx",
     "libs/**/*.ts",
     "libs/**/*.tsx",
+    "services/**/*.ts",
+    "services/**/*.tsx",
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "@types/**/*.ts",

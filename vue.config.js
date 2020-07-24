@@ -12,6 +12,7 @@ module.exports = {
         '@app': path.resolve(__dirname, 'app/'),
         '@libs': path.resolve(__dirname, 'libs/'),
         '@tests': path.resolve(__dirname, 'tests/'),
+        '@services': path.resolve(__dirname, 'services/'),
         '@types': path.resolve(__dirname, '@types/'),
       },
     },

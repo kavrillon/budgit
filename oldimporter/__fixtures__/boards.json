@@ -1,0 +1,12 @@
+[
+  {
+    "id": 0,
+    "name": "Test board",
+    "total": 1234.12
+  },
+  {
+    "id": 1,
+    "name": "Demo board",
+    "total": 4321
+  }
+]

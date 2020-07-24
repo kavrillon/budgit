@@ -4,7 +4,7 @@ import store from '@app/store';
 import { RootState } from '@app/store/@types';
 import { mockBoardStoreWithData } from '@tests/utils/store.utils';
 import BoardHeaderList from './HeaderList.vue';
-import mockBoards from '../../../public/data/boards.json';
+import mockBoards from '../../../public/api/boards.json';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);

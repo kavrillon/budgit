@@ -12,4 +12,8 @@ module.exports = {
     '<rootDir>/importer/**/*.spec.(ts|tsx|js)',
     '<rootDir>/libs/**/*.spec.(ts|tsx|js)',
   ],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/@babel',
+    '<rootDir>/node_modules/@jest',
+  ],
 };

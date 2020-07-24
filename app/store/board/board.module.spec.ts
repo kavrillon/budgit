@@ -11,7 +11,7 @@ import {
   MUTATION_BOARD_SET_CURRENT,
 } from './mutations';
 import { initialState } from './board.module';
-import mockBoards from '../../../public/data/boards.json';
+import mockBoards from '../../../public/api/boards.json';
 import { MUTATION_SET_ERROR, MUTATION_SET_LOADING } from '../mutations';
 
 jest.mock('@app/services/board.service');

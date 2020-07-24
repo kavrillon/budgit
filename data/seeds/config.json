@@ -2,11 +2,11 @@
   {
     "id": 0,
     "name": "Test board",
-    "total": 1234.1234
+    "accounts": ["ACC_1", "ACC_2"]
   },
   {
     "id": 1,
     "name": "Demo board",
-    "total": 4321
+    "accounts": ["ACC_1", "ACC_2", "ACC_3"]
   }
 ]

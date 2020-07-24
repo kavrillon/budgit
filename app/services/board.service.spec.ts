@@ -1,6 +1,6 @@
 import { Board } from '@types';
 import axios from 'axios';
-import mockBoards from '../../public/data/boards.json';
+import mockBoards from '../../public/api/boards.json';
 import { boardService } from './board.service';
 
 jest.mock('axios');

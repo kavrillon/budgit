@@ -2,7 +2,7 @@ import { shallowMount, Wrapper, RouterLinkStub } from '@vue/test-utils';
 
 import BoardSummary from './Summary.vue';
 
-import mockBoards from '../../../public/data/boards.json';
+import mockBoards from '../../../public/api/boards.json';
 
 describe('BoardSummary', () => {
   let wrapper: Wrapper<Vue>;

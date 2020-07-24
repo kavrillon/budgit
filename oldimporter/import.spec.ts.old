@@ -2,12 +2,14 @@
 const fs = require('fs');
 import { importFromFiles } from './import';
 import mockBoards from './__fixtures__/boards';
+import * as mockBoardsConfiguration from './__fixtures__/boardsConfiguration.json';
 
 // eslint-disable-next-line
 declare let global: any;
 
 const SOURCE_FOLDER = '/any/source/path';
 const DESTINATION_FOLDER = '/any/destination/path';
+const USER_CONFIGURATION_FILE = '/any/configuration/file';
 const MOCK_FILE_NAMES = ['file1.csv', 'file2.csv', 'file3.csv', 'anything.any'];
 
 const MOCK_FILE_CONTENT_1 = fs.readFileSync(
@@ -32,24 +34,18 @@ describe('importFiles', () => {
 
   beforeEach(() => {
     jest.spyOn(fs, 'readdirSync').mockReturnValue(MOCK_FILE_NAMES);
+    jest.spyOn(fs, 'existsSync').mockReturnValue(false);
     jest
       .spyOn(fs, 'readFileSync')
       .mockReturnValueOnce(MOCK_FILE_CONTENT_1)
       .mockReturnValueOnce(MOCK_FILE_CONTENT_2)
-      .mockReturnValueOnce(MOCK_FILE_CONTENT_3);
+      .mockReturnValueOnce(MOCK_FILE_CONTENT_3)
+      .mockReturnValue(mockBoardsConfiguration);
     jest.spyOn(fs, 'writeFileSync').mockReturnValue({});
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('should not read non-csv files', () => {
-    importFromFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
-    expect(fs.readFileSync).not.toHaveBeenCalledWith(
-      '/any/source/path/anything.any',
-      'utf8',
-    );
   });
 
   it('should read all csv files from the given folder', () => {
@@ -68,11 +64,33 @@ describe('importFiles', () => {
     );
   });
 
-  it('should generate the boards json file in the destination folder', () => {
+  it('should not read non-csv files', () => {
     importFromFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      '/any/destination/path/boards.json',
-      JSON.stringify(mockBoards),
+    expect(fs.readFileSync).not.toHaveBeenCalledWith(
+      '/any/source/path/anything.any',
+      'utf8',
     );
+  });
+
+  describe('when user conf exists', () => {
+    beforeEach(() => {
+      jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    });
+
+    it('should generate the boards file', () => {
+      importFromFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
+      expect(fs.writeFileSync).toHaveBeenCalledWith(
+        '/any/destination/path/boards.json',
+        JSON.stringify(mockBoards),
+      );
+    });
+  });
+
+  describe('when no user conf', () => {
+    it('should not generate the boards file', () => {
+      importFromFiles(SOURCE_FOLDER, DESTINATION_FOLDER);
+
+      expect(fs.writeFileSync).not.toHaveBeenCalled();
+    });
   });
 });
