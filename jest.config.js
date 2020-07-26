@@ -1,25 +1,19 @@
 module.exports = {
-  moduleFileExtensions: ['js', 'jsx', 'json', 'vue', 'ts', 'tsx'],
-  transform: {
-    '^.+\\.vue$': 'vue-jest',
-    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$':
-      'jest-transform-stub',
-    '^.+\\.tsx?$': 'ts-jest',
-  },
-  transformIgnorePatterns: ['/node_modules/'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '@app/(.*)': '<rootDir>/app/$1',
+    '@importer/(.*)': '<rootDir>/importer/$1',
+    '@libs/(.*)': '<rootDir>/libs/$1',
+    '@tests/(.*)': '<rootDir>/tests/$1',
+    '@types/(.*)': '<rootDir>/@types/$1',
   },
-  snapshotSerializers: ['jest-serializer-vue'],
-  testMatch: ['**/*.spec.(js|jsx|ts|tsx)'],
-  testURL: 'http://localhost/',
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
+  preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
+  testMatch: [
+    '<rootDir>/app/**/*.spec.(ts|tsx|js)',
+    '<rootDir>/importer/**/*.spec.(ts|tsx|js)',
+    '<rootDir>/libs/**/*.spec.(ts|tsx|js)',
   ],
-  globals: {
-    'ts-jest': {
-      babelConfig: true,
-    },
-  },
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/@babel',
+    '<rootDir>/node_modules/@jest',
+  ],
 };

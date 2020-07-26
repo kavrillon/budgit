@@ -1,0 +1,31 @@
+@import './abstract';
+@import './fonts';
+@import './custom-props';
+
+// Global styles
+
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+html {
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  overflow: hidden;
+  margin: 0;
+  background-color: var(--color-bg);
+  padding: 0;
+  color: var(--color-text);
+  font-size: var(--font-size);
+  line-height: 1.15;
+  font-family: var(--font-family);
+}

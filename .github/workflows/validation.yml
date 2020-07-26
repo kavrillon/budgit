@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [12.x]
 
     steps:
       - uses: actions/checkout@v1
@@ -20,26 +20,12 @@ jobs:
         run: |
           yarn install
           yarn build
-        env:
-          CI: true
       - name: Linting
         run: |
           yarn lint
-        env:
-          CI: true
-      - name: Seeds Generation
-        run: |
-          yarn data:seeds1 && yarn data:seeds2
-        env:
-          CI: true
       - name: Unit Testing
         run: |
           yarn test:unit
-        env:
-          CI: true
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: E2E Testing
         run: |
           yarn test:e2e
-        env:
-          CI: true

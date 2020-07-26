@@ -1,12 +1,50 @@
 # Budg'It
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/acb3ea28c14e45b18a1e79f6e5584077)](https://www.codacy.com/manual/kavrillon/budgit?utm_source=github.com&utm_medium=referral&utm_content=kavrillon/budgit&utm_campaign=Badge_Grade)
-
 ## Project setup
 
-Be aware: for now, the project works only with the CE bank export.
+```sh
+yarn install
+```
 
-- `yarn install`
-- Create a `BUDGIT_DATA_PATH` env var containing the absolute path to the bank account export files (.csv).
-- `yarn data:import`
-- `yarn serve`
+### Compiles and hot-reloads for development
+
+```sh
+yarn serve
+```
+
+### Compiles and minifies for production
+
+```sh
+yarn build
+```
+
+### Run your unit tests
+
+```sh
+yarn test:unit
+```
+
+### Run your end-to-end tests
+
+```sh
+yarn test:e2e
+```
+
+### Lints and fixes files
+
+```sh
+yarn lint
+```
+
+### Customize configuration
+
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Technical infos
+
+### Transitions
+
+Routing transitions :
+
+- the `enter` transition is managed by containers: as it is asynchronous, the router can't manage them.
+- the `leave` transition is managed by the router: it is synchronous, and the router has to know when to change page.

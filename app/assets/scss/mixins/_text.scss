@@ -1,0 +1,20 @@
+// Mixins text
+
+@mixin title {
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-title);
+  font-weight: 300;
+}
+
+@mixin subtitle {
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-subtitle);
+  font-weight: 300;
+}
+
+@mixin highlight {
+  font-size: var(--font-size-highlight);
+  font-weight: 300;
+}
